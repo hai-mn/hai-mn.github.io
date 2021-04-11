@@ -1,21 +1,21 @@
 {
   "articles": [
     {
-      "path": "about.html",
-      "title": "About this site",
-      "description": "Some additional details about the website",
+      "path": "404.html",
+      "title": "Sorry, nothing to see here",
+      "description": "You've reached the end of the road.",
       "author": [],
       "contents": "\r\n\r\n\r\n\r\n",
-      "last_modified": "2021-04-11T00:33:45-05:00"
+      "last_modified": "2021-04-11T01:30:36-05:00"
     },
     {
       "path": "index.html",
-      "title": "HaiBiostat",
-      "description": "Welcome to the website. I hope you enjoy it!\n",
+      "title": "HaiBiostat's Posts",
+      "description": "Welcome to my website. I hope you enjoy it!\n",
       "author": [],
       "contents": "\r\n\r\n\r\n\r\n",
-      "last_modified": "2021-04-11T00:33:48-05:00"
+      "last_modified": "2021-04-11T01:30:40-05:00"
     }
   ],
-  "collections": []
+  "collections": ["posts/posts.json"]
 }
