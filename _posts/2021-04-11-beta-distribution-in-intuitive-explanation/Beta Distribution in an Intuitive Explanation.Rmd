@@ -1,0 +1,153 @@
+---
+title: Beta Distribution in an Intuitive Explanation
+description: |
+  Intuitively explain the Beta Distribution and its applications.
+author:
+  - name: Hai Nguyen
+    affiliation: University of Illinois at Chicago
+date: Last compiled on `r format(Sys.time(), '%d %B, %Y')`
+categories:
+  - Biostatistics
+  - Tutorial
+  - Toolkit for Bayesian Methods
+  - Bayesian Methods
+base_url: https://hai-mn.github.io
+output:
+  distill::distill_article:
+    self_contained: false
+    toc: true
+    toc_depth: 3
+---
+
+## Motivation
+
+  > Even though I had learned the beta distribution from UIC's Bayesian methods course and tutored it, such as setting up it as the prior distribution in conjugate distribution context. But it was easy to forget because of its dried content and too abstract. Here I try to combine the rigid theory (UC coursework's content) and intuitive thought. By that way, I was able to 'permenently stamp' the concept to my brain.
+
+  - The Beta distribution is a __probability distribution on/of probabilities__  
+
+  - The beta distribution describes a family of continuous probability distributions that are nonzero only on the interval `(0 1)`.  
+
+  - For example, we can use it to model the probabilities: the [Click-Through Rate of the advertisement](https://paperswithcode.com/task/click-through-rate-prediction#:~:text=Edit-,Click-through%20rate%20prediction%20is%20the%20task%20of%20predicting%20the,an%20advertisement), the [batting averages](https://en.wikipedia.org/wiki/Batting_average#Major_League_Baseball), the 5-year survival chance for women with breast cancer, and so on.
+
+
+## Definition
+
+A continuous random variable $X_B \sim Beta(\alpha, \beta)$ has __Beta distribution__ if its probability density function (PDF) is  
+
+\[ 
+f_{X_B} (x; \alpha, \beta) = \frac{1}{B(α,β)} x^{\alpha − 1} (1−x)^{\beta − 1}, \ \ \text{for} \ 0 < x < 1.
+\]
+
+where $B(\cdot)$ is the __Beta function__ and __*shape parameters*__ $\alpha, \beta > 0$.  
+
+## Intuitive interpretation
+
+|         | PDF                                                       | Probability as a ...|
+|:--------|:----------------------------------------------------------|:-----------------:|
+| Binomial|$f(x) = {n \choose x} p^x (1-p)^{n-x}$                     | `parameter`       |
+|         |$\rightarrow$ the function of $x$                          |                   |
+| Beta    |$f(p) = \frac{1}{B(α,β)} p^{\alpha − 1} (1−p)^{\beta − 1}$ | `random variable` |
+|         |$\rightarrow$ the function of $p$                          |                   |
+
+  - The beta distribution intuitively comes into play when we look at it in terms of numerator---$x/p$ to the power of something multiplied by $1-x/1-p$ to the power of something---from the lens of the binomial distribution.   
+  
+  - The difference between the binomial and the beta is that the above models the number of successes ($x$), while the below models the probability ($p$) of success. In other words, the probability is a `parameter` in binomial; In __*the Beta*__, the probability is a `random variable`.
+  
+  - In this context, the shape parameters $\alpha$ and $\beta$ or __$\alpha-1$ as the number of successes__ and __$\beta-1$ as the number of failures__   
+  
+  - We can explore the beauty of beta distribution via the [the calculator for Beta distribution](https://homepage.divms.uiowa.edu/~mbognar/applets/beta.html)---Dr. Bognar at the University of Iowa built it.    
+
+  - Beta distribution is very flexible: bell-curve (The PDF of a beta distribution is approximately normal if $\alpha + \beta$ is large enough and $\alpha$ & $\beta$ are approximately equal), U-shaped (when $\alpha$ < 1, $\beta$ < 1) and even straight line. Here's an graph excerpt from [wikipedia](https://en.wikipedia.org/wiki/Beta_distribution).    
+  
+  ![The very flexible of Beta distribution](Visualize the Shape of Beta distribution.png)    
+
+
+## Beta function
+
+The beta function is
+
+\[ 
+B(x,y) = \int_0^1 t^{x−1} (1−t)^{y−1} dt = \frac{\Gamma(x) \Gamma(y)}{\Gamma(x+y)},
+\]
+
+
+where $\Gamma(\cdot)$ is the __Gamma function__.
+
+## Gamma function
+
+The Gamma function $\Gamma$ is an extension of the factorial function, with its argument shifted down by 1, to real and complex numbers.
+
+For positive integer $n$:
+
+\[ 
+\Gamma (n) = (n−1)! = 1 \times 2 \times 3 \times ... \times (n−1)
+\]
+
+The gamma function is defined for all complex numbers except the non-positive integers by the integral:
+
+\[
+\Gamma (t) = \int_0^{\infty} x^{t-1} e^{-x} dx
+\]
+
+> Simplify the Beta function with the Gamma Function $\Rightarrow$ we saw the PDF of Beta written in terms of the Gamma function. The Beta function is the ratio of the product of the Gamma function of each parameter divided by the Gamma function of the sum of the parameters (_proof refered the further reading topic_).   
+
+## Main facts
+
+\[
+E[X_B] = \mu = \frac{\alpha}{\alpha + \beta}; \ \ V[X_B] = \sigma^2 = \frac{\alpha\beta}{(\alpha + \beta)^2(\alpha + \beta + 1)}
+\]
+
+The standard uniform distribution $\text{Unif} \ (0,1)$ is a special case of the beta distribution $Beta \ (1,1)$, when $\alpha = \beta = 1$.  
+
+The mode is $\omega = \frac{\alpha − 1}{\alpha + \beta − 2}$ for $\alpha, \beta > 1$.  
+The concentration is $\kappa = \alpha + \beta$.  
+Definitions of $\mu, \omega$ and $\kappa$ can be inverted:
+
+\[ \alpha = \mu\kappa,  \beta = (1 − \mu)\kappa \]  
+
+\[ \alpha = \omega(\kappa−2)+1,  \beta = (1 − \omega)(\kappa−2)+1, \ \kappa > 2. \]
+
+Parameter $\kappa$ is a measure of number of observations needed to change our previous belief about $\mu$.    
+If $\kappa$ is small we need only a few new observations.   
+
+
+__Example.__ Concentration $\kappa = 8$ around $\mu = 0.5$  corresponds to $\alpha = \mu \kappa = 4$ and $\beta = (1 − \mu) \kappa = 4$.  
+
+Parameterization in terms of mean value and standard deviation is:   
+
+\[ \alpha = \mu [\frac{\mu (1 - \mu)}{\sigma^2} - 1]; \ \ \beta = (1 - \mu)[\frac{\mu (1 - \mu)}{\sigma^2} - 1] \] 
+
+Standard deviation is typically smaller than standard deviation of uniform distribution on $[0,1]$, i.e. $0.28867$. 
+
+
+
+__Examples.__  
+
+  1. For $\mu = 0.5$,  $\sigma = 0.28867$ the shape parameters are $\alpha = 1$, $\beta = 1$.   
+  2. Find shape parameters of beta distribution with $\mu = 0.5$, $\sigma = 0.1$.   
+
+The standard uniform distribution $Unif \ (0,1)$ is a special case of the beta distribution $Beta \ (1,1)$, when $\alpha = \beta = 1$.  
+
+## Recommended actions
+
+  - Keep parameter $\beta$ fixed. Move $\alpha$ up or down. Observe how the mass of the distribution moves    
+  
+  - Do the same as above, but keep $\alpha$ constant and move $\beta$ up or down     
+  
+  - Make $\alpha = \beta = 1$. What does the shape of the distribution tell you about your knowledge about random variable $\theta$?     
+  
+  - Keep $\alpha = \beta$ , but move both of them up or down. Interpret the shape of the distribution     
+  
+  - When beta distribution is used as a prior for parameter of binomial distribution, parameters $\alpha$ and $\beta$ can be interpreted as previously observed numbers of successes ($\alpha$) or failures ($\beta$). For example, if in 2 Bernoulli experiments there was 1 success and 1 failure you can express opinion about probability of success as $Beta(1,1)$. What would you assume as prior if in 6 previously observed outcomes there were 3 successes and 3 failures? What is the likely value of the parameter? Do we have more or less information than in case of 1 success and 1 failure?    
+  
+  - Define distribution with mode $\omega$=.8 and concentration $\kappa = 12$. To do that find shape parameters $\alpha = \omega (\kappa − 2) + 1 = 9$ and $\beta = (1 − \omega)(\kappa − 2) + 1 = 3$.  
+  
+## Plots
+
+I plan to build an shiny app to plot beta distribution on the specification of shape parameter (in the process).
+
+## Further reading 
+
+  - Bayesian Methods, UC's lecture   
+  - David Robinson (*Principal Data Scientist at Heap, works in R and Python*), Understanding the beta distribution (using baseball statistics), http://varianceexplained.org/statistics/beta_distribution_and_baseball/  
+  - Aerin Kim, Beta Distribution — Intuition, Examples, and Derivation, https://towardsdatascience.com/beta-distribution-intuition-examples-and-derivation-cf00f4db57af

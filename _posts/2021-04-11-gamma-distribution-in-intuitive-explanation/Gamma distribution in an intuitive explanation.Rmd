@@ -5,11 +5,12 @@ description: |
 author:
   - name: Hai Nguyen
     affiliation: University of Illinois at Chicago
-date: "Last compiled on `r format(Sys.time(), '%d %B, %Y')`"
+date: Last compiled on `r format(Sys.time(), '%d %B, %Y')`
 categories:
   - Biostatistics
   - Tutorial
   - ggplot2 in R
+  - Toolkit for Bayesian Methods
   - Bayesian Methods
 base_url: https://hai-mn.github.io
 output:
