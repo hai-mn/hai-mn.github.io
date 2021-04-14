@@ -7,7 +7,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
   <meta name="generator" content="distill" />
-  <link rel="alternate" type="application/rss+xml" href="https://hai-mn.github.io/index.xml" />
 
   <style type="text/css">
   /* Hide doc at startup (prevent jankiness while JS renders/transforms) */
@@ -86,642 +85,39 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </style>
 
   <!--radix_placeholder_meta_tags-->
-  <title>HaiBiostat: HaiBiostat's Posts</title>
+  <title>Machine Learning &amp; Predictive Analytics</title>
 
-  <meta property="description" itemprop="description" content="Welcome to my website. I hope you enjoy it!"/>
+  <meta property="description" itemprop="description" content="An Overview of Machine Learning &amp; Predictive Analytics"/>
 
-  <link rel="license" href="https://creativecommons.org/licenses/by/4.0/"/>
-  <link rel="icon" type="image/png" href="images/Haibiostat.png"/>
 
+  <!--  https://schema.org/Article -->
+  <meta property="article:published" itemprop="datePublished" content="2021-04-20"/>
+  <meta property="article:created" itemprop="dateCreated" content="2021-04-20"/>
+  <meta name="article:author" content="Hai Nguyen"/>
 
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-  <meta property="og:title" content="HaiBiostat: HaiBiostat&#39;s Posts"/>
+  <meta property="og:title" content="Machine Learning &amp; Predictive Analytics"/>
   <meta property="og:type" content="article"/>
-  <meta property="og:description" content="Welcome to my website. I hope you enjoy it!"/>
+  <meta property="og:description" content="An Overview of Machine Learning &amp; Predictive Analytics"/>
   <meta property="og:locale" content="en_US"/>
-  <meta property="og:site_name" content="HaiBiostat"/>
 
   <!--  https://dev.twitter.com/cards/types/summary -->
   <meta property="twitter:card" content="summary"/>
-  <meta property="twitter:title" content="HaiBiostat: HaiBiostat&#39;s Posts"/>
-  <meta property="twitter:description" content="Welcome to my website. I hope you enjoy it!"/>
-  <meta property="twitter:site" content="@HaiBiostat"/>
-  <meta property="twitter:creator" content="@HaiBiostat"/>
+  <meta property="twitter:title" content="Machine Learning &amp; Predictive Analytics"/>
+  <meta property="twitter:description" content="An Overview of Machine Learning &amp; Predictive Analytics"/>
 
   <!--/radix_placeholder_meta_tags-->
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","site","listing"]}},"value":[{"type":"character","attributes":{},"value":["HaiBiostat's Posts"]},{"type":"character","attributes":{},"value":["Welcome to my website. I hope you enjoy it!\n"]},{"type":"character","attributes":{},"value":["distill::distill_website"]},{"type":"character","attributes":{},"value":["posts"]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","categories","base_url","output"]}},"value":[{"type":"character","attributes":{},"value":["Machine Learning & Predictive Analytics"]},{"type":"character","attributes":{},"value":["An Overview of Machine Learning & Predictive Analytics\n"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name"]}},"value":[{"type":"character","attributes":{},"value":["Hai Nguyen"]}]}]},{"type":"character","attributes":{},"value":["April 2021"]},{"type":"character","attributes":{},"value":["Biostatistics","Machine Learning"]},{"type":"character","attributes":{},"value":["https://hai-mn.github.io"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained","toc","toc_depth"]}},"value":[{"type":"logical","attributes":{},"value":[false]},{"type":"logical","attributes":{},"value":[true]},{"type":"integer","attributes":{},"value":[3]}]}]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
+  
+  <script type="text/json" id="radix-resource-manifest">
+  {"type":"character","attributes":{},"value":["An-overview-of-ML-and-PA_files/anchor-4.2.2/anchor.min.js","An-overview-of-ML-and-PA_files/bowser-1.9.3/bowser.min.js","An-overview-of-ML-and-PA_files/distill-2.2.21/template.v2.js","An-overview-of-ML-and-PA_files/header-attrs-2.7/header-attrs.js","An-overview-of-ML-and-PA_files/jquery-1.11.3/jquery.min.js","An-overview-of-ML-and-PA_files/popper-2.6.0/popper.min.js","An-overview-of-ML-and-PA_files/tippy-6.2.7/tippy-bundle.umd.min.js","An-overview-of-ML-and-PA_files/tippy-6.2.7/tippy-light-border.css","An-overview-of-ML-and-PA_files/tippy-6.2.7/tippy.css","An-overview-of-ML-and-PA_files/tippy-6.2.7/tippy.umd.min.js","An-overview-of-ML-and-PA_files/webcomponents-2.0.0/webcomponents.js"]}
+  </script>
   <!--radix_placeholder_navigation_in_header-->
-  <meta name="distill:offset" content=""/>
-
-  <script type="application/javascript">
-
-    window.headroom_prevent_pin = false;
-
-    window.document.addEventListener("DOMContentLoaded", function (event) {
-
-      // initialize headroom for banner
-      var header = $('header').get(0);
-      var headerHeight = header.offsetHeight;
-      var headroom = new Headroom(header, {
-        tolerance: 5,
-        onPin : function() {
-          if (window.headroom_prevent_pin) {
-            window.headroom_prevent_pin = false;
-            headroom.unpin();
-          }
-        }
-      });
-      headroom.init();
-      if(window.location.hash)
-        headroom.unpin();
-      $(header).addClass('headroom--transition');
-
-      // offset scroll location for banner on hash change
-      // (see: https://github.com/WickyNilliams/headroom.js/issues/38)
-      window.addEventListener("hashchange", function(event) {
-        window.scrollTo(0, window.pageYOffset - (headerHeight + 25));
-      });
-
-      // responsive menu
-      $('.distill-site-header').each(function(i, val) {
-        var topnav = $(this);
-        var toggle = topnav.find('.nav-toggle');
-        toggle.on('click', function() {
-          topnav.toggleClass('responsive');
-        });
-      });
-
-      // nav dropdowns
-      $('.nav-dropbtn').click(function(e) {
-        $(this).next('.nav-dropdown-content').toggleClass('nav-dropdown-active');
-        $(this).parent().siblings('.nav-dropdown')
-           .children('.nav-dropdown-content').removeClass('nav-dropdown-active');
-      });
-      $("body").click(function(e){
-        $('.nav-dropdown-content').removeClass('nav-dropdown-active');
-      });
-      $(".nav-dropdown").click(function(e){
-        e.stopPropagation();
-      });
-    });
-  </script>
-
-  <style type="text/css">
-
-  /* Theme (user-documented overrideables for nav appearance) */
-
-  .distill-site-nav {
-    color: rgba(255, 255, 255, 0.8);
-    background-color: #0F2E3D;
-    font-size: 15px;
-    font-weight: 300;
-  }
-
-  .distill-site-nav a {
-    color: inherit;
-    text-decoration: none;
-  }
-
-  .distill-site-nav a:hover {
-    color: white;
-  }
-
-  @media print {
-    .distill-site-nav {
-      display: none;
-    }
-  }
-
-  .distill-site-header {
-
-  }
-
-  .distill-site-footer {
-
-  }
-
-
-  /* Site Header */
-
-  .distill-site-header {
-    width: 100%;
-    box-sizing: border-box;
-    z-index: 3;
-  }
-
-  .distill-site-header .nav-left {
-    display: inline-block;
-    margin-left: 8px;
-  }
-
-  @media screen and (max-width: 768px) {
-    .distill-site-header .nav-left {
-      margin-left: 0;
-    }
-  }
-
-
-  .distill-site-header .nav-right {
-    float: right;
-    margin-right: 8px;
-  }
-
-  .distill-site-header a,
-  .distill-site-header .title {
-    display: inline-block;
-    text-align: center;
-    padding: 14px 10px 14px 10px;
-  }
-
-  .distill-site-header .title {
-    font-size: 18px;
-    min-width: 150px;
-  }
-
-  .distill-site-header .logo {
-    padding: 0;
-  }
-
-  .distill-site-header .logo img {
-    display: none;
-    max-height: 20px;
-    width: auto;
-    margin-bottom: -4px;
-  }
-
-  .distill-site-header .nav-image img {
-    max-height: 18px;
-    width: auto;
-    display: inline-block;
-    margin-bottom: -3px;
-  }
-
-
-
-  @media screen and (min-width: 1000px) {
-    .distill-site-header .logo img {
-      display: inline-block;
-    }
-    .distill-site-header .nav-left {
-      margin-left: 20px;
-    }
-    .distill-site-header .nav-right {
-      margin-right: 20px;
-    }
-    .distill-site-header .title {
-      padding-left: 12px;
-    }
-  }
-
-
-  .distill-site-header .nav-toggle {
-    display: none;
-  }
-
-  .nav-dropdown {
-    display: inline-block;
-    position: relative;
-  }
-
-  .nav-dropdown .nav-dropbtn {
-    border: none;
-    outline: none;
-    color: rgba(255, 255, 255, 0.8);
-    padding: 16px 10px;
-    background-color: transparent;
-    font-family: inherit;
-    font-size: inherit;
-    font-weight: inherit;
-    margin: 0;
-    margin-top: 1px;
-    z-index: 2;
-  }
-
-  .nav-dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: white;
-    min-width: 200px;
-    border: 1px solid rgba(0,0,0,0.15);
-    border-radius: 4px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1);
-    z-index: 1;
-    margin-top: 2px;
-    white-space: nowrap;
-    padding-top: 4px;
-    padding-bottom: 4px;
-  }
-
-  .nav-dropdown-content hr {
-    margin-top: 4px;
-    margin-bottom: 4px;
-    border: none;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  }
-
-  .nav-dropdown-active {
-    display: block;
-  }
-
-  .nav-dropdown-content a, .nav-dropdown-content .nav-dropdown-header {
-    color: black;
-    padding: 6px 24px;
-    text-decoration: none;
-    display: block;
-    text-align: left;
-  }
-
-  .nav-dropdown-content .nav-dropdown-header {
-    display: block;
-    padding: 5px 24px;
-    padding-bottom: 0;
-    text-transform: uppercase;
-    font-size: 14px;
-    color: #999999;
-    white-space: nowrap;
-  }
-
-  .nav-dropdown:hover .nav-dropbtn {
-    color: white;
-  }
-
-  .nav-dropdown-content a:hover {
-    background-color: #ddd;
-    color: black;
-  }
-
-  .nav-right .nav-dropdown-content {
-    margin-left: -45%;
-    right: 0;
-  }
-
-  @media screen and (max-width: 768px) {
-    .distill-site-header a, .distill-site-header .nav-dropdown  {display: none;}
-    .distill-site-header a.nav-toggle {
-      float: right;
-      display: block;
-    }
-    .distill-site-header .title {
-      margin-left: 0;
-    }
-    .distill-site-header .nav-right {
-      margin-right: 0;
-    }
-    .distill-site-header {
-      overflow: hidden;
-    }
-    .nav-right .nav-dropdown-content {
-      margin-left: 0;
-    }
-  }
-
-
-  @media screen and (max-width: 768px) {
-    .distill-site-header.responsive {position: relative; min-height: 500px; }
-    .distill-site-header.responsive a.nav-toggle {
-      position: absolute;
-      right: 0;
-      top: 0;
-    }
-    .distill-site-header.responsive a,
-    .distill-site-header.responsive .nav-dropdown {
-      display: block;
-      text-align: left;
-    }
-    .distill-site-header.responsive .nav-left,
-    .distill-site-header.responsive .nav-right {
-      width: 100%;
-    }
-    .distill-site-header.responsive .nav-dropdown {float: none;}
-    .distill-site-header.responsive .nav-dropdown-content {position: relative;}
-    .distill-site-header.responsive .nav-dropdown .nav-dropbtn {
-      display: block;
-      width: 100%;
-      text-align: left;
-    }
-  }
-
-  /* Site Footer */
-
-  .distill-site-footer {
-    width: 100%;
-    overflow: hidden;
-    box-sizing: border-box;
-    z-index: 3;
-    margin-top: 30px;
-    padding-top: 30px;
-    padding-bottom: 30px;
-    text-align: center;
-  }
-
-  /* Headroom */
-
-  d-title {
-    padding-top: 6rem;
-  }
-
-  @media print {
-    d-title {
-      padding-top: 4rem;
-    }
-  }
-
-  .headroom {
-    z-index: 1000;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-  }
-
-  .headroom--transition {
-    transition: all .4s ease-in-out;
-  }
-
-  .headroom--unpinned {
-    top: -100px;
-  }
-
-  .headroom--pinned {
-    top: 0;
-  }
-
-  /* adjust viewport for navbar height */
-  /* helps vertically center bootstrap (non-distill) content */
-  .min-vh-100 {
-    min-height: calc(100vh - 100px) !important;
-  }
-
-  </style>
-
-  <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
-  <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet"/>
-  <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet"/>
-  <script src="site_libs/headroom-0.9.4/headroom.min.js"></script>
-  <script src="site_libs/autocomplete-0.37.1/autocomplete.min.js"></script>
-  <script src="site_libs/fuse-6.4.1/fuse.min.js"></script>
-
-  <script type="application/javascript">
-
-  function getMeta(metaName) {
-    var metas = document.getElementsByTagName('meta');
-    for (let i = 0; i < metas.length; i++) {
-      if (metas[i].getAttribute('name') === metaName) {
-        return metas[i].getAttribute('content');
-      }
-    }
-    return '';
-  }
-
-  function offsetURL(url) {
-    var offset = getMeta('distill:offset');
-    return offset ? offset + '/' + url : url;
-  }
-
-  function createFuseIndex() {
-
-    // create fuse index
-    var options = {
-      keys: [
-        { name: 'title', weight: 20 },
-        { name: 'categories', weight: 15 },
-        { name: 'description', weight: 10 },
-        { name: 'contents', weight: 5 },
-      ],
-      ignoreLocation: true,
-      threshold: 0
-    };
-    var fuse = new window.Fuse([], options);
-
-    // fetch the main search.json
-    return fetch(offsetURL('search.json'))
-      .then(function(response) {
-        if (response.status == 200) {
-          return response.json().then(function(json) {
-            // index main articles
-            json.articles.forEach(function(article) {
-              fuse.add(article);
-            });
-            // download collections and index their articles
-            return Promise.all(json.collections.map(function(collection) {
-              return fetch(offsetURL(collection)).then(function(response) {
-                if (response.status === 200) {
-                  return response.json().then(function(articles) {
-                    articles.forEach(function(article) {
-                      fuse.add(article);
-                    });
-                  })
-                } else {
-                  return Promise.reject(
-                    new Error('Unexpected status from search index request: ' +
-                              response.status)
-                  );
-                }
-              });
-            })).then(function() {
-              return fuse;
-            });
-          });
-
-        } else {
-          return Promise.reject(
-            new Error('Unexpected status from search index request: ' +
-                        response.status)
-          );
-        }
-      });
-  }
-
-  window.document.addEventListener("DOMContentLoaded", function (event) {
-
-    // get search element (bail if we don't have one)
-    var searchEl = window.document.getElementById('distill-search');
-    if (!searchEl)
-      return;
-
-    createFuseIndex()
-      .then(function(fuse) {
-
-        // make search box visible
-        searchEl.classList.remove('hidden');
-
-        // initialize autocomplete
-        var options = {
-          autoselect: true,
-          hint: false,
-          minLength: 2,
-        };
-        window.autocomplete(searchEl, options, [{
-          source: function(query, callback) {
-            const searchOptions = {
-              isCaseSensitive: false,
-              shouldSort: true,
-              minMatchCharLength: 2,
-              limit: 10,
-            };
-            var results = fuse.search(query, searchOptions);
-            callback(results
-              .map(function(result) { return result.item; })
-            );
-          },
-          templates: {
-            suggestion: function(suggestion) {
-              var img = suggestion.preview && Object.keys(suggestion.preview).length > 0
-                ? `<img src="${offsetURL(suggestion.preview)}"</img>`
-                : '';
-              var html = `
-                <div class="search-item">
-                  <h3>${suggestion.title}</h3>
-                  <div class="search-item-description">
-                    ${suggestion.description || ''}
-                  </div>
-                  <div class="search-item-preview">
-                    ${img}
-                  </div>
-                </div>
-              `;
-              return html;
-            }
-          }
-        }]).on('autocomplete:selected', function(event, suggestion) {
-          window.location.href = offsetURL(suggestion.path);
-        });
-        // remove inline display style on autocompleter (we want to
-        // manage responsive display via css)
-        $('.algolia-autocomplete').css("display", "");
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
-
-  });
-
-  </script>
-
-  <style type="text/css">
-
-  .nav-search {
-    font-size: x-small;
-  }
-
-  /* Algolioa Autocomplete */
-
-  .algolia-autocomplete {
-    display: inline-block;
-    margin-left: 10px;
-    vertical-align: sub;
-    background-color: white;
-    color: black;
-    padding: 6px;
-    padding-top: 8px;
-    padding-bottom: 0;
-    border-radius: 6px;
-    border: 1px #0F2E3D solid;
-    width: 180px;
-  }
-
-
-  @media screen and (max-width: 768px) {
-    .distill-site-nav .algolia-autocomplete {
-      display: none;
-      visibility: hidden;
-    }
-    .distill-site-nav.responsive .algolia-autocomplete {
-      display: inline-block;
-      visibility: visible;
-    }
-    .distill-site-nav.responsive .algolia-autocomplete .aa-dropdown-menu {
-      margin-left: 0;
-      width: 400px;
-      max-height: 400px;
-    }
-  }
-
-  .algolia-autocomplete .aa-input, .algolia-autocomplete .aa-hint {
-    width: 90%;
-    outline: none;
-    border: none;
-  }
-
-  .algolia-autocomplete .aa-hint {
-    color: #999;
-  }
-  .algolia-autocomplete .aa-dropdown-menu {
-    width: 550px;
-    max-height: 70vh;
-    overflow-x: visible;
-    overflow-y: scroll;
-    padding: 5px;
-    margin-top: 3px;
-    margin-left: -150px;
-    background-color: #fff;
-    border-radius: 5px;
-    border: 1px solid #999;
-    border-top: none;
-  }
-
-  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion {
-    cursor: pointer;
-    padding: 5px 4px;
-    border-bottom: 1px solid #eee;
-  }
-
-  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion:last-of-type {
-    border-bottom: none;
-    margin-bottom: 2px;
-  }
-
-  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item {
-    overflow: hidden;
-    font-size: 0.8em;
-    line-height: 1.4em;
-  }
-
-  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item h3 {
-    font-size: 1rem;
-    margin-block-start: 0;
-    margin-block-end: 5px;
-  }
-
-  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-description {
-    display: inline-block;
-    overflow: hidden;
-    height: 2.8em;
-    width: 80%;
-    margin-right: 4%;
-  }
-
-  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview {
-    display: inline-block;
-    width: 15%;
-  }
-
-  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview img {
-    height: 3em;
-    width: auto;
-    display: none;
-  }
-
-  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview img[src] {
-    display: initial;
-  }
-
-  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion.aa-cursor {
-    background-color: #eee;
-  }
-  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion em {
-    font-weight: bold;
-    font-style: normal;
-  }
-
-  </style>
-
-
   <!--/radix_placeholder_navigation_in_header-->
   <!--radix_placeholder_distill-->
 
@@ -2036,649 +1432,388 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
   </script>
 
-  <style type="text/css">
-  /* base variables */
-
-  /* Edit the CSS properties in this file to create a custom
-     Distill theme. Only edit values in the right column
-     for each row; values shown are the CSS defaults.
-     To return any property to the default,
-     you may set its value to: unset
-     All rows must end with a semi-colon.                      */
-
-  /* Optional: embed custom fonts here with `@import`          */
-  /* This must remain at the top of this file.                 */
-
-
-
-  html {
-    /*-- Main font sizes --*/
-    --title-size:      50px;
-    --body-size:       1.06rem;
-    --code-size:       14px;
-    --aside-size:      12px;
-    --fig-cap-size:    13px;
-    /*-- Main font colors --*/
-    --title-color:     #000000;
-    --header-color:    rgba(0, 0, 0, 0.8);
-    --body-color:      rgba(0, 0, 0, 0.8);
-    --aside-color:     rgba(0, 0, 0, 0.6);
-    --fig-cap-color:   rgba(0, 0, 0, 0.6);
-    /*-- Specify custom fonts ~~~ must be imported above   --*/
-    --heading-font:    sans-serif;
-    --mono-font:       monospace;
-    --body-font:       sans-serif;
-    --navbar-font:     sans-serif;  /* websites + blogs only */
-  }
-
-  /*-- ARTICLE METADATA --*/
-  d-byline {
-    --heading-size:    0.6rem;
-    --heading-color:   rgba(0, 0, 0, 0.5);
-    --body-size:       0.8rem;
-    --body-color:      rgba(0, 0, 0, 0.8);
-  }
-
-  /*-- ARTICLE TABLE OF CONTENTS --*/
-  .d-contents {
-    --heading-size:    18px;
-    --contents-size:   13px;
-  }
-
-  /*-- ARTICLE APPENDIX --*/
-  d-appendix {
-    --heading-size:    15px;
-    --heading-color:   rgba(0, 0, 0, 0.65);
-    --text-size:       0.8em;
-    --text-color:      rgba(0, 0, 0, 0.5);
-  }
-
-  /*-- WEBSITE HEADER + FOOTER --*/
-  /* These properties only apply to Distill sites and blogs  */
-
-  .distill-site-header {
-    --title-size:       18px;
-    --text-color:       rgba(255, 255, 255, 0.8);
-    --text-size:        15px;
-    --hover-color:      white;
-    --bkgd-color:       #0F2E3D;
-  }
-
-  .distill-site-footer {
-    --text-color:       rgba(255, 255, 255, 0.8);
-    --text-size:        15px;
-    --hover-color:      white;
-    --bkgd-color:       #0F2E3D;
-  }
-
-  /*-- Additional custom styles --*/
-  /* Add any additional CSS rules below                      */
-  </style>
-  <style type="text/css">
-  /* base variables */
-
-  /* Edit the CSS properties in this file to create a custom
-     Distill theme. Only edit values in the right column
-     for each row; values shown are the CSS defaults.
-     To return any property to the default,
-     you may set its value to: unset
-     All rows must end with a semi-colon.                      */
-
-  /* Optional: embed custom fonts here with `@import`          */
-  /* This must remain at the top of this file.                 */
-  @import url('https://fonts.googleapis.com/css2?family=Fira+Code&family=Roboto&display=swap');
-
-  html {
-    /*-- Main font sizes --*/
-    --title-size:      32px;
-    --body-size:       1.06rem;
-    --code-size:       14px;
-    --aside-size:      12px;
-    --fig-cap-size:    13px;
-    /*-- Main font colors --*/
-    --title-color:     #000000;
-    --header-color:    rgba(0, 0, 0, 0.8);
-    --body-color:      rgba(0, 0, 0, 0.8);
-    --aside-color:     rgba(0, 0, 0, 0.6);
-    --fig-cap-color:   rgba(0, 0, 0, 0.6);
-    /*-- Specify custom fonts ~~~ must be imported above   --*/
-    --heading-font:    "Roboto", sans-serif;
-    --mono-font:       "Fira Code", monospace;
-    --body-font:       "Roboto", sans-serif;
-    --navbar-font:     "Roboto", sans-serif;  /* websites + blogs only */
-  }
-
-  /*-- ARTICLE METADATA --*/
-  d-byline {
-    --heading-size:    0.6rem;
-    --heading-color:   rgba(0, 0, 0, 0.5);
-    --body-size:       0.8rem;
-    --body-color:      rgba(0, 0, 0, 0.8);
-  }
-
-  /*-- ARTICLE TABLE OF CONTENTS --*/
-  .d-contents {
-    --heading-size:    18px;
-    --contents-size:   13px;
-  }
-
-  /*-- ARTICLE APPENDIX --*/
-  d-appendix {
-    --heading-size:    15px;
-    --heading-color:   rgba(0, 0, 0, 0.65);
-    --text-size:       0.85em;
-    --text-color:      rgba(0, 0, 0, 0.6);
-  }
-
-  /*-- WEBSITE HEADER + FOOTER --*/
-  /* These properties only apply to Distill sites and blogs  */
-
-  .distill-site-header {
-    --title-size:       18px;
-    --text-color:       rgba(255, 255, 255, 0.8);
-    --text-size:        15px;
-    --hover-color:      #34A5DA;
-    --bkgd-color:       #222222;
-    border-bottom: 4px solid #34A5DA;
-    webkit-box-shadow: 1px 1px 18px #4d4d4d;
-    moz-box-shadow: 1px 1px 18px #4d4d4d;
-    box-shadow: 1px 1px 18px #4d4d4d;
-  }
-
-  .distill-site-footer {
-    --text-color:       rgba(255, 255, 255, 0.8);
-    --text-size:        15px;
-    --hover-color:      white;
-    --bkgd-color:       #0F2E3D;
-  }
-
-  /*-- Additional custom styles --*/
-
-  /* Underline links with accent color */
-  d-article a {
-    border-bottom: 1px solid #34A5DA;
-  }
-  d-article a:hover {
-    border-bottom: 2px solid #34A5DA;
-  }
-  .d-contents nav a:hover {
-      text-decoration: none;
-  }
-  .categories li > a:hover {
-      border-bottom: 2px solid #34A5DA;
-  }
-
-  /* Use accent color for decoration */
-  d-article div.sourceCode pre {
-      border-left: 2px solid #34A5DA;
-  }
-  d-article blockquote {
-      border-left: 2px solid #34A5DA;
-  }
-
-  /* Adjust fonts */
-  d-article h2 {
-    line-height: 1.15em;
-    font-size: 26px;
-  }
-  code {
-    font-family: var(--mono-font);
-    font-size: 14px;
-  }</style>
-  <style type="text/css">
-  /* base style */
-
-  /* FONT FAMILIES */
-
-  :root {
-    --heading-default: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
-    --mono-default: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-    --body-default: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
-  }
-
-  body,
-  .posts-list .post-preview p,
-  .posts-list .description p {
-    font-family: var(--body-font), var(--body-default);
-  }
-
-  h1, h2, h3, h4, h5, h6,
-  .posts-list .post-preview h2,
-  .posts-list .description h2 {
-    font-family: var(--heading-font), var(--heading-default);
-  }
-
-  d-article div.sourceCode code,
-  d-article pre code {
-    font-family: var(--mono-font), var(--mono-default);
-  }
-
-
-  /*-- TITLE --*/
-  d-title h1,
-  .posts-list > h1 {
-    color: var(--title-color, black);
-  }
-
-  d-title h1 {
-    font-size: var(--title-size, 50px);
-  }
-
-  /*-- HEADERS --*/
-  d-article h1,
-  d-article h2,
-  d-article h3,
-  d-article h4,
-  d-article h5,
-  d-article h6 {
-    color: var(--header-color, rgba(0, 0, 0, 0.8));
-  }
-
-  /*-- BODY --*/
-  d-article > p,  /* only text inside of <p> tags */
-  d-article > ul, /* lists */
-  d-article > ol {
-    color: var(--body-color, rgba(0, 0, 0, 0.8));
-    font-size: var(--body-size, 1.06rem);
-  }
-
-
-  /*-- CODE --*/
-  d-article div.sourceCode code,
-  d-article pre code {
-    font-size: var(--code-size, 14px);
-  }
-
-  /*-- ASIDE --*/
-  d-article aside {
-    font-size: var(--aside-size, 12px);
-    color: var(--aside-color, rgba(0, 0, 0, 0.6));
-  }
-
-  /*-- FIGURE CAPTIONS --*/
-  figure .caption,
-  figure figcaption,
-  .figure .caption {
-    font-size: var(--fig-cap-size, 13px);
-    color: var(--fig-cap-color, rgba(0, 0, 0, 0.6));
-  }
-
-  /*-- METADATA --*/
-  d-byline h3 {
-    font-size: var(--heading-size, 0.6rem);
-    color: var(--heading-color, rgba(0, 0, 0, 0.5));
-  }
-
-  d-byline {
-    font-size: var(--body-size, 0.8rem);
-    color: var(--body-color, rgba(0, 0, 0, 0.8));
-  }
-
-  d-byline a,
-  d-article d-byline a {
-    color: var(--body-color, rgba(0, 0, 0, 0.8));
-  }
-
-  /*-- TABLE OF CONTENTS --*/
-  .d-contents nav h3 {
-    font-size: var(--heading-size, 18px);
-  }
-
-  .d-contents nav a {
-    font-size: var(--contents-size, 13px);
-  }
-
-  /*-- APPENDIX --*/
-  d-appendix h3 {
-    font-size: var(--heading-size, 15px);
-    color: var(--heading-color, rgba(0, 0, 0, 0.65));
-  }
-
-  d-appendix {
-    font-size: var(--text-size, 0.8em);
-    color: var(--text-color, rgba(0, 0, 0, 0.5));
-  }
-
-  d-appendix d-footnote-list a.footnote-backlink {
-    color: var(--text-color, rgba(0, 0, 0, 0.5));
-  }
-
-  /*-- WEBSITE HEADER + FOOTER --*/
-  .distill-site-header .title {
-    font-size: var(--title-size, 18px);
-    font-family: var(--navbar-font), var(--heading-default);
-  }
-
-  .distill-site-header a,
-  .nav-dropdown .nav-dropbtn {
-    font-family: var(--navbar-font), var(--heading-default);
-  }
-
-  .nav-dropdown .nav-dropbtn {
-    color: var(--text-color, rgba(255, 255, 255, 0.8));
-    font-size: var(--text-size, 15px);
-  }
-
-  .distill-site-header a:hover,
-  .nav-dropdown:hover .nav-dropbtn {
-    color: var(--hover-color, white);
-  }
-
-  .distill-site-header {
-    font-size: var(--text-size, 15px);
-    color: var(--text-color, rgba(255, 255, 255, 0.8));
-    background-color: var(--bkgd-color, #0F2E3D);
-  }
-
-  .distill-site-footer {
-    font-size: var(--text-size, 15px);
-    color: var(--text-color, rgba(255, 255, 255, 0.8));
-    background-color: var(--bkgd-color, #0F2E3D);
-  }
-
-  .distill-site-footer a:hover {
-    color: var(--hover-color, white);
-  }</style>
   <!--/radix_placeholder_distill-->
-  <script src="site_libs/header-attrs-2.7/header-attrs.js"></script>
-  <script src="site_libs/popper-2.6.0/popper.min.js"></script>
-  <link href="site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
-  <link href="site_libs/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
-  <script src="site_libs/tippy-6.2.7/tippy.umd.min.js"></script>
-  <script src="site_libs/anchor-4.2.2/anchor.min.js"></script>
-  <script src="site_libs/bowser-1.9.3/bowser.min.js"></script>
-  <script src="site_libs/webcomponents-2.0.0/webcomponents.js"></script>
-  <script src="site_libs/distill-2.2.21/template.v2.js"></script>
+  <script src="An-overview-of-ML-and-PA_files/header-attrs-2.7/header-attrs.js"></script>
+  <script src="An-overview-of-ML-and-PA_files/jquery-1.11.3/jquery.min.js"></script>
+  <script src="An-overview-of-ML-and-PA_files/popper-2.6.0/popper.min.js"></script>
+  <link href="An-overview-of-ML-and-PA_files/tippy-6.2.7/tippy.css" rel="stylesheet" />
+  <link href="An-overview-of-ML-and-PA_files/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
+  <script src="An-overview-of-ML-and-PA_files/tippy-6.2.7/tippy.umd.min.js"></script>
+  <script src="An-overview-of-ML-and-PA_files/anchor-4.2.2/anchor.min.js"></script>
+  <script src="An-overview-of-ML-and-PA_files/bowser-1.9.3/bowser.min.js"></script>
+  <script src="An-overview-of-ML-and-PA_files/webcomponents-2.0.0/webcomponents.js"></script>
+  <script src="An-overview-of-ML-and-PA_files/distill-2.2.21/template.v2.js"></script>
   <!--radix_placeholder_site_in_header-->
   <!--/radix_placeholder_site_in_header-->
 
 
 </head>
 
-<body class="layout-listing">
+<body>
 
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"HaiBiostat's Posts","description":"Welcome to my website. I hope you enjoy it!","authors":[]}
+{"title":"Machine Learning & Predictive Analytics","description":"An Overview of Machine Learning & Predictive Analytics","authors":[{"author":"Hai Nguyen","authorURL":"#","affiliation":"&nbsp;","affiliationURL":"#","orcidID":""}],"publishedDate":"2021-04-20T00:00:00.000-05:00","citationText":"Nguyen, 2021"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
 <!--radix_placeholder_navigation_before_body-->
-<header class="header header--fixed" role="banner">
-<nav class="distill-site-nav distill-site-header">
-<div class="nav-left">
-<a href="index.html" class="title">HaiBiostat</a>
-<input id="distill-search" class="nav-search hidden" type="text" placeholder="Search..."/>
-</div>
-<div class="nav-right">
-<a href="index.xml">
-<i class="fa fa-rss" aria-hidden="true"></i>
-</a>
-<a href="https://github.com/hai-mn/hai-mn.github.io" aria-label="Link to source">
-<i class="fab fa-github" aria-hidden="true"></i>
-</a>
-<a href="javascript:void(0);" class="nav-toggle">&#9776;</a>
-</div>
-</nav>
-</header>
 <!--/radix_placeholder_navigation_before_body-->
 <!--radix_placeholder_site_before_body-->
 <!--/radix_placeholder_site_before_body-->
-<!--radix_placeholder_article_listing-->
-
-
-<script type="application/javascript">
-
-function init_posts_list() {
-
-  function load_image(img) {
-    var src = $(img).attr('data-src');
-    if (src) {
-      $(img).attr('src', src);
-      $(img).load(function() {
-        img.removeAttribute('data-src');
-      });
-    }
-  }
-
-  function set_posts_visible(posts, visible) {
-    if (visible) {
-
-      // show bottom border by default
-      $(posts).removeClass('post-preview-last');
-
-      // apply limits if need be
-      var max_posts = 25;
-      var apply_limits = $('.posts-container').hasClass('posts-apply-limit');
-      if (apply_limits && posts.length > max_posts) {
-        posts = $(posts).slice(0, max_posts);
-      } else {
-        $('.posts-more a').addClass('hidden');
-      }
-
-      // apply last style
-      $(posts.slice(-1)[0]).addClass('post-preview-last');
-
-      $(posts).removeClass('hidden');
-      $(posts).find('img[data-src]').each(function(i, img) {
-        load_image(img);
-      });
-    } else {
-      $(posts).addClass('hidden');
-    }
-  }
-
-  function apply_hash_filter() {
-
-    // clear active state
-    $('.categories .active').removeClass('active');
-
-    // mark all posts invisible to start
-    set_posts_visible($('.posts-list').children('a'), false);
-
-    // if we have a hash filter
-    if (window.location.hash && window.location.hash.startsWith("#category:")) {
-
-      // mark posts that match the category visible
-      var page_category = window.location.hash.replace(/^#category:/, "");
-      var posts = $('.post-metadata').map(function(idx, script) {
-        var metadata = $.parseJSON($(script).html());
-        var post = null;
-        $.each(metadata.categories, function(idx, category) {
-          category = category.replace(/ /g,"_");
-          if ((page_category || '').toLowerCase() === "articles" || category === page_category) {
-            post = $(script).parent().get();
-            return false;
-          }
-        });
-        return post;
-      });
-      set_posts_visible(posts, true);
-
-      // mark the hash active
-      $('.categories li>a[href="' + window.location.hash + '"]').addClass('active');
-
-      // update the list_caption
-      var list_caption = $('.posts-list-caption');
-      var caption = (page_category || '').toLowerCase() === "articles"
-        ? list_caption.attr('data-caption')
-        : ('Category: ' + page_category.replace(/_/g," "));
-      list_caption.text(caption);
-
-    } else {
-
-      // no hash filter, make all posts visible (subject to max display)
-      set_posts_visible($('.posts-list').children(), true);
-
-      // reset list caption
-      var list_caption = $('.posts-list-caption');
-      list_caption.text(list_caption.attr('data-caption'));
-
-
-    }
-  }
-
-  // more articles
-  function apply_post_limits(apply) {
-    if (apply) {
-      $('.posts-container').addClass('posts-apply-limit');
-      $('.posts-more a').removeClass('hidden');
-    } else {
-      $('.posts-container').removeClass('posts-apply-limit');
-      $('.posts-more a').addClass('hidden');
-    }
-  }
-
-  // click handling for tags
-  $('.dt-tag').click(function(ev) {
-    window.location.hash = '#category:' + $(this).text().replace(/ /g, "_");
-    return false;
-  })
-
-  // hash filter handling
-  apply_hash_filter();
-  $(window).on('hashchange',function() {
-    apply_post_limits(true);
-    apply_hash_filter();
-  });
-
-  // more articles link
-  $('.posts-more a').click(function(e) {
-    e.preventDefault();
-    apply_post_limits(false);
-    apply_hash_filter();
-    return false;
-  });
-
-}
-
-</script>
-
-
-
-<div class="posts-container posts-with-sidebar posts-apply-limit l-screen-inset">
-<div class="posts-list">
-<h1 class="posts-list-caption" data-caption="HaiBiostat&#39;s Posts">HaiBiostat's Posts</h1>
-<a href="posts/2021-04-11-beta-distribution-in-intuitive-explanation/" class="post-preview">
-<script class="post-metadata" type="text/json">{"categories":["Biostatistics","Tutorial","Toolkit for Bayesian Methods"]}</script>
-<div class="metadata">
-<div class="publishedDate">April 20, 2021</div>
-<div class="dt-authors">
-<div class="dt-author">Hai Nguyen</div>
-</div>
-</div>
-<div class="thumbnail">
-<img src="posts/2021-04-11-beta-distribution-in-intuitive-explanation/Beta-Distribution-in-an-Intuitive-Explanation_files/figure-html5/unnamed-chunk-2-1.png"/>
-</div>
-<div class="description">
-<h2>Beta Distribution in an Intuitive Explanation</h2>
-<div class="dt-tags">
-<div class="dt-tag">Biostatistics</div>
-<div class="dt-tag">Tutorial</div>
-<div class="dt-tag">Toolkit for Bayesian Methods</div>
-</div>
-<p>Intuitively explain the Beta Distribution and its applications.</p>
-</div>
-</a>
-<a href="posts/2021-04-11-gamma-distribution-in-intuitive-explanation/" class="post-preview">
-<script class="post-metadata" type="text/json">{"categories":["Biostatistics","Tutorial","ggplot2","Toolkit for Bayesian Methods"]}</script>
-<div class="metadata">
-<div class="publishedDate">April 20, 2021</div>
-<div class="dt-authors">
-<div class="dt-author">Hai Nguyen</div>
-</div>
-</div>
-<div class="thumbnail">
-<img src="posts/2021-04-11-gamma-distribution-in-intuitive-explanation/Gamma-distribution-in-an-intuitive-explanation_files/figure-html5/unnamed-chunk-1-1.png"/>
-</div>
-<div class="description">
-<h2>Gamma Distribution in an Intuitive Explanation</h2>
-<div class="dt-tags">
-<div class="dt-tag">Biostatistics</div>
-<div class="dt-tag">Tutorial</div>
-<div class="dt-tag">ggplot2</div>
-<div class="dt-tag">Toolkit for Bayesian Methods</div>
-</div>
-<p>Intuitively explain the Gamma Distribution and its applications.</p>
-</div>
-</a>
-<a href="posts/2021-04-14-machine-learning-&amp;-predictive-analytics/" class="post-preview">
-<script class="post-metadata" type="text/json">{"categories":["Biostatistics","Machine Learning"]}</script>
-<div class="metadata">
-<div class="publishedDate">April 20, 2021</div>
-<div class="dt-authors">
-<div class="dt-author">Hai Nguyen</div>
-</div>
-</div>
-<div class="thumbnail">
-<img/>
-</div>
-<div class="description">
-<h2>Machine Learning &amp; Predictive Analytics</h2>
-<div class="dt-tags">
-<div class="dt-tag">Biostatistics</div>
-<div class="dt-tag">Machine Learning</div>
-</div>
-<p>An Overview of Machine Learning &amp; Predictive Analytics</p>
-</div>
-</a>
-</div>
-<div class="posts-sidebar">
-<div><div class="sidebar-section custom">
-  <h3>About</h3>
-  <p>
-    Hello World! I'm Hai Nguyen, a Ph.D. candidate in Biostatistics at the University of Illinois at Chicago. I sometimes write articles about biostatistics, and data science on this blog.
-  </p>
-  <p>
-    Questions? Comments?
-  </p>
-</div></div>
-<div class="sidebar-section categories">
-<h3>Categories</h3>
-<ul>
-<li>
-<a href="#category:Articles">Articles</a>
-<span class="category-count">(3)</span>
-</li>
-<li>
-<a href="#category:Biostatistics">Biostatistics</a>
-<span class="category-count">(3)</span>
-</li>
-<li>
-<a href="#category:ggplot2">ggplot2</a>
-<span class="category-count">(1)</span>
-</li>
-<li>
-<a href="#category:Machine_Learning">Machine Learning</a>
-<span class="category-count">(1)</span>
-</li>
-<li>
-<a href="#category:Toolkit_for_Bayesian_Methods">Toolkit for Bayesian Methods</a>
-<span class="category-count">(2)</span>
-</li>
-<li>
-<a href="#category:Tutorial">Tutorial</a>
-<span class="category-count">(2)</span>
-</li>
-</ul>
-</div>
-</div>
-<div class="posts-more">
-<a href="#">More articles &raquo;</a>
-</div>
-</div>
-<!--/radix_placeholder_article_listing-->
 
 <div class="d-title">
-<h1>HaiBiostat’s Posts</h1>
+<h1>Machine Learning &amp; Predictive Analytics</h1>
 <!--radix_placeholder_categories-->
+<div class="dt-tags">
+<div class="dt=tag">Biostatistics</div>
+<div class="dt=tag">Machine Learning</div>
+</div>
 <!--/radix_placeholder_categories-->
-<p><p>Welcome to my website. I hope you enjoy it!</p></p>
+<p><p>An Overview of Machine Learning &amp; Predictive Analytics</p></p>
 </div>
 
+<div class="d-byline">
+  
+  Hai Nguyen
+  
+<br/>April 2021
+</div>
 
 <div class="d-article">
+<div class="d-contents d-contents-float">
+<nav class="l-text toc figcaption" id="TOC">
+<h3>Contents</h3>
+<ul>
+<li><a href="#what-is-machine-learning">What is Machine Learning</a></li>
+<li><a href="#learning-types">Learning Types</a>
+<ul>
+<li><a href="#supervised">Supervised</a></li>
+<li><a href="#unsupervised-learning">Unsupervised Learning</a></li>
+<li><a href="#semi-supervised-learning">Semi-supervised Learning</a></li>
+</ul></li>
+<li><a href="#active-learning">Active Learning</a>
+<ul>
+<li><a href="#reinforcement-learning">Reinforcement Learning</a></li>
+<li><a href="#transfer-learning">Transfer Learning</a></li>
+</ul></li>
+<li><a href="#universal-workflow-of-ml">Universal Workflow of ML</a></li>
+<li><a href="#ml-terminologies">ML Terminologies</a>
+<ul>
+<li><a href="#data-assumptions">Data Assumptions</a></li>
+<li><a href="#overfitting-and-underfitting">Overfitting and Underfitting</a></li>
+<li><a href="#parametric-nonparametric-models">Parametric &amp; Nonparametric Models</a></li>
+<li><a href="#regression-analysis">Regression Analysis</a></li>
+</ul></li>
+<li><a href="#use-r-or-python-for-machine-learning">Use R or Python for machine learning?</a></li>
+<li><a href="#references">References</a></li>
+</ul>
+</nav>
+</div>
+<h2 id="what-is-machine-learning">What is Machine Learning</h2>
+<ol type="1">
+<li><p>Meaningful data transformations from input to output data.<br />
+</p></li>
+<li><p>Transformations: represent or encode the data (RGB or HSV for color pixel).<br />
+</p></li>
+<li><p>Learning is automatic search for better data representations.<br />
+</p></li>
+<li><p>Search through a predefined space of possibilities using guidance from feedback signal.</p></li>
+<li><p><em>“A computer program is said to learn from experience E with respect to some class of tasks T and performance measure P, if its performance at tasks T, as measured by P, improves with experience E”</em></p>
+<p style="text-align:right;">
+<p><em>-Tom Mitchell, Machine Learning, McGraw Hill, 1997</em></p>
+</p></li>
+</ol>
+<blockquote>
+<p>Experience E, Task T, Performance P<br />
+1. Chess: T: playing chess, P: % of games won, E: playing practice games against itself.<br />
+2. Driving: T: driving a vehicle, P: avgdistance before error, E: sequence of images and steering commands recoded during manual driving.<br />
+3. Handwriting Recognition: T: recognizing and classifying handwritten words in images, P: % of correctly classified words, E: DB of handwritten words with given classifications.</p>
+</blockquote>
+<h2 id="learning-types">Learning Types</h2>
+<ul>
+<li>Supervised<br />
+</li>
+<li>Unsupervised<br />
+</li>
+<li>Semi-supervised<br />
+</li>
+<li>Reinforcement<br />
+</li>
+<li>Transfer<br />
+</li>
+<li>Active</li>
+</ul>
+<h3 id="supervised">Supervised</h3>
+<ol type="1">
+<li>The majority of practical machine learning uses supervised learning.<br />
+</li>
+<li>Supervised learning is where you have input variables (<span class="math inline">\(x\)</span>) and an output variable (<span class="math inline">\(y\)</span>) and you use an algorithm to learn the mapping function from the input to the output.<br />
+<span class="math display">\[ y = f(x) \]</span></li>
+<li>The goal is to approximate the mapping function so well that when you have new input data <span class="math inline">\(x\)</span> that you can predict the output variables <span class="math inline">\(y\)</span> for that data.<br />
+</li>
+<li>It is called supervised learning because the process of an algorithm learning from the training dataset can be thought of as a teacher supervising the learning process.</li>
+<li>We know the correct answers, the algorithm iteratively makes predictions on the training data and is corrected by the teacher. Learning stops when the algorithm achieves an acceptable level of performance.</li>
+</ol>
+<p><strong>Supervised Learning Examples:</strong></p>
+<ul>
+<li>Linear Regression<br />
+</li>
+<li>Logistic Regression<br />
+</li>
+<li>K-NN (k-Nearest Neighbors)<br />
+</li>
+<li>Support Vector Machines (SVMs)<br />
+</li>
+<li>Decision Tress and Random Forests<br />
+</li>
+<li>Neural Networks</li>
+</ul>
+<h3 id="unsupervised-learning">Unsupervised Learning</h3>
+<ol type="1">
+<li>Unsupervised learning is where you only have input data <span class="math inline">\(x\)</span> and no corresponding output variables.<br />
+</li>
+<li>The goal for unsupervised learning is to model the underlying structure or distribution in the data in order to learn more about the data.<br />
+</li>
+<li>These are called unsupervised learning because unlike supervised learning above there is no correct answers and there is no teacher. Algorithms are left to their own devises to discover and present the interesting structure in the data.<br />
+</li>
+<li>Unsupervised Learning problems can be further grouped into <code>Clustering</code> and <code>Association</code> Problems.<br />
+</li>
+<li><code>Clustering</code>: A clustering problem is where you want to discover the inherent groupings in the data, such as grouping customers by purchasing behavior.<br />
+</li>
+<li><code>Association</code>: An association rule learning problem is where you want to discover rules that describe large portions of your data, such as people that buy <span class="math inline">\(A\)</span> also tend to buy <span class="math inline">\(B\)</span>.</li>
+</ol>
+<p><strong>Unsupervised Learning Examples:</strong></p>
+<ul>
+<li>Clustering
+<ul>
+<li>K-Means<br />
+</li>
+<li>Hierarchical Cluster Analysis (HCA)<br />
+</li>
+<li>Expectation Maximization<br />
+</li>
+</ul></li>
+<li>Visualization and Dimensionality Reduction
+<ul>
+<li>Principal Component Analysis (PCA)<br />
+</li>
+<li>Kernel PCA<br />
+</li>
+<li>t-distributed Stochastic Neighbor Embedding (t-SNE)<br />
+</li>
+</ul></li>
+<li>Association Rule
+<ul>
+<li>Apriori<br />
+</li>
+</ul></li>
+<li>Neural Networks
+<ul>
+<li>Autoencoders<br />
+</li>
+<li>Boltzmann machines</li>
+</ul></li>
+</ul>
+<h3 id="semi-supervised-learning">Semi-supervised Learning</h3>
+<ol type="1">
+<li>Semi-supervised learning is halfway between supervised and unsupervised learning.<br />
+</li>
+<li>Traditional classification methods use labeled data to build classifiers.<br />
+</li>
+<li>The labeled training sets used as input in Supervised learning is very certain and properly defined.<br />
+</li>
+<li>However, they are limited, expensive and takes a lot of time to generate them.<br />
+</li>
+<li>On the other hand, unlabeled data is cheap and is readily available in large volumes.<br />
+</li>
+<li>Hence, semi-supervised learning is learning from a combination of both labeled and unlabeled data<br />
+</li>
+<li>Where we make use of a combination of small amount of labeled data and large amount of unlabeled data to increase the accuracy of our classifiers.</li>
+</ol>
+<h2 id="active-learning">Active Learning</h2>
+<ul>
+<li><p>Active learning (sometimes called “query learning” or “optimal experimental design” in the statistics literature) is a subfield of machine learning and, more generally, artificial intelligence.</p></li>
+<li><p>The key hypothesis is that if the learning algorithm is allowed to choose the data from which it learns—to be “curious,” if you will—it will perform better with less training.</p></li>
+<li><p>Active learning is a special case of semi-supervised learning.</p></li>
+</ul>
+<h3 id="reinforcement-learning">Reinforcement Learning</h3>
+<ul>
+<li><p>Reinforcement Learning is learning what to do and how to map situations to actions.</p></li>
+<li><p>The end result is to maximize the numerical reward signal.</p></li>
+<li><p>The learner is not told which action to take, but instead must discover which action will yield the maximum reward</p></li>
+</ul>
+<h3 id="transfer-learning">Transfer Learning</h3>
+<ol type="1">
+<li>A machine learning technique where a model trained on one task is re-purposed on a second related task.<br />
+</li>
+<li>An optimization that allows rapid progress or improved performance when modeling the second task.</li>
+</ol>
+<h2 id="universal-workflow-of-ml">Universal Workflow of ML</h2>
+<ol type="1">
+<li>Define the problem<br />
+</li>
+<li>Assemble dataset<br />
+</li>
+<li>Choose a metric to quantify project outcome<br />
+</li>
+<li>Decide on how to calculate the metric<br />
+</li>
+<li>Prepare dataset<br />
+</li>
+<li>Define standard baseline<br />
+</li>
+<li>Develop model that beats baseline<br />
+</li>
+<li>Ideal model is at the border of overfit and underfit–cross the border to know where it is so overfit model<br />
+</li>
+<li>Regularize model and tune hyperparameters</li>
+</ol>
+<h2 id="ml-terminologies">ML Terminologies</h2>
+<ol type="1">
+<li>Dataset
+<ul>
+<li>Training –Learn the parameters<br />
+</li>
+<li>Validation –select hyperparameters<br />
+</li>
+<li>Test –test the model aka generalization error<br />
+</li>
+</ul></li>
+<li>Batch –set of examples used in one iteration of model training.<br />
+</li>
+<li>Mini-batch –A small, randomly selected subset of the entire batch of examples run together in a single iteration of training or inference.<br />
+</li>
+<li>Epoch –A full training pass over the entire data set such that each example has been seen once.<br />
+</li>
+<li>Iteration –A single update of a model’s weights during training.</li>
+</ol>
+<h3 id="data-assumptions">Data Assumptions</h3>
+<ol type="1">
+<li>Training and test data are from the same probability distribution.<br />
+</li>
+<li>Training and test data are iid.</li>
+</ol>
+<h3 id="overfitting-and-underfitting">Overfitting and Underfitting</h3>
+<ol type="1">
+<li>Overfitting –model fits very well to the training data, aka detects patterns in the noise also
+<ol type="1">
+<li>Detect:
+<ul>
+<li>Low training error, high generalization error.<br />
+</li>
+</ul></li>
+<li>Remedies:
+<ul>
+<li>Reduce model capacity by removing features and/or parameters.<br />
+</li>
+<li>Get more training data.<br />
+</li>
+<li>Improve training data quality by reducing noise.</li>
+</ul></li>
+</ol></li>
+<li>Underfitting–model too simple to detect patterns in the data
+<ol type="1">
+<li>Detect
+<ul>
+<li>High training error.<br />
+</li>
+</ul></li>
+<li>Remedies:
+<ul>
+<li>Increase model capacity by adding more parameters and/or features.<br />
+</li>
+<li>Reduce model constraints.</li>
+</ul></li>
+</ol></li>
+</ol>
+<h3 id="parametric-nonparametric-models">Parametric &amp; Nonparametric Models</h3>
+<p><span class="math display">\[ 𝑦= 𝑓(𝑥) \]</span></p>
+<p>Estimate the unknown function 𝑓 as <span class="math inline">\(\hat{f}\)</span></p>
+<ul>
+<li>Parametric Models:
+<ol type="1">
+<li>Assume the functional form or shape of 𝑓<br />
+</li>
+<li>Apply methodology to train model<br />
+</li>
+<li>Advantage –simple estimation<br />
+</li>
+<li>Disadvantage – <span class="math inline">\(\hat{f}\)</span>may be far from true 𝑓</li>
+</ol></li>
+<li>Nonparametric Models:
+<ol type="1">
+<li>No assumption on the functional form or shape of 𝑓<br />
+</li>
+<li>Estimate to fit as close as possible to the data<br />
+</li>
+<li>Advantage –can accurately fit a wide range of possible shapes of 𝑓<br />
+</li>
+<li>Disadvantage –need large datasets (since there is no fixed # of params to estimate)</li>
+</ol></li>
+</ul>
+<h3 id="regression-analysis">Regression Analysis</h3>
+<ol type="1">
+<li>OLS
+<ul>
+<li>MSE<br />
+</li>
+<li>Computational Complexity of matrix inversion<br />
+</li>
+<li>Complete training set</li>
+</ul></li>
+<li>Batch Gradient Descent
+<ul>
+<li>Cost function (MSE)<br />
+</li>
+<li>Learning rate hyperparameter<br />
+</li>
+<li>Partial derivative<br />
+</li>
+<li>Complete training set<br />
+</li>
+</ul></li>
+<li>Stochastic Gradient Descent<br />
+</li>
+<li>Mini-batch Gradient Descent</li>
+</ol>
+<h4 id="linear-regression-with-ols">Linear Regression with OLS</h4>
+<p><span class="math display">\[ 𝑦= \theta^T𝑋\]</span></p>
+<p>The cost function minimization is a closed-form solution called the Normal Equation: <span class="math display">\[ \hat{\theta} = (X^T . X)^{-1} X^T.y  \]</span></p>
+<ul>
+<li>Advantage –equation is linear with size of training set so it can handle large training sets efficiently.<br />
+</li>
+<li>Disadvantage –
+<ol type="1">
+<li>computational complexity of inverting a matrix that increases with size of training set.</li>
+<li>difficult to do online learning with new data arriving regularly (need to recalculate estimates), i.e. no iterative parameter updates.</li>
+</ol></li>
+</ul>
+<h2 id="use-r-or-python-for-machine-learning">Use R or Python for machine learning?</h2>
+<p>There is something of a rivalry between the two most commonly used data science languages: R and Python. Of course, there are no machine learning tasks which are only possible to apply in one language or the other.</p>
+<p><strong>R:</strong></p>
+<ul>
+<li>R is geared specifically for mathematical and statistical applications, i.e. R can focus purely on data, but may feel restricted if they ever need to build applications based on their models.<br />
+</li>
+<li>Currently, there are modern tools in R designed specifically to make data science tasks simple and human-readable, such as those from the <code>tidyverse</code>.<br />
+</li>
+<li>Previously, ML algorithms in R were scattered across multiple packages, written by different authors. But R has now followed suit, with the <code>caret</code> and <code>mlr</code> packages (which stands for machine learning in R). While quite similar in purpose and functionality to caret, <code>mlr</code> package provides an interface for a large number of machine learning algorithms, and allows you to perform extremely complicated machine learning tasks with very little coding.</li>
+</ul>
+<p><strong>Python:</strong></p>
+<ul>
+<li>First of all, some of the more cutting-edge deep learning approaches are easier to apply in Python (they tend to be written in Python first and implemented in R later).<br />
+</li>
+<li>Python, while very good for data science, is a more general purpose programming language.<br />
+</li>
+<li>Proponents of python could use this as en example of why it was better suited for machine learning, as it has the well known <code>scikit-learn</code> package which has a plethora of machine learning algorithms built into it.</li>
+</ul>
+<h2 id="references">References</h2>
+<p>James, G., Witten, D., Hastie, T., &amp; Tibshirani, R. (2013). An Introduction to Statistical Learning with Applications in R (1st ed. 2013. ed.). New York, NY: Springer New York.</p>
+<p>Goodfellow, I., Bengio, Y., &amp; Courville, A. (2016). Deep learning. Cambridge, Massachusetts: The MIT Press.</p>
+<p>Hastie, T., Tibshirani, R., &amp; Friedman, J. (2017). The Elements of Statistical Learning: Data Mining, Inference, and Prediction, Second Edition. New York, NY: Springer New York.</p>
+<p>Géron, A. l. (2017). Hands-on machine learning with Scikit-Learn and TensorFlow concepts, tools, and techniques to build intelligent systems (First edition. ed.). Sebastopol, California: O’Reilly Media, Inc.</p>
+<p>Rhys, H. (2020). Machine Learning with R, the tidyverse, and mlr (1st edition ed.): Manning Publications.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
@@ -2687,16 +1822,20 @@ function init_posts_list() {
 <div class="d-appendix">
 </div>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 
 <!--radix_placeholder_site_after_body-->
 <!--/radix_placeholder_site_after_body-->
 <!--radix_placeholder_appendices-->
-<div class="appendix-bottom">
-<h3 id="updates-and-corrections">Corrections</h3>
-<p>If you see mistakes or want to suggest changes, please <a href="https://github.com/hai-mn/hai-mn.github.io/issues/new">create an issue</a> on the source repository.</p>
-<h3 id="reuse">Reuse</h3>
-<p>Text and figures are licensed under Creative Commons Attribution <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Source code is available at <a href="https://github.com/hai-mn/hai-mn.github.io">https://github.com/hai-mn/hai-mn.github.io</a>, unless otherwise noted. The figures that have been reused from other sources don't fall under this license and can be recognized by a note in their caption: "Figure from ...".</p>
-</div>
+<div class="appendix-bottom"></div>
 <!--/radix_placeholder_appendices-->
 <!--radix_placeholder_navigation_after_body-->
 <!--/radix_placeholder_navigation_after_body-->

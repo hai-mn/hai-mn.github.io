@@ -1,0 +1,237 @@
+---
+title: Machine Learning & Predictive Analytics
+description: |
+  An Overview of Machine Learning & Predictive Analytics
+author: Hai Nguyen
+date: April 2021
+categories:
+  - Biostatistics
+  - Machine Learning
+base_url: https://hai-mn.github.io
+output:
+  distill::distill_article:
+    self_contained: false
+    toc: true
+    toc_depth: 3
+---
+
+## What is Machine Learning  
+
+  1. Meaningful data transformations from input to output data.  
+  2. Transformations: represent or encode the data (RGB or HSV for color pixel).  
+  3. Learning is automatic search for better data representations.  
+  4. Search through a predefined space of possibilities using guidance from feedback signal.  
+  
+  
+  5. _"A computer program is said to learn from experience E with respect to some class of tasks T and performance measure P, if its performance at tasks T, as measured by P, improves with experience E"_    <p style="text-align:right;">*-Tom Mitchell, Machine Learning, McGraw Hill, 1997*</p>  
+
+> Experience E, Task T, Performance P  
+  1. Chess: T: playing chess, P: % of games won, E: playing practice games against itself.  
+  2. Driving: T: driving a vehicle, P: avgdistance before error, E: sequence of images and steering commands recoded during manual driving.  
+  3. Handwriting Recognition: T: recognizing and classifying handwritten words in images, P: % of correctly classified words, E: DB of handwritten words with given classifications.  
+
+## Learning Types
+
+  - Supervised  
+  - Unsupervised  
+  - Semi-supervised  
+  - Reinforcement  
+  - Transfer  
+  - Active  
+
+### Supervised 
+
+  1. The majority of practical machine learning uses supervised learning.  
+  2. Supervised learning is where you have input variables ($x$) and an output variable ($y$) and you use an algorithm to learn the mapping function from the input to the output.   
+  \[ y = f(x) \]
+  3. The goal is to approximate the mapping function so well that when you have new input data $x$ that you can predict the output variables $y$ for that data.  
+  4. It is called supervised learning because the process of an algorithm learning from the training dataset can be thought of as a teacher supervising the learning process.
+  5. We know the correct answers, the algorithm iteratively makes predictions on the training data and is corrected by the teacher. Learning stops when the algorithm achieves an acceptable level of performance.
+  
+__Supervised Learning Examples:__
+
+  - Linear Regression  
+  - Logistic Regression  
+  - K-NN (k-Nearest Neighbors)  
+  - Support Vector Machines (SVMs)  
+  - Decision Tress and Random Forests  
+  - Neural Networks  
+
+
+### Unsupervised Learning  
+
+  1. Unsupervised learning is where you only have input data $x$ and no corresponding output variables.  
+  2. The goal for unsupervised learning is to model the underlying structure or distribution in the data in order to learn more about the data.  
+  3. These are called unsupervised learning because unlike supervised learning above there is no correct answers and there is no teacher. Algorithms are left to their own devises to discover and present the interesting structure in the data.  
+  4. Unsupervised Learning problems can be further grouped into `Clustering` and `Association` Problems.  
+  5. `Clustering`: A clustering problem is where you want to discover the inherent groupings in the data, such as grouping customers by purchasing behavior.  
+  6. `Association`: An association rule learning problem is where you want to discover rules that describe large portions of your data, such as people that buy $A$ also tend to buy $B$.  
+
+__Unsupervised Learning Examples:__
+
+  - Clustering  
+    * K-Means  
+    * Hierarchical Cluster Analysis (HCA)  
+    * Expectation Maximization  
+  - Visualization and Dimensionality Reduction   
+    * Principal Component Analysis (PCA)  
+    * Kernel PCA  
+    * t-distributed Stochastic Neighbor Embedding (t-SNE)  
+  - Association Rule  
+    * Apriori  
+  - Neural Networks
+    * Autoencoders  
+    * Boltzmann machines  
+
+
+### Semi-supervised Learning 
+
+  1. Semi-supervised learning is halfway between supervised and unsupervised learning.    
+  2. Traditional classification methods use labeled data to build classifiers.  
+  3. The labeled training sets used as input in Supervised learning is very certain and properly defined.  
+  4. However, they are limited, expensive and takes a lot of time to generate them.  
+  5. On the other hand, unlabeled data is cheap and is readily available in large volumes.  
+  6. Hence, semi-supervised learning is learning from a combination of both labeled and unlabeled data  
+  7. Where we make use of a combination of small amount of labeled data and large amount of unlabeled data to increase the accuracy of our classifiers.  
+
+## Active Learning
+
+  - Active learning (sometimes called “query learning” or “optimal experimental design” in the statistics literature) is a subfield of machine learning and, more generally, artificial intelligence.
+
+  - The key hypothesis is that if the learning algorithm is allowed to choose the data from which it learns—to be “curious,” if you will—it will perform better with less training.
+
+  - Active learning is a special case of semi-supervised learning.
+
+### Reinforcement Learning
+
+  - Reinforcement Learning is learning what to do and how to map situations to actions.
+
+  - The end result is to maximize the numerical reward signal.
+
+  - The learner is not told which action to take, but instead must discover which action will yield the maximum reward
+
+### Transfer Learning
+
+  1. A machine learning technique where a model trained on one task is re-purposed on a second related task.  
+  2. An optimization that allows rapid progress or improved performance when modeling the second task.  
+
+
+
+## Universal Workflow of ML
+
+  1. Define the problem  
+  2. Assemble dataset  
+  3. Choose a metric to quantify project outcome  
+  4. Decide on how to calculate the metric  
+  5. Prepare dataset  
+  6. Define standard baseline  
+  7. Develop model that beats baseline  
+  8. Ideal model is at the border of overfit and underfit–cross the border to know where it is so overfit model  
+  9. Regularize model and tune hyperparameters  
+
+## ML Terminologies
+
+  1. Dataset  
+      - Training –Learn the parameters  
+      - Validation –select hyperparameters  
+      - Test –test the model aka generalization error  
+  2. Batch –set of examples used in one iteration of model training.  
+  3. Mini-batch –A small, randomly selected subset of the entire batch of examples run together in a single iteration of training or inference.  
+  4. Epoch –A full training pass over the entire data set such that each example has been seen once.  
+  5. Iteration –A single update of a model's weights during training.  
+
+### Data Assumptions
+
+  1. Training and test data are from the same probability distribution.  
+  2. Training and test data are iid.  
+
+
+### Overfitting and Underfitting
+
+  1. Overfitting –model fits very well to the training data, aka detects patterns in the noise also  
+      1. Detect:  
+          - Low training error, high generalization error.  
+      2. Remedies:  
+          - Reduce model capacity by removing features and/or parameters.  
+          - Get more training data.  
+          - Improve training data quality by reducing noise.  
+
+  2. Underfitting–model too simple to detect patterns in the data  
+      1. Detect  
+          - High training error.  
+      2. Remedies:  
+          - Increase model capacity by adding more parameters and/or features.  
+          - Reduce model constraints.  
+
+### Parametric & Nonparametric Models
+
+\[ 𝑦= 𝑓(𝑥) \]
+
+Estimate the unknown function 𝑓 as $\hat{f}$   
+
+  - Parametric Models:  
+      1. Assume the functional form or shape of 𝑓  
+      2. Apply methodology to train model  
+      3. Advantage –simple estimation  
+      4. Disadvantage – $\hat{f}$may be far from true 𝑓  
+  
+  - Nonparametric Models:  
+      1. No assumption on the functional form or shape of 𝑓  
+      2. Estimate to fit as close as possible to the data  
+      3. Advantage –can accurately fit a wide range of possible shapes of 𝑓  
+      4. Disadvantage –need large datasets (since there is no fixed # of params to estimate)  
+
+### Regression Analysis
+
+  1. OLS  
+      - MSE  
+      - Computational Complexity of matrix inversion   
+      - Complete training set  
+
+  2. Batch Gradient Descent  
+      - Cost function (MSE)  
+      - Learning rate hyperparameter  
+      - Partial derivative  
+      - Complete training set  
+  3. Stochastic Gradient Descent   
+  4. Mini-batch Gradient Descent   
+
+#### Linear Regression with OLS
+
+\[ 𝑦= \theta^T𝑋\]
+
+The cost function minimization is a closed-form solution called the Normal Equation:
+\[ \hat{\theta} = (X^T . X)^{-1} X^T.y  \]
+
+  - Advantage –equation is linear with size of training set so it can handle large training sets efficiently.   
+  - Disadvantage –  
+      1. computational complexity of inverting a matrix that increases with size of training set. 
+      2. difficult to do online learning with new data arriving regularly (need to recalculate estimates), i.e. no iterative parameter updates.      
+      
+## Use R or Python for machine learning?  
+
+  There is something of a rivalry between the two most commonly used data science languages: R and Python. Of course, there are no machine learning tasks which are only possible to apply in one language or the other.
+  
+__R:__  
+
+  - R is geared specifically for mathematical and statistical applications, i.e. R can focus purely on data, but may feel restricted if they ever need to build applications based on their models.   
+  - Currently, there are modern tools in R designed specifically to make data science tasks simple and human-readable, such as those from the `tidyverse`.   
+  - Previously, ML algorithms in R were scattered across multiple packages, written by different authors. But R has now followed suit, with the `caret` and `mlr` packages (which stands for machine learning in R). While quite similar in purpose and functionality to caret, `mlr` package provides an interface for a large number of machine learning algorithms, and allows you to perform extremely complicated machine learning tasks with very little coding.  
+
+__Python:__
+
+  - First of all, some of the more cutting-edge deep learning approaches are easier to apply in Python (they tend to be written in Python first and implemented in R later).  
+  - Python, while very good for data science, is a more general purpose programming language.   
+  - Proponents of python could use this as en example of why it was better suited for machine learning, as it has the well known `scikit-learn` package which has a plethora of machine learning algorithms built into it. 
+
+## References
+
+James, G., Witten, D., Hastie, T., & Tibshirani, R. (2013). An Introduction to Statistical Learning with Applications in R (1st ed. 2013. ed.). New York, NY: Springer New York.
+
+Goodfellow, I., Bengio, Y., & Courville, A. (2016). Deep learning. Cambridge, Massachusetts: The MIT Press.
+
+Hastie, T., Tibshirani, R., & Friedman, J. (2017). The Elements of Statistical Learning: Data Mining, Inference, and Prediction, Second Edition. New York, NY: Springer New York.
+
+Géron, A. l. (2017). Hands-on machine learning with Scikit-Learn and TensorFlow concepts, tools, and techniques to build intelligent systems (First edition. ed.). Sebastopol, California: O'Reilly Media, Inc.
+
+Rhys, H. (2020). Machine Learning with R, the tidyverse, and mlr (1st edition ed.): Manning Publications.

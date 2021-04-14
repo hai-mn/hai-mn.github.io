@@ -4,13 +4,11 @@ description: |
   Intuitively explain the Beta Distribution and its applications.
 author:
   - name: Hai Nguyen
-    affiliation: University of Illinois at Chicago
-date: Last compiled on `r format(Sys.time(), '%d %B, %Y')`
+date: April 2021
 categories:
   - Biostatistics
   - Tutorial
-  - Toolkit for Bayesian Methods
-  - Bayesian Methods
+  - Toolkit for Bayesian Methods  
 base_url: https://hai-mn.github.io
 output:
   distill::distill_article:
@@ -128,23 +126,115 @@ __Examples.__
 
 The standard uniform distribution $Unif \ (0,1)$ is a special case of the beta distribution $Beta \ (1,1)$, when $\alpha = \beta = 1$.  
 
-## Recommended actions
+## In actions
 
   - Keep parameter $\beta$ fixed. Move $\alpha$ up or down. Observe how the mass of the distribution moves    
-  
+
+```{r, include=F}
+library(ggplot2)
+```
+
+```{r}
+x <- seq(0,1,by=0.2)
+
+df <- data.frame(x)
+ggplot(data=df, aes(x=x))+
+  stat_function(fun=dbeta, args=list(shape1=1, shape2=2), aes(colour = "alpha=1,beta=2")) + 
+  stat_function(fun=dbeta, args=list(shape1=2, shape2=2), aes(colour = "alpha=2,beta=2")) +
+  stat_function(fun=dbeta, args=list(shape1=4, shape2=2), aes(colour = "alpha=4,beta=2")) +
+  stat_function(fun=dbeta, args=list(shape1=6, shape2=2), aes(colour = "alpha=6,beta=2")) +
+  stat_function(fun=dbeta, args=list(shape1=8, shape2=2), aes(colour = "alpha=8,beta=2")) +
+  scale_y_continuous(limits=c(0,3.6)) +
+  scale_colour_manual("", values = c("palegreen", "orange", "olivedrab", "blue", "black")) + 
+  ylab("Probability Density") +
+  ggtitle("PDF of Beta Distribution") + 
+  theme_bw() + 
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
+ 
   - Do the same as above, but keep $\alpha$ constant and move $\beta$ up or down     
-  
+
+```{r}
+ggplot(data=df, aes(x=x))+
+  stat_function(fun=dbeta, args=list(shape1=2, shape2=1), aes(colour = "alpha=2,beta=1")) + 
+  stat_function(fun=dbeta, args=list(shape1=2, shape2=2), aes(colour = "alpha=2,beta=2")) +
+  stat_function(fun=dbeta, args=list(shape1=2, shape2=5), aes(colour = "alpha=2,beta=5")) +
+  stat_function(fun=dbeta, args=list(shape1=2, shape2=6), aes(colour = "alpha=2,beta=6")) +
+  stat_function(fun=dbeta, args=list(shape1=2, shape2=8), aes(colour = "alpha=2,beta=8")) +
+  scale_y_continuous(limits=c(0,3.6)) +
+  scale_colour_manual("", values = c("palegreen", "orange", "olivedrab", "blue", "black")) + 
+  ylab("Probability Density") +
+  ggtitle("PDF of Beta Distribution") + 
+  theme_bw() + 
+  theme(plot.title = element_text(hjust = 0.5))
+```
+
   - Make $\alpha = \beta = 1$. What does the shape of the distribution tell you about your knowledge about random variable $\theta$?     
+  $\Rightarrow$ The standard uniform distribution $Unif(0,1)$ is a special case of the beta distribution $Beta (1,1)$, when $\alpha$=$\beta$=1.
+
+```{r}
+ggplot(data=df, aes(x=x))+
+  stat_function(fun=dbeta, args=list(shape1=1, shape2=1), aes(colour = "alpha=1,beta=1")) +
+  scale_y_continuous(limits=c(0,3.6)) +
+  scale_colour_manual("", values = c("green")) + 
+  ylab("Probability Density") +
+  ggtitle("PDF of Beta Distribution") + 
+  theme_bw() + 
+  theme(plot.title = element_text(hjust = 0.5))
+```
   
   - Keep $\alpha = \beta$ , but move both of them up or down. Interpret the shape of the distribution     
   
-  - When beta distribution is used as a prior for parameter of binomial distribution, parameters $\alpha$ and $\beta$ can be interpreted as previously observed numbers of successes ($\alpha$) or failures ($\beta$). For example, if in 2 Bernoulli experiments there was 1 success and 1 failure you can express opinion about probability of success as $Beta(1,1)$. What would you assume as prior if in 6 previously observed outcomes there were 3 successes and 3 failures? What is the likely value of the parameter? Do we have more or less information than in case of 1 success and 1 failure?    
+```{r}
+ggplot(data=df, aes(x=x))+
+  stat_function(fun=dbeta, args=list(shape1=0.5, shape2=0.5), aes(colour = "alpha=0.5,beta=0.5")) + 
+  stat_function(fun=dbeta, args=list(shape1=1, shape2=1), aes(colour = "alpha=1,beta=1")) +
+  stat_function(fun=dbeta, args=list(shape1=2, shape2=2), aes(colour = "alpha=2,beta=2")) +
+  stat_function(fun=dbeta, args=list(shape1=4, shape2=4), aes(colour = "alpha=4,beta=4")) +
+  stat_function(fun=dbeta, args=list(shape1=6, shape2=6), aes(colour = "alpha=6,beta=6")) +
+  scale_y_continuous(limits=c(0,3.6)) +
+  scale_colour_manual("", values = c("palegreen", "orange", "olivedrab", "blue", "black")) + 
+  ylab("Probability Density") +
+  ggtitle("PDF of Beta Distribution") + 
+  theme_bw() + 
+  theme(plot.title = element_text(hjust = 0.5))
+```
+  
+  - When beta distribution is used as a prior for parameter of binomial distribution, parameters $\alpha$ and $\beta$ can be interpreted as previously observed numbers of successes ($\alpha$) or failures ($\beta$). For example, if in 2 Bernoulli experiments there was 1 success and 1 failure you can express opinion about probability of success as $Beta(1,1)$. What would you assume as prior if in 6 previously observed outcomes there were 3 successes and 3 failures? What is the likely value of the parameter? Do we have __*more*__ or __*less*__ information than in case of 1 success and 1 failure? $\Rightarrow$ *Think of more*   
+  
+```{r, message=F, warning=F}
+ggplot(data=df, aes(x=x))+
+  stat_function(fun=dbeta, args=list(shape1=1, shape2=1), aes(colour = "alpha=1,beta=1")) +
+  stat_function(fun=dbeta, args=list(shape1=3, shape2=3), aes(colour = "alpha=3,beta=3")) +
+  stat_function(fun=dbinom, args=list(size=1, prob=0.5), aes(colour = "Bernoulli w/ prob=0.5")) + # bernoulli
+  scale_y_continuous(limits=c(0,3.6)) +
+  scale_colour_manual("", values = c("red","green","black")) + 
+  ylab("Probability Density") +
+  ggtitle("PDF of Beta Distribution") + 
+  theme_bw() + 
+  theme(plot.title = element_text(hjust = 0.5))
+```
+  
   
   - Define distribution with mode $\omega$=.8 and concentration $\kappa = 12$. To do that find shape parameters $\alpha = \omega (\kappa − 2) + 1 = 9$ and $\beta = (1 − \omega)(\kappa − 2) + 1 = 3$.  
   
-## Plots
+```{r}
+ggplot(data=df, aes(x=x))+
+  stat_function(fun=dbeta, args=list(shape1=9, shape2=3), aes(colour = "alpha=9,beta=3")) +
+  scale_y_continuous(limits=c(0,3.4)) +
+  scale_colour_manual("", values = c("blue")) + 
+  ylab("Probability Density") +
+  ggtitle("PDF of Beta Distribution") + 
+  theme_bw() + 
+  theme(plot.title = element_text(hjust = 0.5))
+```
 
-I plan to build an shiny app to plot beta distribution on the specification of shape parameter (in the process).
+
+  
+## Plots in `shiny`
+
+Planning to build an `shiny` app to plot beta distribution on the specification of shape parameter ("still being in the process").
 
 ## Further reading 
 
