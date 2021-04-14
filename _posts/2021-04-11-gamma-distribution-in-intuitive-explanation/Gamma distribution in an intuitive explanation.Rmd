@@ -1,5 +1,5 @@
 ---
-title: Gamma Distribution in an Intuitive Explanation
+title: "Gamma Distribution: an Intuitive Explanation"
 description: |
   Intuitively explain the Gamma Distribution and its applications.
 author:

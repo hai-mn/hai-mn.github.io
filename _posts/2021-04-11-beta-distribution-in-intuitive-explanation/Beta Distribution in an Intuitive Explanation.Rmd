@@ -1,5 +1,5 @@
 ---
-title: Beta Distribution in an Intuitive Explanation
+title: "Beta Distribution: an Intuitive Explanation"
 description: |
   Intuitively explain the Beta Distribution and its applications.
 author:
