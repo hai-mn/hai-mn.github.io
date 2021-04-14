@@ -4,7 +4,7 @@ description: |
   Intuitively explain the Beta Distribution and its applications.
 author:
   - name: Hai Nguyen
-date: April 2021
+date: April 11, 2021
 categories:
   - Biostatistics
   - Tutorial

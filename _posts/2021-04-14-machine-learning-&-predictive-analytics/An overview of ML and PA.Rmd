@@ -3,7 +3,7 @@ title: Machine Learning & Predictive Analytics
 description: |
   An Overview of Machine Learning & Predictive Analytics
 author: Hai Nguyen
-date: April 2021
+date: April 14, 2021
 categories:
   - Biostatistics
   - Machine Learning
