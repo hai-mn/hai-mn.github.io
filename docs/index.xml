@@ -24,6 +24,18 @@
       <pubDate>Wed, 14 Apr 2021 00:00:00 +0000</pubDate>
     </item>
     <item>
+      <title>Beta Distribution: an Intuitive Explanation</title>
+      <dc:creator>Hai Nguyen</dc:creator>
+      <link>https://hai-mn.github.io/posts/2021-04-11-beta-distribution-in-intuitive-explanation</link>
+      <description>Intuitively explain the Beta Distribution and its applications.</description>
+      <category>Biostatistics</category>
+      <category>Tutorial</category>
+      <category>Toolkit for Bayesian Methods</category>
+      <guid>https://hai-mn.github.io/posts/2021-04-11-beta-distribution-in-intuitive-explanation</guid>
+      <pubDate>Sun, 11 Apr 2021 00:00:00 +0000</pubDate>
+      <media:content url="https://hai-mn.github.io/posts/2021-04-11-beta-distribution-in-intuitive-explanation/Beta-Distribution-in-an-Intuitive-Explanation_files/figure-html5/unnamed-chunk-2-1.png" medium="image" type="image/png" width="1248" height="768"/>
+    </item>
+    <item>
       <title>Gamma Distribution: an Intuitive Explanation</title>
       <dc:creator>Hai Nguyen</dc:creator>
       <link>https://hai-mn.github.io/posts/2021-04-11-gamma-distribution-in-intuitive-explanation</link>
@@ -35,18 +47,6 @@
       <guid>https://hai-mn.github.io/posts/2021-04-11-gamma-distribution-in-intuitive-explanation</guid>
       <pubDate>Sun, 11 Apr 2021 00:00:00 +0000</pubDate>
       <media:content url="https://hai-mn.github.io/posts/2021-04-11-gamma-distribution-in-intuitive-explanation/Gamma-distribution-in-an-intuitive-explanation_files/figure-html5/unnamed-chunk-1-1.png" medium="image" type="image/png" width="1248" height="768"/>
-    </item>
-    <item>
-      <title>Beta Distribution: an Intuitive Explanation</title>
-      <dc:creator>Hai Nguyen</dc:creator>
-      <link>https://hai-mn.github.io/posts/2021-04-11-beta-distribution-in-intuitive-explanation</link>
-      <description>Intuitively explain the Beta Distribution and its applications.</description>
-      <category>Biostatistics</category>
-      <category>Tutorial</category>
-      <category>Toolkit for Bayesian Methods</category>
-      <guid>https://hai-mn.github.io/posts/2021-04-11-beta-distribution-in-intuitive-explanation</guid>
-      <pubDate>Sun, 11 Apr 2021 00:00:00 +0000</pubDate>
-      <media:content url="https://hai-mn.github.io/posts/2021-04-11-beta-distribution-in-intuitive-explanation/Beta-Distribution-in-an-Intuitive-Explanation_files/figure-html5/unnamed-chunk-2-1.png" medium="image" type="image/png" width="1248" height="768"/>
     </item>
   </channel>
 </rss>
