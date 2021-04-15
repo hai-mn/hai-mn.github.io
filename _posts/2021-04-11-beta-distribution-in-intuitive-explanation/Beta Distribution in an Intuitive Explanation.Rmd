@@ -201,15 +201,15 @@ ggplot(data=df, aes(x=p))+
   theme(plot.title = element_text(hjust = 0.5))
 ```
   
-  - Variance changes
+  - Variance changes based on 2 shape parameters.
 
 ```{r}
 ggplot(data=df, aes(x=p))+
-  stat_function(fun=dbeta, args=list(shape1=900, shape2=100), aes(colour = "alpha=900,beta=100")) + 
-  stat_function(fun=dbeta, args=list(shape1=90, shape2=10), aes(colour = "alpha=90,beta=10")) +
+  stat_function(fun=dbeta, args=list(shape1=400, shape2=80), aes(colour = "alpha=400,beta=80")) + 
+  stat_function(fun=dbeta, args=list(shape1=40, shape2=8), aes(colour = "alpha=40,beta=8")) +
   stat_function(fun=dbeta, args=list(shape1=30, shape2=70), aes(colour = "alpha=30,beta=70")) +
-  stat_function(fun=dbeta, args=list(shape1=3, shape2=7), aes(colour = "alpha=4,beta=4")) +
-  scale_y_continuous(limits=c(0,27)) +
+  stat_function(fun=dbeta, args=list(shape1=3, shape2=7), aes(colour = "alpha=3,beta=7")) +
+  scale_y_continuous(limits=c(0,25)) +
   scale_colour_manual("", values = c("blue", "green", "orange", "black")) + 
   ylab("Density") +
   ggtitle("PDF of Beta Distribution") + 
