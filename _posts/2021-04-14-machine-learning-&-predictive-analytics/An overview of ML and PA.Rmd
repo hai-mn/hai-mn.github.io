@@ -254,7 +254,9 @@ There is something of a rivalry between the two most commonly used data science 
 -   Python, while very good for data science, is a more general purpose programming language.\
 -   Proponents of python could use this as en example of why it was better suited for machine learning, as it has the well known `scikit-learn` package which has a plethora of machine learning algorithms built into it.
 
-**Google Trend** demonstrates the search interest relative to the highest point on the chart for the given region and over the past 5 years.
+**Google Trends** demonstrates the search interest relative to the highest point on the chart for the given region and over the past 5 years.
+
+<!-- Google Trends does NOT work locally, but still pop-up in HTML -->
 
 <script type="text/javascript" src="https://ssl.gstatic.com/trends_nrtr/2431_RC04/embed_loader.js"></script> <script type="text/javascript"> trends.embed.renderExploreWidget("TIMESERIES", {"comparisonItem":[{"keyword":"/m/05z1_","geo":"","time":"2016-04-17 2021-04-17"},{"keyword":"/m/0212jm","geo":"","time":"2016-04-17 2021-04-17"},{"keyword":"/m/0jgqg","geo":"","time":"2016-04-17 2021-04-17"},{"keyword":"/m/09gbxjr","geo":"","time":"2016-04-17 2021-04-17"},{"keyword":"/m/0j3djl7","geo":"","time":"2016-04-17 2021-04-17"}],"category":0,"property":""}, {"exploreQuery":"date=today%205-y&q=%2Fm%2F05z1_,%2Fm%2F0212jm,%2Fm%2F0jgqg,%2Fm%2F09gbxjr,%2Fm%2F0j3djl7","guestPath":"https://trends.google.com:443/trends/embed/"}); </script>
 
