@@ -2487,7 +2487,10 @@ d-appendix d-footnote-list a.footnote-backlink {
 <li><a href="#parametric-nonparametric-models">Parametric &amp; Nonparametric Models</a></li>
 <li><a href="#regression-analysis">Regression Analysis</a></li>
 </ul></li>
-<li><a href="#use-r-or-python-for-machine-learning">Use R or Python for machine learning?</a></li>
+<li><a href="#use-r-or-python-for-machine-learning">Use R or Python for machine learning?</a>
+<ul>
+<li><a href="#machine-learning-with-mlr-package-in-r">Machine Learning with <code>mlr</code> Package in R</a></li>
+</ul></li>
 <li><a href="#references">References</a></li>
 </ul>
 </nav>
@@ -2793,13 +2796,117 @@ d-appendix d-footnote-list a.footnote-backlink {
 <!-- Google Trends does NOT work locally, but still pop-up in HTML -->
 <script type="text/javascript" src="https://ssl.gstatic.com/trends_nrtr/2431_RC04/embed_loader.js"></script>
 <script type="text/javascript"> trends.embed.renderExploreWidget("TIMESERIES", {"comparisonItem":[{"keyword":"/m/05z1_","geo":"","time":"2016-04-17 2021-04-17"},{"keyword":"/m/0212jm","geo":"","time":"2016-04-17 2021-04-17"},{"keyword":"/m/0jgqg","geo":"","time":"2016-04-17 2021-04-17"},{"keyword":"/m/09gbxjr","geo":"","time":"2016-04-17 2021-04-17"},{"keyword":"/m/0j3djl7","geo":"","time":"2016-04-17 2021-04-17"}],"category":0,"property":""}, {"exploreQuery":"date=today%205-y&q=%2Fm%2F05z1_,%2Fm%2F0212jm,%2Fm%2F0jgqg,%2Fm%2F09gbxjr,%2Fm%2F0j3djl7","guestPath":"https://trends.google.com:443/trends/embed/"}); </script>
+<h3 id="machine-learning-with-mlr-package-in-r">Machine Learning with <code>mlr</code> Package in R</h3>
+<p>R users got <code>mlr</code> package similar to <a href="https://scikit-learn.org/stable/">Scikit-Learn</a> from Python. The package synthesizes all the ML functions from other packages in which we can perform most of ML tasks. <code>mlr</code> package has several algorithms in its bouquet. These algorithms have been categorized into regression, classification, clustering, survival, multiclassification and cost sensitive classification:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://mlr.mlr-org.com'>mlr</a></span><span class='op'>)</span>
+<span class='fu'><a href='https://mlr.mlr-org.com/reference/listLearners.html'>listLearners</a></span><span class='op'>(</span><span class='st'>"classif"</span><span class='op'>)</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"class"</span>,<span class='st'>"package"</span><span class='op'>)</span><span class='op'>]</span>
+</code></pre>
+</div>
+<pre><code>                            class                   package
+1                     classif.ada                 ada,rpart
+2              classif.adaboostm1                     RWeka
+3             classif.bartMachine               bartMachine
+4                classif.binomial                     stats
+5                classif.boosting              adabag,rpart
+6                     classif.bst                 bst,rpart
+7                     classif.C50                       C50
+8                 classif.cforest                     party
+9              classif.clusterSVM        SwarmSVM,LiblineaR
+10                  classif.ctree                     party
+11               classif.cvglmnet                    glmnet
+12                 classif.dbnDNN                   deepnet
+13                  classif.dcSVM            SwarmSVM,e1071
+14                  classif.earth               earth,stats
+15                 classif.evtree                    evtree
+16             classif.extraTrees                extraTrees
+17             classif.fdausc.glm                   fda.usc
+18          classif.fdausc.kernel                   fda.usc
+19             classif.fdausc.knn                   fda.usc
+20              classif.fdausc.np                   fda.usc
+21                classif.FDboost            FDboost,mboost
+22            classif.featureless                       mlr
+23                   classif.fgam                    refund
+24                    classif.fnn                       FNN
+25               classif.gamboost                    mboost
+26               classif.gaterSVM                  SwarmSVM
+27                classif.gausspr                   kernlab
+28                    classif.gbm                       gbm
+29                  classif.geoDA               DiscriMiner
+30               classif.glmboost                    mboost
+31                 classif.glmnet                    glmnet
+32       classif.h2o.deeplearning                       h2o
+33                classif.h2o.gbm                       h2o
+34                classif.h2o.glm                       h2o
+35       classif.h2o.randomForest                       h2o
+36                    classif.IBk                     RWeka
+37                    classif.J48                     RWeka
+38                   classif.JRip                     RWeka
+39                   classif.kknn                      kknn
+40                    classif.knn                     class
+41                   classif.ksvm                   kernlab
+42                    classif.lda                      MASS
+43       classif.LiblineaRL1L2SVC                 LiblineaR
+44      classif.LiblineaRL1LogReg                 LiblineaR
+45       classif.LiblineaRL2L1SVC                 LiblineaR
+46      classif.LiblineaRL2LogReg                 LiblineaR
+47         classif.LiblineaRL2SVC                 LiblineaR
+48 classif.LiblineaRMultiClassSVC                 LiblineaR
+49                  classif.linDA               DiscriMiner
+50                 classif.logreg                     stats
+51                  classif.lssvm                   kernlab
+52                   classif.lvq1                     class
+53                    classif.mda                       mda
+54                    classif.mlp                     RSNNS
+55               classif.multinom                      nnet
+56             classif.naiveBayes                     e1071
+57              classif.neuralnet                 neuralnet
+58                   classif.nnet                      nnet
+59                classif.nnTrain                   deepnet
+60            classif.nodeHarvest               nodeHarvest
+61                   classif.OneR                     RWeka
+62                   classif.pamr                      pamr
+63                   classif.PART                     RWeka
+64              classif.penalized                 penalized
+65                    classif.plr                   stepPlr
+66             classif.plsdaCaret                 caret,pls
+67                 classif.probit                     stats
+68                    classif.qda                      MASS
+69                  classif.quaDA               DiscriMiner
+70           classif.randomForest              randomForest
+71        classif.randomForestSRC           randomForestSRC
+72                 classif.ranger                    ranger
+73                    classif.rda                      klaR
+74                 classif.rFerns                    rFerns
+75                   classif.rknn                      rknn
+76         classif.rotationForest            rotationForest
+77                  classif.rpart                     rpart
+78                    classif.RRF                       RRF
+79                  classif.rrlda                     rrlda
+80                 classif.saeDNN                   deepnet
+81                    classif.sda                       sda
+82              classif.sparseLDA sparseLDA,MASS,elasticnet
+83                    classif.svm                     e1071
+84                classif.xgboost                   xgboost</code></pre>
+</div>
+<p>– <a href="https://www.analyticsvidhya.com/blog/2016/08/practicing-machine-learning-techniques-in-r-with-mlr-package/?#">ANALYTICS VIDHYA</a></p>
+<p><u>The entire structure of this package relies on this premise:</u></p>
+<p><span class="math display">\[\text{Create a Task.   Make a Learner.   Train Them.}\]</span></p>
+<ul>
+<li>Creating a task means loading data in the package (e.g., <code>makeClassifTask</code>).<br />
+</li>
+<li>Making a learner means choosing an algorithm (<code>makeLearner</code>) which learns from task (or data).<br />
+</li>
+<li>Finally, train them (<code>train</code>).</li>
+</ul>
 <h2 id="references">References</h2>
 <p>James, G., Witten, D., Hastie, T., &amp; Tibshirani, R. (2013). An Introduction to Statistical Learning with Applications in R (1st ed. 2013. ed.). New York, NY: Springer New York.</p>
 <p>Goodfellow, I., Bengio, Y., &amp; Courville, A. (2016). Deep learning. Cambridge, Massachusetts: The MIT Press.</p>
 <p>Hastie, T., Tibshirani, R., &amp; Friedman, J. (2017). The Elements of Statistical Learning: Data Mining, Inference, and Prediction, Second Edition. New York, NY: Springer New York.</p>
 <p>Géron, A. l. (2017). Hands-on machine learning with Scikit-Learn and TensorFlow concepts, tools, and techniques to build intelligent systems (First edition. ed.). Sebastopol, California: O’Reilly Media, Inc.</p>
 <p>Rhys, H. (2020). Machine Learning with R, the tidyverse, and mlr (1st edition ed.): Manning Publications.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>

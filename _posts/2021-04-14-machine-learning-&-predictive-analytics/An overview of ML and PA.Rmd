@@ -260,6 +260,28 @@ There is something of a rivalry between the two most commonly used data science 
 
 <script type="text/javascript" src="https://ssl.gstatic.com/trends_nrtr/2431_RC04/embed_loader.js"></script> <script type="text/javascript"> trends.embed.renderExploreWidget("TIMESERIES", {"comparisonItem":[{"keyword":"/m/05z1_","geo":"","time":"2016-04-17 2021-04-17"},{"keyword":"/m/0212jm","geo":"","time":"2016-04-17 2021-04-17"},{"keyword":"/m/0jgqg","geo":"","time":"2016-04-17 2021-04-17"},{"keyword":"/m/09gbxjr","geo":"","time":"2016-04-17 2021-04-17"},{"keyword":"/m/0j3djl7","geo":"","time":"2016-04-17 2021-04-17"}],"category":0,"property":""}, {"exploreQuery":"date=today%205-y&q=%2Fm%2F05z1_,%2Fm%2F0212jm,%2Fm%2F0jgqg,%2Fm%2F09gbxjr,%2Fm%2F0j3djl7","guestPath":"https://trends.google.com:443/trends/embed/"}); </script>
 
+### Machine Learning with `mlr` Package in R
+
+R users got `mlr` package similar to [Scikit-Learn](https://scikit-learn.org/stable/) from Python. The package synthesizes all the ML functions from other packages in which we can perform most of ML tasks. `mlr` package has several algorithms in its bouquet. These algorithms have been categorized into regression, classification, clustering, survival, multiclassification and cost sensitive classification:
+
+```{r}
+library(mlr)
+listLearners("classif")[c("class","package")]
+```
+
+  -- [ANALYTICS VIDHYA](https://www.analyticsvidhya.com/blog/2016/08/practicing-machine-learning-techniques-in-r-with-mlr-package/?#)
+
+
+<u>The entire structure of this package relies on this premise:</u>
+
+\[\text{Create a Task.   Make a Learner.   Train Them.}\]
+
+- Creating a task means loading data in the package (e.g., `makeClassifTask`).  
+- Making a learner means choosing an algorithm (`makeLearner`) which learns from task (or data).   
+- Finally, train them (`train`).   
+
+
+
 ## References
 
 James, G., Witten, D., Hastie, T., & Tibshirani, R. (2013). An Introduction to Statistical Learning with Applications in R (1st ed. 2013. ed.). New York, NY: Springer New York.
