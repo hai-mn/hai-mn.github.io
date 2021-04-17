@@ -12,7 +12,17 @@
       <link>https://hai-mn.github.io</link>
     </image>
     <generator>Distill</generator>
-    <lastBuildDate>Wed, 14 Apr 2021 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 17 Apr 2021 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Discriminant Analysis -- A Classification by Maximizing Class Separation</title>
+      <dc:creator>Hai Nguyen</dc:creator>
+      <link>https://hai-mn.github.io/posts/2021-04-17-machine learning-discriminant-analysis</link>
+      <description>An Gentle Introduction of Discriminant Analysis &amp; Its Applicant</description>
+      <category>Machine Learning</category>
+      <category>R</category>
+      <guid>https://hai-mn.github.io/posts/2021-04-17-machine learning-discriminant-analysis</guid>
+      <pubDate>Sat, 17 Apr 2021 00:00:00 +0000</pubDate>
+    </item>
     <item>
       <title>Machine Learning &amp; Predictive Analytics</title>
       <dc:creator>Hai Nguyen</dc:creator>

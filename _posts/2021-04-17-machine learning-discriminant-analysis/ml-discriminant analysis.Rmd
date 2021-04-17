@@ -1,0 +1,202 @@
+---
+title: Discriminant Analysis -- A Classification by Maximizing Class Separation
+description: |
+  An Gentle Introduction of Discriminant Analysis & Its Applicant
+author: Hai Nguyen
+date: April 17, 2021
+categories:
+  - Machine Learning
+  - R
+base_url: https://hai-mn.github.io
+output:
+  distill::distill_article:
+    self_contained: false
+    toc: true
+    toc_depth: 3
+---
+
+## Linear Discriminant Analysis  
+
+Approach for multiclass classification.   
+A discriminant is a function that takes an input vector x and assigns to one of the multiple classes.   
+
+  - Model the distribution of the predictors $X$ in each response class  
+  - Use Bayes theorem to flip these around into estimates for   
+
+\[ Pr(y =𝑘\mid 𝑋=𝑥) = \frac{\pi_k f_k(x)}{\sum_{l=1}^K \pi_l f_l(x)} \]
+
+where 
+
+$\pi_k$: overall prior probability that a randomly chosen observation comes from the $𝑘$-th class   
+$f_k(x)$: the density function of $𝑥$   
+
+  - When the distributions are assumed to be normal, the LDA model is very similar in form to logistic regression.  
+  
+## Why Discriminant Analysis 
+
+  1. When the classes are well-separated, the parameter estimates for the logistic regression model are surprisingly unstable. Linear discriminant analysis does not suffer from this problem.  
+  2. If n is small and the distribution of the predictors X is approximately normal in each of the classes, the linear discriminant model is again more stable than the logistic regression model.  
+  3. Linear discriminant analysis is popular when we have more than two response classes, because it also provides low-dimensional views of the data.  
+  
+## Quadratic Discriminant Analysis
+
+\[ Pr(y =𝑘\mid 𝑋=𝑥) = \frac{\pi_k f_k(x)}{\sum_{l=1}^K \pi_l f_l(x)} \]
+
+where 
+
+$\pi_k$: overall prior probability that a randomly chosen observation comes from the $𝑘$-th class   
+$f_k(x)$: the density function of $𝑥$   
+
+LDA = $f_k(x)$ are Gaussian densities, with the same covariance matrix $\sum$ in each class.   
+QDA = With Gaussians but different $\sum_k$ in each class, we get quadratic discriminant analysis.   
+NOTE = By proposing specific density models for $f_k(x)$, including nonparametric approaches.   
+
+## LDA vs QDA
+
+__The strengths of the LDA and QDA algorithms are:__   
+
+  - They can reduce a high-dimensional feature space into a much more manageable number   
+  - Can be used for classification or as a preprocessing (dimension reduction) technique to
+other classification algorithms that may perform better on the dataset  
+  - QDA can learn curved decision boundaries between classes (this isn’t the case for LDA)   
+  
+__The weaknesses of the LDA and QDA algorithms are:__   
+
+  - They can only handle continuous predictors (although recoding a categorical variable as
+numeric may help in some cases)   
+  - They assume the data are normally distributed across the predictors. If the data are not,
+performance will suffer  
+  - LDA can only learn linear decision boundaries between classes (this isn’t the case for
+QDA)  
+  - LDA assumes equal covariances of the classes and performance will suffer if this isn’t
+the case (this isn’t the case for QDA)   
+  - QDA is more flexbile than LDA, and so can be more prone to overfitting   
+
+__When we should apply LDA vs QDA__    
+
+  1. LDA needs lot less parameters than QDA.   
+  2. LDA is a much less flexible classifier than QDA $\Rightarrow$ substantially low variance.  
+  3. If LDA’s assumption of common covariance matrix is poor, then LDA has high bias.  
+  4. LDA better bet if training set is small so reducing variance is important.  
+  5. QDA better bet if training set is large so variance of classifier not a major concern.  
+  
+  
+## Building our first linear and quadratic discriminant models
+
+We have a tibble containing 178 cases and 14 variables of measurements made on various wine bottles.  
+
+```{r load pkgs dta, message=FALSE}
+#install.packages("mlr")
+library(mlr)
+library(tidyverse)
+#install.packages("HDclassif")
+data(wine, package = "HDclassif")
+wineTib <- as_tibble(wine)
+wineTib
+```
+
+```{r clean dta}
+names(wineTib) <- c("Class", "Alco", "Malic", "Ash", "Alk", "Mag",
+                    "Phe", "Flav", "Non_flav", "Proan", "Col", "Hue",
+                    "OD", "Prol")
+wineTib$Class <- as.factor(wineTib$Class)
+wineTib
+```
+
+We got:  
+  - 13 continuous measurements made on 178 bottles of wine, where each measurement is the amount of a different compound/element in the wine.    
+  - `Class`:  vineyard the bottle comes from.  
+
+```{r}
+wineUntidy <- gather(wineTib, "Variable", "Value", -Class)
+ggplot(wineUntidy, aes(Class, Value)) +
+  facet_wrap(~ Variable, scales = "free_y") +
+  geom_boxplot() +
+  theme_bw()
+```
+
+~~~
+Box and whisker plots of each continuous variable in the data against vineyard number. For the box and whiskers: the thick horizontal line represents the median, the box represents the interquartile range (IQR), the whiskers represent the Tukey range (1.5 times the IQR above and below the quartiles), and the dots represent data outside of the Tukey range.   
+~~~
+
+### Creating the task and learner, and training the `LDA` model
+
+```{r}
+wineTask <- makeClassifTask(data = wineTib, target = "Class")
+lda <- makeLearner("classif.lda")
+ldaModel <- train(lda, wineTask)
+```
+
+Extracting discriminant function values for each case
+
+```{r}
+ldaModelData <- getLearnerModel(ldaModel)
+ldaPreds <- predict(ldaModelData)$x
+head(ldaPreds)
+```
+Plotting the discriminant function values against each other
+
+```{r}
+wineTib %>%
+  mutate(LD1 = ldaPreds[, 1],
+         LD2 = ldaPreds[, 2]) %>%
+  ggplot(aes(LD1, LD2, col = Class)) + 
+    geom_point() +
+    stat_ellipse() +
+    theme_bw()
+```
+
+### Creating the task and learner, and training the `QDA` model
+
+```{r}
+qda <- makeLearner("classif.qda")
+qdaModel <- train(qda, wineTask)
+```
+
+Cross-validating the LDA and QDA models
+
+```{r, warning=FALSE, message=FALSE}
+kFold <- makeResampleDesc(method = "RepCV", folds = 10, reps = 50,
+stratify = TRUE)
+
+ldaCV <- resample(learner = lda, task = wineTask, resampling = kFold,
+measures = list(mmce, acc))
+
+qdaCV <- resample(learner = qda, task = wineTask, resampling = kFold,
+measures = list(mmce, acc))
+
+ldaCV$aggr
+
+qdaCV$aggr
+```
+- Our LDA model correctly classified 98.8% of wine bottles, on average! There isn’t much
+room for improvement here, but   
+- our QDA model managed to correctly classify 99.2% of cases!   
+
+
+Calculating confusion matrices
+
+```{r}
+calculateConfusionMatrix(ldaCV$pred, relative = TRUE)
+
+calculateConfusionMatrix(qdaCV$pred, relative = TRUE)
+```
+
+Predicting which vineyard the poisoned wine came from
+
+```{r}
+poisoned <- tibble(Alco = 13, Malic = 2, Ash = 2.2, Alk = 19, Mag = 100,
+                   Phe = 2.3, Flav = 2.5, Non_flav = 0.35, Proan = 1.7,
+                   Col = 4, Hue = 1.1, OD = 3, Prol = 750)
+predict(qdaModel, newdata = poisoned)
+```
+
+The model predicts that the poisoned bottle came from vineyard 1.
+
+Here's we ends the analytic example.
+
+## References
+
+Hastie, T., Tibshirani, R., & Friedman, J. (2017). The Elements of Statistical Learning: Data Mining, Inference, and Prediction, Second Edition. New York, NY: Springer New York.
+
+Rhys, H. (2020). Machine Learning with R, the tidyverse, and mlr (1st edition ed.): Manning Publications.
