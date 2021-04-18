@@ -83,7 +83,9 @@ __When we should apply LDA vs QDA__
   
 ## Building our first linear and quadratic discriminant models
 
-We have a tibble containing 178 cases and 14 variables of measurements made on various wine bottles.  
+We have a tibble containing 178 cases and 14 variables of measurements made on various wine bottles: data are the results of a chemical analysis of wines grown in the same region in Italy but derived from three different cultivars. 
+
+The analysis determined the quantities of 13 constituents (Alcohol, Malic acid, Ash, Alcalinit of ash, Magnesium, Total phenols, Flavanoids, Nonflavanoid phenols, Proanthocyanins, Color intensity, Hue, OD280/OD315 of diluted wines, and Proline)found in each of the three types of wines.
 
 ```{r load pkgs dta, message=FALSE}
 #install.packages("mlr")
@@ -134,6 +136,7 @@ ldaModelData <- getLearnerModel(ldaModel)
 ldaPreds <- predict(ldaModelData)$x
 head(ldaPreds)
 ```
+
 Plotting the discriminant function values against each other
 
 ```{r}
@@ -169,6 +172,7 @@ ldaCV$aggr
 
 qdaCV$aggr
 ```
+
 - Our LDA model correctly classified 98.8% of wine bottles, on average! There isn’t much
 room for improvement here, but   
 - our QDA model managed to correctly classify 99.2% of cases!   
