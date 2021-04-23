@@ -12,7 +12,22 @@
       <link>https://hai-mn.github.io</link>
     </image>
     <generator>Distill</generator>
-    <lastBuildDate>Sat, 17 Apr 2021 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 22 Apr 2021 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Fitting a Simple Linear Regression in Bayesian Context</title>
+      <dc:creator>Hai Nguyen</dc:creator>
+      <link>https://hai-mn.github.io/posts/2021-04-22-Simple-linear-regression-in-Bayesian-way</link>
+      <description>How to fit a linear regression using Bayesian Methods  
+Consider a Bayesian model fit as a remedial measures for influential case</description>
+      <category>Biostatistics</category>
+      <category>Tutorial</category>
+      <category>R</category>
+      <category>Bayesian methods</category>
+      <category>JAGS/Stan</category>
+      <guid>https://hai-mn.github.io/posts/2021-04-22-Simple-linear-regression-in-Bayesian-way</guid>
+      <pubDate>Thu, 22 Apr 2021 00:00:00 +0000</pubDate>
+      <media:content url="https://hai-mn.github.io/posts/2021-04-22-Simple-linear-regression-in-Bayesian-way/distill-preview.png" medium="image" type="image/png" width="1248" height="768"/>
+    </item>
     <item>
       <title>Discriminant Analysis -- A Classification by Maximizing Class Separation</title>
       <dc:creator>Hai Nguyen</dc:creator>

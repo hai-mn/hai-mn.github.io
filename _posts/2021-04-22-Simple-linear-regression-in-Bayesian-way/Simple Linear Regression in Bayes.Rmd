@@ -1,0 +1,496 @@
+---
+title: Fitting a Simple Linear Regression in Bayesian Context
+description: |
+  How to fit a linear regression using Bayesian Methods  
+  Consider a Bayesian model fit as a remedial measures for influential case    
+author: Hai Nguyen
+date: April 22, 2021
+categories:
+  - Biostatistics
+  - Tutorial
+  - R
+  - Bayesian methods
+  - JAGS/Stan
+bibliography: bibliographs.bib
+base_url: https://hai-mn.github.io
+output:
+  distill::distill_article:
+    toc: true
+    toc_float: yes
+    toc_depth: 3
+    theme: journal
+    highlight: haddock
+    highlight_downlit: false
+---
+
+```{r setup, warning=FALSE, message=FALSE, include=FALSE}
+library(rjags)
+library(rstan)
+library(shinystan)
+options(mc.cores = parallel::detectCores())
+rstan_options(auto_write = TRUE)
+library(HDInterval)
+dta <- read.csv("Ht-Wt.csv")
+```
+
+# Frequentist approach in simple linear regression
+
+## An example with data
+
+I use the data in @RN721 which has   
+  - `male`  
+  - `height`   
+  - `weight`  
+
+We will use `height` to predict `weight` of a person
+
+```{r}
+DT::datatable(dta, 
+          rownames = FALSE,
+          filter = list(position = "top"))
+```
+
+## Fit a model
+
+```{r}
+fit <- lm(dta$weight ~ dta$height)
+summary(fit)
+```
+
+Then, we can see the fitted regression line overlay with data
+
+```{r}
+plot(dta$height, dta$weight, ylab = "Weight (lbs)", xlab = "Height (inches)",
+     main = "Scatter Plot between Height and Weight by Gender",
+     pch = as.numeric(dta$male), col = as.factor(dta$male))
+abline(fit, col = "orange", lwd = 3)
+```
+
+## Model fit diagnostics
+
+There are four assumptions associated with a linear regression model:  
+
+  - __<span style="color:red">Linearity</span>__: The relationship between X and the mean of Y is linear.  
+  - __<span style="color:red">Homoscedasticity</span>__: The variance of residual is the same for any value of X.  
+  - __<span style="color:red">Independence</span>__: Observations are independent of each other.  
+  - __<span style="color:red">Normality</span>__: For any fixed value of X, Y is normally distributed.   
+
+I check the model fit by plotting:
+
+  - plot of residuals against predictor variable (*how to check residuals have non-linear patterns or not*)   
+  - normal probability plot (*how to check residuals are normally distributed: residuals follow a straight line well or do they deviate severely; it’s good if residuals are lined well on the straight dashed line.*)   
+  - plot of square root of standardized residual absolute value (*how to check the assumption of equal variance (homoscedasticity): if residuals are spread equally along the ranges of predictors; it’s good if we see a horizontal line with equally (randomly) spread points.*)
+  
+And to look at the outlier and leverage via
+  
+  - plot standardized residuals vs leverage
+
+<aside>
+Residuals are the difference between the observed score and the predicted score.
+
+\[ e_i = Y^{obs}_i - \hat{Y}_i\]
+
+Residuals come in three varieties:
+
+  - __Raw Residuals__: The difference between the raw observed score and the predicted score.   
+  - __Standardized Residuals__: These are the raw residuals divided by the standard error of estimate.   
+  - __Studentized Residuals__: These are raw residuals divided by the standard error of the residual with that case deleted. These are sometimes called studentized deleted residuals or studentized jackknifed residuals.   
+</aside>
+
+```{r}
+par(mfrow=c(2,2))
+plot(fit)
+```
+
+Lastly, we look at the influential points
+
+```{r}
+n <- dim(dta)[1]
+cooksD <- cooks.distance(fit)
+#identify influential points
+(influential_obs <- as.numeric(names(cooksD)[(cooksD > (4/n))]))
+#plot cooksD
+plot(cooksD, pch="*", cex=2, main="Influential Obs by Cooks distance")  
+abline(h = 4/n, col="red")  # add cutoff line
+text(x=1:length(cooksD), y=cooksD, labels=ifelse((cooksD>(4/n)),names(cooksD),""), col="red", pos = 4)
+```
+
+Till now, we can say that the linear regression assumption is violated in this case, e.g. error is not following the normal distribution. Therefore, how about we delete the influential points and re-fit the model: 
+
+```{r}
+dta.outliers_removed <- dta[-influential_obs, ]
+
+fit.outliers_removed <- lm(dta.outliers_removed$weight ~ dta.outliers_removed$height)
+summary(fit.outliers_removed)
+```
+Somehow, we saw the model assumption is satisfied when the influential cases removed.
+
+```{r}
+par(mfrow=c(1,2))
+plot(fit.outliers_removed, which=c(1,2))
+```
+
+The regression line changes when we remove the influential observations. Dangerous!!!
+
+```{r}
+par(mfrow=c(1,2))
+plot(dta$height, dta$weight, ylab = "Weight (lbs)", xlab = "Height (inches)",
+     main = "With Outliers")
+abline(fit, col = "orange", lwd = 3)
+
+plot(dta.outliers_removed$height, dta.outliers_removed$weight, ylab = "Weight (lbs)", xlab = "Height (inches)",
+     main = "Outliers removed")
+abline(fit.outliers_removed, col = "orange", lwd = 3)
+```
+
+But, the action of deleting of influential cases is often not the solution due to produce the bias estimates.
+
+Through this case, we have reviewed:
+
+[Influential points = Outliers & Leverage]{style="color:red"}  
+
+A point that makes a lot of difference in a regression case, is called 'an influential point'. Usually influential points have two characteristics:
+
+  - They are [outliers]{style="color:red"}, i.e. graphically they are **far from the pattern described by the other points**, that means that the relationship between x and y is different for that point than for the other points.\
+  - They are in a position of [high leverage]{style="color:red"}, meaning that the value of the variable x is far from the mean. Observations with **very low or very high values of x** are in positions of high leverage.
+
+<aside>
+Remind knowledge
+
+  1.  Discrepancy: Difference between the predicted and observed value\
+    -   Measured by Studentized Residuals\
+  2.  Leverage: high leverage if it has "extreme" predictor x values\
+    -   Measured by Hat Value\
+  3.  Influence: Assesses how much regression equation would change if an observation/potential outlier was dropped from the analysis\
+    -   Measured by Cook's Distance, Difference in Fit (DFFITS), or Difference in coefficients (DFBETAS)\
+</aside>
+
+## Message take-away
+
+  - Removing influential cases is not the optimal solution.   
+  - In the real-life analysis, we can use other types of regression:  
+    * Ridge regression   
+    * Robust regression   
+    * IRLS Robust regression   
+    * Lowess method  
+    * Regression trees   
+    * and etc...   
+
+# Bayesian approach 
+
+## Introduction to a regression model in Bayesian way
+
+$$ y = \beta_0 + \beta_1 x + \epsilon $$
+
+With Bayesian approach distribution of $\epsilon$ does not have to be Gaussian (normal), we are going to use robust assumption.
+
+![Parameterization of the model for MCMC (adapted from @RN721)](RobustLinearRegression.jpg)
+
+Bayes theorem for this model:
+
+$$
+p(\beta_0, \beta_1, \sigma, \gamma \mid D) = \frac{p(D \mid \beta_0, \beta_1, \sigma, \gamma) \ p(\beta_0, \beta_1, \sigma, \gamma)}{\int \int \int \int p(D \mid \beta_0, \beta_1, \sigma, \gamma) \ p(\beta_0, \beta_1, \sigma, \gamma) \ d\beta_0 \ d\beta_1 \ d\sigma \ d\gamma}
+$$
+
+Create the data list.
+
+```{r read data in JAGS/stan}
+y <- dta$weight
+x <- dta$height
+dataList <- list(x = x, y = y)
+```
+
+## MCMC in JAGS
+
+### Describe the model.
+
+**Based on the Normal distribution** (demonstrating purpose, not run)
+
+```{r, eval=FALSE}
+modstring_norm = "
+# Specify the Normal model for none-standardized data:
+model {
+    for (i in 1:Ntotal) {
+        y[i] ~ dnorm(mu[i], prec)
+        mu[i] = b[1] + b[2]*log_income[i] 
+    }
+    
+    for (i in 1:2) {
+        b[i] ~ dnorm(0.0, 1.0/1.0e6)
+    }
+    
+    prec ~ dgamma(5/2.0, 5*10.0/2.0)
+    sig2 = 1.0 / prec
+    sig = sqrt(sig2)
+} "
+```
+
+**Based on the Student-t distribution**, robust assumption   
+
+```{r desc model in JAGS}
+ modelString = "
+# Standardize the data:
+data {
+    Ntotal <- length(y)
+    xm <- mean(x)
+    ym <- mean(y)
+    xsd <- sd(x)
+    ysd <- sd(y)
+    for ( i in 1:length(y) ) {
+      zx[i] <- (x[i] - xm) / xsd
+      zy[i] <- (y[i] - ym) / ysd
+    }
+}
+# Specify the model for standardized data:
+model {
+    for ( i in 1:Ntotal ) {
+      zy[i] ~ dt( zbeta0 + zbeta1 * zx[i] , 1/zsigma^2 , nu )
+    }
+    # Priors vague on standardized scale:
+    zbeta0 ~ dnorm(0, 1/(10)^2 )  
+    zbeta1 ~ dnorm(0, 1/(10)^2 )
+    zsigma ~ dunif(1.0E-3, 1.0E+3 )
+    nu ~ dexp(1/30.0)
+    # Transform to original scale:
+    beta1 <- zbeta1 * ysd / xsd  
+    beta0 <- zbeta0 * ysd  + ym - zbeta1 * xm * ysd / xsd 
+    sigma <- zsigma * ysd
+}
+"
+# Write out modelString to a text file
+writeLines(modelString, con="TEMPmodel.txt")
+```
+
+In the tutorial, we just want to execute the model specified by t-student distribution.
+
+Every arrow has a corresponding line in the descriptive diagram.\
+
+Variable names starting with "`z`" mean that these variables are standardized (`z-scores`).
+
+<aside>
+**The intention of using z-scores in JAGS is to overcome a problem of correlation of the parameters (as the simulation the correlation between** $\beta_0$ and $\beta_1$).
+</aside>
+
+Strong correlation creates thin and long shape on scatter-plot of the variables which makes Gibbs sampling very slow and inefficient.
+
+But remember to scale back to the original measures. 
+
+HMC implemented in Stan does not have this problem. This can be applied to STAN in all situation !!!
+
+```{r, eval=FALSE}
+parameters = c("beta0" ,  "beta1" ,  "sigma", 
+              "zbeta0" , "zbeta1" , "zsigma", "nu")
+adaptSteps = 500  # Number of steps to "tune" the samplers
+burnInSteps = 1000
+nChains = 4 
+thinSteps = 1
+numSavedSteps=20000
+nIter = ceiling((numSavedSteps*thinSteps ) / nChains )
+jagsModel = jags.model("TEMPmodel.txt", data=dataList ,
+                      n.chains=nChains, n.adapt=adaptSteps)
+update(jagsModel, n.iter=burnInSteps)
+codaSamples = coda.samples(jagsModel, variable.names=parameters, 
+                          n.iter=nIter, thin=thinSteps)
+```
+
+```{r, include=FALSE}
+#saveRDS(codaSamples, file="SimplelinearreginJAGs.Rds")
+codaSamples <- readRDS(file="SimplelinearreginJAGs.Rds")
+```
+
+### Explore the MCMC object  
+
+```{r}
+summary(codaSamples)
+plot(codaSamples, trace=TRUE, density=FALSE) # note: many graphs
+autocorr.plot(codaSamples, ask=F)
+effectiveSize(codaSamples)
+#gelman.diag(codaSamples)
+gelman.plot(codaSamples)   # lines may return error ==> Most likely reason: collinearity of parameters 
+(HDIofChains <- lapply(codaSamples, function(z) cbind(Mu = hdi(codaSamples[[1]][,1]), Sd = hdi(codaSamples[[1]][,2]))))
+```
+
+Look at strong correlation between beta0 and beta1 which slows Gibbs sampling down.
+
+```{r}
+head(as.matrix(codaSamples[[1]]))
+pairs(as.matrix(codaSamples[[1]])[,1:4])
+```
+
+## MCMC in Stan
+
+### Describe the model in Stan
+
+In order to give a vague priors to slope and intercept consider the following arguments:
+
+1.  The largest possible value of slope is
+
+$$ \frac{\sigma_y}{\sigma_x} $$
+
+when variables $x$ and $y$ are perfectly correlated.
+
+Then standard deviation of the slope parameter $\beta_1$ should be large enough to make the maximum value easily achievable.
+
+2.  Size of intercept is defined by value of
+
+$$ E[X] \frac{\sigma_y}{\sigma_x} $$
+
+So, the prior should have enough width to include this value.
+
+```{r}
+modelString = "
+data {
+    int<lower=1> Ntotal;
+    real x[Ntotal];
+    real y[Ntotal];
+    real meanY;
+    real sdY;
+    real meanX;
+    real sdX;
+}
+transformed data {
+    real unifLo;
+    real unifHi;
+    real expLambda;
+    real beta0sigma;
+    real beta1sigma;
+    unifLo = sdY/1000;
+    unifHi = sdY*1000;
+    expLambda = 1/30.0;
+    beta1sigma = 10*fabs(sdY/sdX);
+    beta0sigma = 10*(sdY^2+sdX^2)    / 10*fabs(meanX*sdY/sdX);
+}
+parameters {
+    real beta0;
+    real beta1;
+    real<lower=0> nu; 
+    real<lower=0> sigma; 
+}
+model {
+    sigma ~ uniform(unifLo, unifHi); 
+    nu ~ exponential(expLambda);
+    beta0 ~ normal(0, beta0sigma);
+    beta1 ~ normal(0, beta1sigma);
+    for (i in 1:Ntotal) {
+        y[i] ~ student_t(nu, beta0 + beta1 * x[i], sigma);
+    }
+}
+"
+```
+
+```{r, eval=FALSE}
+stanDsoRobustReg <- stan_model(model_code=modelString) 
+```
+
+```{r}
+dat<-list(Ntotal=length(dta$weight), 
+          y=dta$weight, 
+          meanY=mean(dta$weight),
+          sdY=sd(dta$weight),
+          x=dta$height,
+          meanX=mean(dta$height),
+          sdX=sd(dta$height))
+```
+
+```{r, eval=FALSE}
+fitSimRegStan <- sampling(stanDsoRobustReg, 
+             data=dat, 
+             pars=c('beta0', 'beta1', 'nu', 'sigma'),
+             iter=5000, chains = 4, cores = 4)
+```
+
+Save the fitted object.
+
+```{r, include=FALSE}
+#saveRDS(fitSimRegStan,file="fitSimRegStan.Rdata")
+fitSimRegStan <- readRDS("fitSimRegStan.Rdata")
+```
+
+### Explore the MCMC object
+
+```{r}
+print(fitSimRegStan)
+plot(fitSimRegStan)
+rstan::traceplot(fitSimRegStan, ncol=1, inc_warmup=F)
+pairs(fitSimRegStan, pars=c('nu','beta0','beta1','sigma'))
+stan_scat(fitSimRegStan, c('beta0','beta1'))
+stan_scat(fitSimRegStan, c('beta1','sigma'))
+stan_scat(fitSimRegStan, c('beta0','sigma'))
+stan_scat(fitSimRegStan, c('nu','sigma'))
+stan_dens(fitSimRegStan)
+stan_ac(fitSimRegStan, separate_chains = T)
+stan_diag(fitSimRegStan,information = "sample",chain=0)
+stan_diag(fitSimRegStan,information = "stepsize",chain = 0)
+stan_diag(fitSimRegStan,information = "treedepth",chain = 0)
+stan_diag(fitSimRegStan,information = "divergence",chain = 0)
+```
+
+Work with `shinystan` object.
+
+```{r, eval=FALSE}
+launch_shinystan(fitSimRegStan)
+```
+
+## Using fitted regression model for prediction
+
+Recall that the data in this example contains predictor height and output weight for a group of people from `Ht-Wt.csv` (data above).
+
+Plot all heights observed in the sample and check the summary of the variable.
+
+```{r height descriptive}
+plot(1:length(dat$x),dat$x)
+summary(dat$x)
+```
+
+Can we predict weight of a person who is 50 or 80 inches tall?
+
+To do this we can go through all pairs of simulated parameters ($\beta_0$, $\beta_1$) and use them to simulate $y(50)$ and $y(80)$.\
+This gives distribution of predicted values.
+
+```{r}
+summary(fitSimRegStan)
+regParam<-cbind(Beta0=rstan::extract(fitSimRegStan,pars="beta0")$'beta0',
+                Beta1=rstan::extract(fitSimRegStan,pars="beta1")$'beta1')
+head(regParam)
+predX50<-apply(regParam,1,function(z) z%*%c(1,50))
+predX80<-apply(regParam,1,function(z) z%*%c(1,80))
+```
+
+Plot both distributions, look at their summaries and HDIs.
+
+```{r}
+suppressWarnings(library(HDInterval))
+den<-density(predX50)
+plot(density(predX80),xlim=c(60,240))
+lines(den$x,den$y)
+summary(cbind(predX50,predX80))
+rbind(predX50=hdi(predX50),predX80=hdi(predX80))
+```
+
+
+__Both JAGS and Stan produced the identical results.__
+
+# Compare the fit between FA and BA
+
+
+```{r}
+plot(dta$height, dta$weight, ylab = "Weight (lbs)", xlab = "Height (inches)",
+     main = "With Outliers")
+abline(fit, col = "orange", lwd = 2)
+abline(a=-139.96225, b= 4.46120, col = "blue", lwd = 1)
+abline(fit.outliers_removed, col = "red", lty="dashed", lwd =1)
+```
+
+|           | With influential | Without influential | Bayesian approach w/ robust assumption |
+|:---------:|   :---------:    |     :---------:       |         :---------:          |
+|           |<span style="color:orange">orange</span>, solid    |<span style="color:red">red</span>, dashed            |<span style="color:blue">blue</span>, solid                |
+|Intercept|-104.78            |-155.91                | -139.96                 |
+|Slope|3.98                   |4.71                   |4.46                   |
+
+> Great! From the comparison, we can see that using Bayesian Methods to fit simple linear regression can be robust when the traditional regression has the influential points. 
+
+# Further reading 
+
+  - Bayesian Methods, UC's lecture   
+  - Gelman, A., Carlin, J., Stern, H., Dunson, D., Vehtari, A., & Rubin, D. (2013). Bayesian Data Analysis, Third Edition, 3rd Edition (3rd edition ed.): CRC Press.   
+  - Kutner, M. H. (2005). Applied linear statistical models (5th ed. ed.). Boston: McGraw-Hill Irwin.
