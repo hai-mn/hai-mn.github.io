@@ -1,0 +1,15 @@
+Title: 
+Bogus Mplus text;
+Data:
+File is Grandey & Cropanzano 1999 MonteCarlo.dat;
+Variable:
+names are JD LD TI WRS WFC;
+Analysis:
+Estimator = ML;
+Model:
+TI on JD WRS;
+LD on JD WFC;
+JD on WRS WFC;
+WFC on WRS;
+Output:
+Standardized sampstat Tech1 Tech8 MODINDICES(1);

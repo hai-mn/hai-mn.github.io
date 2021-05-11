@@ -9,7 +9,7 @@ categories:
   - Biostatistics
   - Tutorial
   - R
-  - Bayesian methods
+  - Bayesian Methods
   - JAGS/Stan
 bibliography: bibliographs.bib
 base_url: https://hai-mn.github.io

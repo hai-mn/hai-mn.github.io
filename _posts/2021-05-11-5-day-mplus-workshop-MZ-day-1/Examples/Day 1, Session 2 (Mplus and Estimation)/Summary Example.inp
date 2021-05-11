@@ -1,0 +1,14 @@
+Title: 
+Bogus Mplus text;
+Data: 
+File is summary.dat;
+Type = means stdeviations correlation;
+Nobservations = 500;
+Variable: 
+names are y x1 x2;
+Analysis:
+Estimator = ML;
+Model:
+y on x1 x2;
+Output:
+Standardized sampstat TECH1;
