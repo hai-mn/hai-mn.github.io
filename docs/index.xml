@@ -16,7 +16,7 @@
     <item>
       <title>A Note on 5-day Workshop on Mplus ~ Day 1</title>
       <dc:creator>Hai Nguyen</dc:creator>
-      <link>https://hai-mn.github.io/posts/2021-05-11-5-day-mplus-workshop-MZ-day-1</link>
+      <link>https://hai-mn.github.io/posts/2021-05-11-5-day-mplus-workshop-michael-zyphur-day-1</link>
       <description>A Crash Course on Social Psychology Research from Michael Zyphur: Regression - Pathway analysis - Model fit  
 Combination of using Mplus and R  
 Drawing a pathway graph/causal graph using `DiagrammeR` package</description>
@@ -24,9 +24,9 @@ Drawing a pathway graph/causal graph using `DiagrammeR` package</description>
       <category>Social Sciences</category>
       <category>Mplus</category>
       <category>Pathway/causal graph</category>
-      <guid>https://hai-mn.github.io/posts/2021-05-11-5-day-mplus-workshop-MZ-day-1</guid>
+      <guid>https://hai-mn.github.io/posts/2021-05-11-5-day-mplus-workshop-michael-zyphur-day-1</guid>
       <pubDate>Tue, 11 May 2021 00:00:00 +0000</pubDate>
-      <media:content url="https://hai-mn.github.io/posts/2021-05-11-5-day-mplus-workshop-MZ-day-1/distill-preview.png" medium="image" type="image/png" width="1248" height="768"/>
+      <media:content url="https://hai-mn.github.io/posts/2021-05-11-5-day-mplus-workshop-michael-zyphur-day-1/distill-preview.png" medium="image" type="image/png" width="1248" height="768"/>
     </item>
     <item>
       <title>Fitting a Simple Linear Regression in Bayesian Context</title>
