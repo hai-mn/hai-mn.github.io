@@ -5,7 +5,7 @@ description: |
   MplusAutomation: a brief guide     
 author:
   - name: Hai Nguyen
-date: May 21, 2021
+date: May 26, 2021
 categories:
   - Biostatistics
   - Psychology/Socialogy
