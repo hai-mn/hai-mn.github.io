@@ -20,7 +20,7 @@
       <description>Mplus as a knitr engine in Rmarkdown  
 MplusAutomation: a brief guide</description>
       <category>Biostatistics</category>
-      <category>Psychology/Socialogy</category>
+      <category>Psychology/Sociology</category>
       <category>Mplus</category>
       <category>R</category>
       <category>MplusAutomation</category>
@@ -36,9 +36,9 @@ MplusAutomation: a brief guide</description>
 Combination of using Mplus and R  
 Drawing a pathway graph/causal graph using `DiagrammeR` package</description>
       <category>Biostatistics</category>
-      <category>Social Sciences</category>
+      <category>Psychology/Sociology</category>
       <category>Mplus</category>
-      <category>Pathway/causal graph</category>
+      <category>Pathway/Causal Graph</category>
       <guid>https://hai-mn.github.io/posts/2021-05-11-5-day-mplus-workshop-michael-zyphur-day-1</guid>
       <pubDate>Tue, 11 May 2021 00:00:00 +0000</pubDate>
       <media:content url="https://hai-mn.github.io/posts/2021-05-11-5-day-mplus-workshop-michael-zyphur-day-1/distill-preview.png" medium="image" type="image/png" width="1248" height="768"/>

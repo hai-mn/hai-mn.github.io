@@ -8,7 +8,7 @@ author:
 date: May 26, 2021
 categories:
   - Biostatistics
-  - Psychology/Socialogy
+  - Psychology/Sociology
   - Mplus  
   - R
   - MplusAutomation  
