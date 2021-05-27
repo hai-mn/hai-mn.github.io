@@ -1,4 +1,4 @@
-------Begin Mplus Model Run: 26May2021 22:22:10------
+------Begin Mplus Model Run: 26May2021 22:25:45------
 Run options:
 	Recursive (run models in subdirectories): FALSE
 	Show output on console: FALSE
@@ -6,4 +6,4 @@ Run options:
 ------
 Currently running model: 2-iris-LPA_means_correlated_free_variances.inp
 
-------End Mplus Model Run: 26May2021 22:22:14------
+------End Mplus Model Run: 26May2021 22:25:46------
