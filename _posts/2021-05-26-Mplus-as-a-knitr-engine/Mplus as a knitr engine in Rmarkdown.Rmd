@@ -1,0 +1,326 @@
+---
+title: "Set up to run Mplus inside Rmarkdown"
+description: |
+  Mplus as a knitr engine in Rmarkdown  
+  MplusAutomation: a brief guide     
+author:
+  - name: Hai Nguyen
+date: May 11, 2021
+categories:
+  - Biostatistics
+  - Psychology/Socialogy
+  - Mplus  
+  - R
+  - MplusAutomation  
+  - Tutorial
+base_url: https://hai-mn.github.io
+output:
+  distill::distill_article:
+    toc: true
+    toc_float: yes
+    toc_depth: 4
+    theme: journal
+    highlight: haddock
+    highlight_downlit: false
+bibliography: bibliography.bib
+---
+
+## Goals
+
+- This post I aim to set up the M*plus* engine using `knitr` package in Rmarkdown.   
+- After that, I run a simple model example to demonstrate how M*plus* works within Rmarkdown. (Therefore, I do not intent to explain the model results and fit here.)  
+
+
+## Set up Mplus in Rmarkdown
+
+Globally we can [change the engine interpreters for one/multiple engine(s)](https://bookdown.org/yihui/rmarkdown/language-engines.html), we applied for M*plus*:
+
+```{r engine path setup}
+knitr::opts_chunk$set(engine.path = list(
+  mplus = "C:/Program Files/Mplus/Mplus"
+))
+```
+
+Next step, we [register a M*plus* custom language engine](https://bookdown.org/yihui/rmarkdown-cookbook/custom-engine.html):
+
+```{r}
+knitr::knit_engines$set(mplus = function(options) {
+    code <- paste(options$code, collapse = "\n")
+    fileConn<-file("formplus.inp")
+    writeLines(code, fileConn)
+    close(fileConn)
+    out  <- system2("C:/Program Files/Mplus/Mplus", "formplus.inp")
+    fileConnOutput <- file("formplus.out")
+    mplusOutput <- readLines(fileConnOutput)
+    knitr::engine_output(options, code, mplusOutput)
+})
+```
+
+For more language engines, we can refer demos from [Yihui Xie's post](https://yihui.org/knitr/demo/engines/).
+
+Further reading, we may read [a Rich Jones' post on rpubs](https://rpubs.com/rnjma/730770)
+
+## Gentle introduction to `MplusAutomation`
+
+The MplusAutomation package for R [@RN789]: 
+
+- Creating many similar syntax files:
+  * Simulations with different sample sizes
+  * Excluding different parts of a sample
+- Running batches of input files  
+- Extracting and tabulating model parameters and test statistics.
+
+
+Four core routines support these aims:   
+
+- `createModels`  
+- `runModels`   
+- `readModels`   
+- `compareModels`  
+  
+The MplusAutomation package can be installed within R using the following call:
+
+```{r, warning=FALSE}
+if (!require(MplusAutomation)) install.packages("MplusAutomation")
+library(MplusAutomation)
+```
+
+## Run a LPA via `MplusAutomation`
+
+### Generating data
+
+I use Edgar Anderson's Iris Data with 150 cases (rows) and 5 variables named `Sepal.Length`, `Sepal.Width`, `Petal.Length`, `Petal.Width`, and `Species`.
+
+`iris` data set gives the measurements in cm of the variables sepal length and width and petal length and width, respectively, for 50 flowers from each of 3 species of iris: Iris setosa, versicolor, and virginica.
+
+```{r, eval=FALSE}
+?iris
+```
+
+```{r}
+head(iris)
+```
+
+`prepareMPlusData()` function prepares a data file in the MPlus' format, namely, a tab-separated `.dat` file with no column names.
+
+```{r}
+prepareMplusData(iris[, -5], "iris.dat", inpfile=TRUE)
+```
+
+### Latent Profile Analysis using Mplus
+
+We can directly run in Rmarkdown or apply `runModels` to run the `.inp` files.
+
+#### Run direct in Rmarkdown
+
+1. One for which we estimate different means between 2 profiles
+
+```{mplus}
+TITLE: iris LPA
+
+DATA:
+    File is iris.dat
+    
+VARIABLE: 
+
+    Names are x1, x2, x3, x4;
+
+    Classes = c(2) ;
+            
+MODEL:
+    
+    %overall%
+    
+    x1 x2 x3 x4; 
+    
+    %c#1%
+    
+    [x1-x4];
+    
+    %c#2%
+    
+    [x1-x4];
+    
+ANALYSIS: 
+    Type is mixture;
+            
+OUTPUT:
+    Tech11;
+```
+
+2. One for which we estimate different means between the 2 profiles and the model is specified to estimate the correlation (or covariance) for the variables
+
+```{mplus}
+TITLE: iris LPA
+
+DATA:
+    File is iris.dat
+    
+VARIABLE: 
+
+    Names are x1, x2, x3, x4;
+
+    Classes = c(2) ;
+            
+MODEL:
+    
+    %overall%
+    
+    x1 x2 x3 x4; 
+    
+    x1 WITH x2-x4;
+    x2 WITH x3-x4;
+    x3 WITH x4;
+
+    %c#1%
+    
+    [x1-x4];
+    
+    %c#2%
+    
+    [x1-x4];
+    
+ANALYSIS: 
+    Type is mixture;
+            
+OUTPUT:
+    Tech11;
+```
+
+3. One for which we estimate different means and the model is specified to different covariances (and variable variances) between the 2 profiles
+
+```{Mplus}
+TITLE: iris LPA
+
+DATA:
+    File is iris.dat
+    
+VARIABLE: 
+
+    Names are x1, x2, x3, x4;
+
+    Classes = c(2) ;
+            
+MODEL:
+
+    %c#1%
+    
+    x1 x2 x3 x4; 
+    
+    x1 WITH x2-x4;
+    x2 WITH x3-x4;
+    x3 WITH x4;
+    
+    [x1-x4];
+    
+    %c#2%
+    
+    x1 x2 x3 x4; 
+    
+    x1 WITH x2-x4;
+    x2 WITH x3-x4;
+    x3 WITH x4;
+    
+    [x1-x4];
+    
+ANALYSIS: 
+    Type is mixture;
+            
+OUTPUT:
+    Tech11;
+```
+
+> The disadvantage is that Rmarkdown shows a lengthy output, making "eye strain" to track the necessary information.
+
+#### Using `runModels`
+
+Save each chunk of the following models (either in a `.txt` file or in MPlus style using a `.inp` file type), then run with `runModels`
+
+```{r}
+# Model 1
+runModels("2-iris-LPA_means.inp")
+# Model 2
+runModels("2-iris-LPA_means_correlated.inp")
+# Model 3
+runModels("2-iris-LPA_means_correlated_free_variances.inp")
+```
+
+
+```{r}
+m1 <- readModels("2-iris-LPA_means.out")
+m2 <- readModels("2-iris-LPA_means_correlated.out")
+m3 <- readModels("2-iris-LPA_means_correlated_free_variances.out")
+```
+### Compare the model fit
+
+Now, we inspect the fit statistics and other summary information for the three models:
+
+```{r}
+m1$summaries$BIC
+m2$summaries$BIC
+m3$summaries$BIC
+```
+
+And examine parameters:
+
+```{r}
+m1$parameters[[1]][-nrow(m1$parameters[[1]]), ]
+m2$parameters[[1]][-nrow(m2$parameters[[1]]), ]
+m3$parameters[[1]][-nrow(m3$parameters[[1]]), ]
+```
+
+One last thing, I want to mention about the `createModels()` which can creates a set of models using a template. We can save file as `mplus_iris_lpa_template.txt`
+
+~~~
+[[init]]
+iterators = classes;
+classes = 1:9;
+filename = "[[classes]]-iris-LPA.inp";
+outputDirectory = the_dir;
+[[/init]]
+
+TITLE: iris LPA
+
+DATA:
+    File is iris.dat
+    
+VARIABLE: 
+
+    Names are x1 x2 x3 x4;
+
+    Classes = c([[classes]]) ;
+
+MODEL:
+    
+    %overall%
+    
+    x1 x2 x3 x4; 
+    
+    [x1-x4];
+
+            
+ANALYSIS: 
+    Type is mixture;
+            
+OUTPUT:
+    Tech11;
+~~~
+
+Here is an example that would create models with different numbers of profiles, from 1 to 9. 
+
+```{r, eval=FALSE}
+#Set the folder containing mplus.txt as working
+createModels("mplus_iris_lpa_template.txt")
+
+#Set the folder containing input files as working directory
+runModels()
+
+#Set the folder containing output files as working directory
+models_list <- readModels()
+outputs<-extractModelParameters()
+```
+
+
+Further reading, we can look at [a Josh Rosenberg's post](https://spartanideas.msu.edu/2017/09/02/using-mplus-from-r-with-mplusautomation/) and [the Mplus website](https://www.statmodel.com/JohnsHopkinsVideosDays2-3.shtml)
+
+More information about the `MplusAutomation` package in [GitHub](https://github.com/michaelhallquist/MplusAutomation).  

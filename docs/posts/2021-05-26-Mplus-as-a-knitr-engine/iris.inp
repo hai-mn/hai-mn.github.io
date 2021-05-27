@@ -1,0 +1,5 @@
+TITLE: Your title goes here
+DATA: FILE = "iris.dat";
+VARIABLE: 
+NAMES = Sepal_Length Sepal_Width Petal_Length Petal_Width; 
+MISSING=.;

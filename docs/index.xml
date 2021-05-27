@@ -29,6 +29,21 @@ Drawing a pathway graph/causal graph using `DiagrammeR` package</description>
       <media:content url="https://hai-mn.github.io/posts/2021-05-11-5-day-mplus-workshop-michael-zyphur-day-1/distill-preview.png" medium="image" type="image/png" width="1248" height="768"/>
     </item>
     <item>
+      <title>Set up to run Mplus inside Rmarkdown</title>
+      <dc:creator>Hai Nguyen</dc:creator>
+      <link>https://hai-mn.github.io/posts/2021-05-26-Mplus-as-a-knitr-engine</link>
+      <description>Mplus as a knitr engine in Rmarkdown  
+MplusAutomation: a brief guide</description>
+      <category>Biostatistics</category>
+      <category>Psychology/Socialogy</category>
+      <category>Mplus</category>
+      <category>R</category>
+      <category>MplusAutomation</category>
+      <category>Tutorial</category>
+      <guid>https://hai-mn.github.io/posts/2021-05-26-Mplus-as-a-knitr-engine</guid>
+      <pubDate>Tue, 11 May 2021 00:00:00 +0000</pubDate>
+    </item>
+    <item>
       <title>Fitting a Simple Linear Regression in Bayesian Context</title>
       <dc:creator>Hai Nguyen</dc:creator>
       <link>https://hai-mn.github.io/posts/2021-04-22-Simple-linear-regression-in-Bayesian-way</link>
