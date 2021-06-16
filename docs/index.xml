@@ -12,7 +12,22 @@
       <link>https://hai-mn.github.io</link>
     </image>
     <generator>Distill</generator>
-    <lastBuildDate>Wed, 26 May 2021 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 08 Jun 2021 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Metabolic Syndrome Prevalence across time using NHANES Data</title>
+      <dc:creator>Hai Nguyen</dc:creator>
+      <link>https://hai-mn.github.io/posts/2021-06-09-mets-using-nhanesdata</link>
+      <description>How to correctly approach NHANES data to make estimates that are representative of the population    
+Define Metabolic Syndrome based on ATP III  
+Look at the MetS prevalence over time</description>
+      <category>Biostatistics</category>
+      <category>NHANES approach</category>
+      <category>R</category>
+      <category>ggplot2</category>
+      <guid>https://hai-mn.github.io/posts/2021-06-09-mets-using-nhanesdata</guid>
+      <pubDate>Tue, 08 Jun 2021 00:00:00 +0000</pubDate>
+      <media:content url="https://hai-mn.github.io/posts/2021-06-09-mets-using-nhanesdata/distill-preview.png" medium="image" type="image/png" width="1248" height="768"/>
+    </item>
     <item>
       <title>Set up to run Mplus inside Rmarkdown</title>
       <dc:creator>Hai Nguyen</dc:creator>
