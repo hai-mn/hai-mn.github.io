@@ -12,7 +12,19 @@
       <link>https://hai-mn.github.io</link>
     </image>
     <generator>Distill</generator>
-    <lastBuildDate>Tue, 08 Jun 2021 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 25 Aug 2021 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Selection bias</title>
+      <dc:creator>Hai Nguyen</dc:creator>
+      <link>https://hai-mn.github.io/posts/2021-08-25-selection-bias</link>
+      <description>Understanding: definition, examples  
+Applying in DAG  
+General solution</description>
+      <category>Causal Inference</category>
+      <category>DiagrammeR</category>
+      <guid>https://hai-mn.github.io/posts/2021-08-25-selection-bias</guid>
+      <pubDate>Wed, 25 Aug 2021 00:00:00 +0000</pubDate>
+    </item>
     <item>
       <title>Metabolic Syndrome Prevalence across time using NHANES Data</title>
       <dc:creator>Hai Nguyen</dc:creator>
