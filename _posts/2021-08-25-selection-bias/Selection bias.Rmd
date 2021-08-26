@@ -1,9 +1,9 @@
 ---
 title: "Selection bias"
 description: |
-  Understanding: definition, examples    
-  Applying in DAG    
-  General solution    
+  - Understanding: definition, examples  
+  - Applying in DAG  
+  - General solution  
 author:
   - name: Hai Nguyen
 date: August 25, 2021
