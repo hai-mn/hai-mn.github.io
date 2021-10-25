@@ -20,7 +20,6 @@ output:
     toc: true
     toc_float: yes
     toc_depth: 3
-    code_folding: hide
     theme: journal
     highlight: haddock
     highlight_downlit: false
@@ -213,12 +212,14 @@ We can map on Chicago Neighborhood map (using ArcGIS) as such
 
 Save for later on!!! 
 
-## Reference
+## Refs
 
-* Pugach, Oksana. 2018. "Latent Profile Analysis of Chicago Neighborhoods" Unpublished Work. Chalk Talk - Institute for Health Resereach; Policy - Methodology Research Core.
+Pugach, Oksana. 2018. "Latent Profile Analysis of Chicago Neighborhoods" Unpublished Work. Chalk Talk - Institute for Health Resereach; Policy - Methodology Research Core.
 
-* University of Virginia Library, Research Data Services + Sciences. "Getting Started with Factor Analysis" - https://data.library.virginia.edu/getting-started-with-factor-analysis/
+University of Virginia Library, Research Data Services + Sciences. "Getting Started with Factor Analysis" - https://data.library.virginia.edu/getting-started-with-factor-analysis/
 
-* Stats Stackexchange. "How to calculate the loading matrix from the score matrix and a data matrix X (PCA)?" - https://stats.stackexchange.com/questions/447952/how-to-calculate-the-loading-matrix-from-the-score-matrix-and-a-data-matrix-x-p 
+Stats Stackexchange. "How to calculate the loading matrix from the score matrix and a data matrix X (PCA)?" - https://stats.stackexchange.com/questions/447952/how-to-calculate-the-loading-matrix-from-the-score-matrix-and-a-data-matrix-x-p 
 
-* Luca Scrucca. 2020. "A quick tour of mclust" - https://cran.r-project.org/web/packages/mclust/vignettes/mclust.html
+Luca Scrucca. 2020. "A quick tour of mclust" - https://cran.r-project.org/web/packages/mclust/vignettes/mclust.html
+
+Luca Scrucca, Michael Fop, T. Brendan Murphy,Adrian E. Raftery. "mclust 5: Clustering, Classification and Density Estimation Using Gaussian Finite Mixture Models." R J. 2016 August ; 8(1): 289-317
