@@ -45,15 +45,11 @@ __Selection bias__ happens in different fields. Everything can be "selection bia
   
 Some other names refer to __"selection bias"__    
 
-- Berkson's bias  
-- Healthy worker effect  
-- Censoring/truncation  
-- Non-response bias  
-- Prevalent-user bias  
-- Volunteer bias  
-- Incidence-prevalence bias  
-- Index-event bias  
-- Survivor bias  
+  - Differential loss to follow-up (bias due to _informative censoring_)  
+  - Missing data bias, nonresponse bias  
+  - Healthy worker effect 
+  - Self-selection bias, volunteer bias   
+  - Selection affected by treatment received before study entry    
 
 ## Selection bias: set up  
 

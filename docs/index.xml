@@ -12,7 +12,24 @@
       <link>https://hai-mn.github.io</link>
     </image>
     <generator>Distill</generator>
-    <lastBuildDate>Wed, 25 Aug 2021 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 24 Oct 2021 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Latent Profile Analysis of Chicago Neighborhoods</title>
+      <dc:creator>Hai Nguyen</dc:creator>
+      <link>https://hai-mn.github.io/posts/2021-10-24-LPA Chicago Neighborhoods</link>
+      <description>American Census Survey data;    
+Factor Analysis;    
+Latent Profile Analysis: Gaussian Mixture modeling;</description>
+      <category>Biostatistics</category>
+      <category>Psychology/Sociology</category>
+      <category>Factor Analysis</category>
+      <category>Mclust</category>
+      <category>Tutorial</category>
+      <category>Mapping</category>
+      <guid>https://hai-mn.github.io/posts/2021-10-24-LPA Chicago Neighborhoods</guid>
+      <pubDate>Sun, 24 Oct 2021 00:00:00 +0000</pubDate>
+      <media:content url="https://hai-mn.github.io/posts/2021-10-24-LPA Chicago Neighborhoods/distill-preview.png" medium="image" type="image/png" width="1248" height="768"/>
+    </item>
     <item>
       <title>Selection bias</title>
       <dc:creator>Hai Nguyen</dc:creator>
