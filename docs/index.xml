@@ -43,6 +43,22 @@ General solution;</description>
       <pubDate>Wed, 25 Aug 2021 00:00:00 +0000</pubDate>
     </item>
     <item>
+      <title>Matching in R</title>
+      <dc:creator>Hai Nguyen</dc:creator>
+      <link>https://hai-mn.github.io/posts/2021-07-03-matching in R-causal-inference</link>
+      <description>Observational study;    
+Causal inference;    
+Matching;    
+R;</description>
+      <category>Biostatistics</category>
+      <category>Causal inference</category>
+      <category>Tutorial</category>
+      <category>R</category>
+      <guid>https://hai-mn.github.io/posts/2021-07-03-matching in R-causal-inference</guid>
+      <pubDate>Sat, 03 Jul 2021 00:00:00 +0000</pubDate>
+      <media:content url="https://hai-mn.github.io/posts/2021-07-03-matching in R-causal-inference/distill-preview.png" medium="image" type="image/png" width="1248" height="768"/>
+    </item>
+    <item>
       <title>Metabolic Syndrome Prevalence across time using NHANES Data</title>
       <dc:creator>Hai Nguyen</dc:creator>
       <link>https://hai-mn.github.io/posts/2021-06-09-mets-using-nhanesdata</link>

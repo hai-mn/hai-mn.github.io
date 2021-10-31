@@ -1,0 +1,290 @@
+---
+title: Matching in R
+description: |
+  Observational study;    
+  Causal inference;    
+  Matching;    
+  R;
+author:
+  - name: Hai Nguyen
+date: "July 03, 2021"
+categories:
+  - Biostatistics
+  - Causal inference
+  - Tutorial
+  - R
+base_url: https://hai-mn.github.io
+output:
+  distill::distill_article:
+    toc: true
+    toc_float: yes
+    toc_depth: 3
+    theme: journal
+    highlight: haddock
+    highlight_downlit: false
+bibliography: bibliography.bib
+---
+
+```{r setup, warning=FALSE, message=FALSE}
+library(DOS) # Design of Observational Studies
+library(tidyverse)
+library(kableExtra)
+library(optmatch)
+```
+
+**Multivariate matching is involved in 3 steps:**  
+(i) creating a distance matrix,  
+(ii) adding a propensity score caliper to the distance matrix, and   
+(iii) finding an optimal match.
+
+Matching in R created largely due to the efforts of Ben Hansen [@RN642], who created
+an R function, fullmatch, to do optimal matching from Fortan code created by Demetri Bertsekas [@RN644, @RN643].
+
+## Research questions  
+**Does financial aid increase college attendance?**
+
+## Goal  
+**Four matched samples will be constructed:** The construction of one of the four matched samples is presented in step-by-step detail.
+
+## Context  
+
+- During [1979-1981 Social Security Student Benefit  Program](https://www.rdocumentation.org/packages/DOS/versions/1.0.0/topics/dynarski) provided a substantial tuition benefit for a child of a deceased father, before the cancellation in 1982.   
+- Analyzing the impact on college attendance and completed schooling of the elimination of the Social Security Student Benefit Program in 1982   
+
+- From 1965 to 1982, the Social Security Administration paid for millions of students to go to college. Under this program, the 18- to 22-year-old children of deceased, disabled, or retired Social Security beneficiaries received monthly payments while enrolled full time in college.
+
+- In 1981, Congress voted to eliminate the program. Then was cancelled in 1982   
+
+- The program's demise provides an opportunity to measure the incentive effects of financial aid. Using difference-in-differences methodology, and proxying for benefit eligibility with the death of a parent during an individual's childhood, found that ? **the elimination of the Social Security student benefit program reduced college attendance probabilities**  
+
+### Data  
+
+Data `Xb` with 2820 rows and 8 columns:   
+- `faminc`: family income in units of $10,000   
+- `incmiss`: income missing (1 if family income is missing, 0 o.w.)   
+- `black`: 1 if black, 0 o.w.   
+- `hispanic`: 1 if hispanic, 0 o.w.   
+- `afqtpct`: the Armed Forces Qualifications Test   
+- `edm`: mother’s education (1 for less than high school, 2 for high school, 3 for some college, 4 for BA degree or more)   
+- `edmissm`: mother’s education missing (1 if missing, 0 o.w.)   
+- `female`: gender (1 for female, 0 for male)   
+
+> **Imputation:** `faminc` is set to 2 when `incmiss` = 1 indicating that `faminc` is missing, and `edm` is set to 0 when `edmissm`=1 indicating that `edm` is missing   
+
+> AFQT was missing for less than 2% of subjects, and these subjects are not used in the matching. With this restriction, there are 131 high school seniors with deceased fathers and 2689 other high school seniors in the 1979-1981 cohort (131+2689 = 2820)  
+
+The treatment `zb`, where is 1 if the father is deceased, and 0 o.w.   
+```{r data}
+data("dynarski")
+dim(dynarski)
+kable(head(dynarski, n=20), caption="First 20 people in the 1979-1981 cohort, the treatment zb and the eight covariates Xb") %>%
+  kable_styling(bootstrap_options = "striped", full_width = F)
+#write.csv(dynarski, file="dynarski.csv")
+```
+
+
+```{r Freq table of seniors}
+zb<-dynarski$zb
+zbf<-factor(zb,levels=c(1,0),labels=c("Father deceased","Father not deceased"))
+table(zbf)
+Xb<-dynarski[,3:10]
+```
+
+$\Rightarrow$ The 131 seniors with deceased fathers will each be matched to 10 controls whose fathers were not deceased.
+
+### Covariates with Missing Values
+
+```{r check missing}
+with(dynarski, table(incmiss))
+incmiss.per<-round(table(dynarski$incmiss)[2]/dim(dynarski)[1]*100,1)
+paste0("Percentage of income missing: ", incmiss.per)
+
+with(dynarski, table(edmissm))
+edmissm.per<-round(table(dynarski$edmissm)[2]/dim(dynarski)[1]*100,1)
+paste0("Percentage of mother's education missing: ", edmissm.per)
+```
+
+Discussion of the missing covariate values will be later on another post.
+
+## Propensity Score  
+The propensity score is estimated using a logit model.
+```{r ps}
+# Estimate the propensity score
+p <- glm(zb ~ Xb$faminc + Xb$incmiss + Xb$black + Xb$hisp + Xb$afqtpct + Xb$edmissm + Xb$edm + Xb$female, family = binomial)$fitted.values
+```
+
+$\Rightarrow$ The vector `p` contains the 2820 estimated propensity scores, $\hat{e}(\mathbf{x}_l)$, $l$ = 1, 2, ..., 2820.
+
+> It is reasonable to be able to improve the model: perhaps including interaction terms or transformations or polynomials or whatnot.
+
+Estimated propensity scores for 131 seniors with deceased fathers and 2689 other seniors in the 1979-1981 cohort, before the Social Security Student Benefit Program was eliminated.
+```{r boxplot}
+boxplot(p~zbf, ylab="Propensity score", main="1979-1981 Cohort")
+```
+
+```{r overlay histogram, message=FALSE}
+dynarski$p <- p
+ggplot(dynarski, aes(p, fill = zbf)) + 
+  geom_histogram(alpha = 0.5, aes(y = ..density..), position = 'identity') +
+  ggtitle("Figure of Overlay Histograms of PS in 2 Groups") +
+  theme_bw()
+```
+
+$\Longrightarrow$ the median $\hat{e}(\mathbf{x})$ in the treated group (`r round(median(p[zb==1]), 3)`) is about equal to the upper quartile among potential controls (`r round(quantile(p[zb==0], prob=.75), 3)`). Nonetheless, the distributions in Figure of Overlay Histogram of PS in 2 Groups overlap substantially, so matching appears to be possible.  
+
+## Distance Matrix
+Constructing in 2 steps:  
+- Step 1: computing the rankbased Mahalanobis distance $\rightarrow$ 131x2689 distance matrix   
+```{r smahal}
+#Robust Mahalanobis distance matrix, treated x control
+dmat<-smahal(zb,Xb)
+dim(dmat)
+
+kable(round(dmat[1:5,1:5],2), caption="First five rows and columns of the 131×2689 distance matrix using the rank-based Mahalanobis distance") %>%
+  kable_styling(bootstrap_options = "striped", full_width = F)
+```
+
+- Step 2: adding the caliper on the propensity score. The caliper was at $0.2 \times sd(\hat{e}(\mathbf{x}))$.  
+
+```{r caliper}
+#Add a caliper on the propensity score using a penalty function
+dmat<-addcaliper(dmat,zb,p,caliper=.2)
+dim(dmat)
+
+kable(round(dmat[1:5,1:5],2), caption="First five rows and columns of the 131×2689 distance matrix after adding the propensity score calipers") %>%
+  kable_styling(bootstrap_options = "striped", full_width = F)
+```
+
+$\Rightarrow$ Among these 25 entries, only 2 respected the caliper and did not incur a penalty (3.03 and 8.70).
+
+## Constructing the Match [@RN642]
+Matching ten controls to each senior with a deceased father: The `fullmatch` function needs to know the distance matrix, here `dmat`, matching 10-to-1 means 10x131 will be used, omitting 2689−10x131 = `r 2689-10*131`, which is the omit fraction be: `r round((2689-10*131)/2689*100,0)`%.
+
+```{r fullmatch}
+m<-fullmatch(dmat, data=dynarski, min.controls=10, max.controls=10, omit.fraction=1379/2689)
+```
+
+There is an entry in m for each of the 2820 seniors
+
+```{r}
+length(m)
+```
+
+The first ten entries in m are
+
+```{r}
+m[1:10]
+```
+
+i.e. the first senior of the 2820 seniors is in matched set #34 and the
+second senior is in matched set #10. The third senior was one of the 1379 unmatched
+controls; this is the meaning of the zero in m.01. The fourth senior is in matched
+set #87, the fifth is unmatched, and so on.
+
+The function matched(·) indicates who is matched. The first ten entries of matched(m) are
+
+```{r}
+matched(m)[1:10]
+```
+
+the first two seniors were matched but the third was not, and so on.
+
+There are 1441 matched seniors, where 1441 = 131×11, because the 131 seniors with deceased fathers were each matched to ten controls, making 131 matched sets each of size 11.
+
+```{r}
+sum(matched(m))
+sum(matched(m))/11
+```
+
+The first 3 matched sets are in Table below. The first match consists of 11 female high school seniors, neither black nor hispanic, whose mothers had a high school education, with family incomes between \$30,000 and \$40,000, mostly with test scores between 59% and 77%. In the second matched set, incomes were lower but test scores were higher. And so on.
+
+```{r matched set ex}
+# Housekeeping
+im<-as.integer(m) # matched set from 1 to 131
+dynarski<-cbind(dynarski,im) 
+dm<-dynarski[matched(m),] # only select matched cases, note that matched(m): T\F
+dm<-dm[order(dm$im,1-dm$zb),] # sort data according to matched set then zb decreasing
+
+# Table of matched set example
+#which(dm$id==10) # [1] 188
+#which(dm$id==396) # [1] 23
+#which(dm$id==3051) # [1] 1068
+
+kable(rbind(dm[188:198,-c(11,12)], dm[23:33,-c(11,12)],dm[1068:1078,-c(11,12)]), caption="The 3 of 131 matched sets, each set containing one treated subject and 10 matched controls") %>%
+  kable_styling(bootstrap_options = "striped", full_width = F)
+```
+
+## Checking Covariate Balance
+
+Note that: for covariate $k$,   
+- $\bar{x}_{tk}$ is the mean in the first group in the comparison,   
+- $\bar{x}_{ck}$ is the mean in the second group in the comparison, and   
+- $\bar{x}_{mck}$ is the mean in the matched comparison group formed from the second group    
+- $sd_{bk}$ is the standardized difference in means before matching and   
+- $sd_{mk}$ is the standardized difference in means after matching; they have the same denominator but different numerators   
+
+```{r fd}
+#fd <- dynarski[dynarski$zb==1,-c(1,2,12)]
+#round(apply(fd, 2, FUN=mean),2)
+
+d.tk<-dynarski %>%
+  filter(zb==1) %>%
+  mutate(faminc=ifelse(incmiss==1,NA, faminc), 
+         edm=ifelse(edmissm==1, NA, edm)) %>%
+  select(-id,-zb,-im)
+x.tk<-d.tk %>% summarise_all(mean, na.rm=TRUE)
+s.tk<-d.tk %>% summarise_all(sd, na.rm=TRUE)
+
+d.ck<-dynarski %>%
+  filter(zb==0) %>%
+  mutate(faminc=ifelse(incmiss==1,NA, faminc), 
+         edm=ifelse(edmissm==1, NA, edm)) %>%
+  select(-id,-zb,-im)
+x.ck<-d.ck %>% summarise_all(mean, na.rm=TRUE)
+s.ck<-d.ck %>% summarise_all(sd, na.rm=TRUE)
+
+sd.bk<-abs(x.tk-x.ck)/sqrt((s.tk^2+s.ck^2)/2)
+
+d.cmk<-dm %>%
+  filter(zb==0) %>%
+  mutate(faminc=ifelse(incmiss==1,NA, faminc), 
+         edm=ifelse(edmissm==1, NA, edm)) %>%
+  select(-id,-zb,-im) 
+x.cmk<-d.cmk %>% summarise_all(mean, na.rm=TRUE)
+sd.cmk<-abs(x.tk-x.cmk)/sqrt((s.tk^2+s.ck^2)/2)
+
+set<-round(rbind(x.tk,x.cmk,x.ck,sd.bk,sd.cmk),2)
+row.names(set) <- c("x.tk","x.cmk","x.ck","sd.bk","sd.cmk")
+
+kable(set, caption="Balance on covariates before and after matching") %>%
+  kable_styling(bootstrap_options = "striped", full_width = F)
+```
+
+$\Longrightarrow$ They were quite different before matching but were much closer after matching. The family income of seniors with deceased fathers was lower, they were more often black, and their mothers had less education. Between 1979-1981, AFQT test scores decline. The imbalances are much smaller after matching.
+
+## Outcomes
+
+The outcomes were not provided in the Dynarski's dataset. But I guessed we can report the proportions and MH-odds ratio between 2 groups after matching.
+
+In short, during 1979-1981, when the Social Security Student Benefit Program provided tuition aid to students of a deceased Social Security beneficiary, seniors with deceased fathers were **more likely to attend college and complete one year of college** than were matched controls, with an odds ratio of about `1.65`, but there is no sign of this in 1982-1983 after the program ended *(the later can be checked because of lack the data for analysis)*. 
+
+Standardized differences in covariate means before and after matching in matched comparisons. The boxplot displays standardized differences in means, for the nine covariates and the propensity score.
+
+```{r ps boxplot}
+m<-c(0,1)
+d.sd<-rbind(sd.bk,sd.cmk)
+d.sd<-cbind(d.sd,m)
+d.sd.long<-d.sd %>%
+  pivot_longer(-m,names_to="absstdzdiff", values_to="sd")
+d.sd.long$m<-factor(d.sd.long$m,levels=c(0,1),labels=c("Unmatched","Matched"))
+boxplot(sd~m, data=d.sd.long, xlab="", ylab="Absolute Standardized Difference", main="1979-1981 Cohort: FD vs. FND")
+```
+
+## Further reading
+
+- @RN641's fine study  
+- @RN642's `fullmatch` function
+- @RN649, @RN640, @RN650 showed how `fullmatch` is doing
+- @RN651 showed `proc assign` in SAS
+
+
