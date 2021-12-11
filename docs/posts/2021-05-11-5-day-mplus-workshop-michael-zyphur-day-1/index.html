@@ -477,7 +477,7 @@ d-title {
 
 </style>
 
-<script src="../../site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="../../site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <link href="../../site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet"/>
 <link href="../../site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet"/>
 <script src="../../site_libs/headroom-0.9.4/headroom.min.js"></script>
@@ -1884,7 +1884,10 @@ function init_distill() {
 
     // hoverable references
     $('span.citation[data-cites]').each(function() {
-      var refHtml = $('#ref-' + $(this).attr('data-cites')).html();
+      var refs = $(this).attr('data-cites').split(" ");
+      var refHtml = refs.map(function(ref) {
+        return "<p>" + $('#ref-' + ref).html() + "</p>";
+      }).join("\n");
       window.tippy(this, {
         allowHTML: true,
         content: refHtml,
@@ -4370,6 +4373,38 @@ Standardized sampstat Tech1 Tech8;</code></pre>
 <p>McCloskey, D. N. 1992. The Cult of Statistical Significance: How the Standard Error Costs Us Jobs, Justice, and Lives.</p>
 <p>Asparouhov, T., Muthén, B. &amp; Morin, A. J. S. 2015. Bayesian structural equation modeling with cross-loadings and residual covariances: Comments on Stromeyer et al. Journal of Management, 41, 1561-1577.</p>
 <!--radix_placeholder_article_footer-->
+<div class="article-footer">
+  <p class="social_footer">
+    <span class="disqus-comments">
+      <i class="fas fa-comments"></i>
+      &nbsp;
+      <span class="disqus-comment-count" data-disqus-identifier="posts/2021-05-11-5-day-mplus-workshop-michael-zyphur-day-1/">Comment on this article</span>
+    </span>
+    <span class="article-sharing">
+      Share: &nbsp;
+      <a href="https://twitter.com/share?text=A%20Note%20on%205-day%20Workshop%20on%20Mplus%20~%20Day%201&amp;url=https%3A%2F%2Fhai-mn.github.io%2Fposts%2F2021-05-11-5-day-mplus-workshop-michael-zyphur-day-1%2F">
+        <i class="fab fa-twitter"></i>
+      </a>
+      <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3A%2F%2Fhai-mn.github.io%2Fposts%2F2021-05-11-5-day-mplus-workshop-michael-zyphur-day-1%2F&amp;title=A%20Note%20on%205-day%20Workshop%20on%20Mplus%20~%20Day%201">
+        <i class="fab fa-linkedin"></i>
+      </a>
+    </span>
+  </p>
+  <script id="dsq-count-scr" src="https://HaiBiostat.disqus.com/count.js" async></script>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript" cookie-consent="functionality">
+var disqus_config = function () {
+  this.page.url = 'https://hai-mn.github.io/posts/2021-05-11-5-day-mplus-workshop-michael-zyphur-day-1/';
+  this.page.identifier = 'posts/2021-05-11-5-day-mplus-workshop-michael-zyphur-day-1/';
+};
+(function() {
+  var d = document, s = d.createElement('script');
+  s.src = 'https://HaiBiostat.disqus.com/embed.js';
+  s.setAttribute('data-timestamp', +new Date());
+  (d.head || d.body).appendChild(s);
+})();
+</script>
+</div>
 <!--/radix_placeholder_article_footer-->
 </div>
 

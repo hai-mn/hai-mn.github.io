@@ -476,7 +476,7 @@ d-title {
 
 </style>
 
-<script src="../../site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="../../site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <link href="../../site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet"/>
 <link href="../../site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet"/>
 <script src="../../site_libs/headroom-0.9.4/headroom.min.js"></script>
@@ -1883,7 +1883,10 @@ function init_distill() {
 
     // hoverable references
     $('span.citation[data-cites]').each(function() {
-      var refHtml = $('#ref-' + $(this).attr('data-cites')).html();
+      var refs = $(this).attr('data-cites').split(" ");
+      var refHtml = refs.map(function(ref) {
+        return "<p>" + $('#ref-' + ref).html() + "</p>";
+      }).join("\n");
       window.tippy(this, {
         allowHTML: true,
         content: refHtml,
@@ -2756,6 +2759,38 @@ time: 0.00
 <p>Rhys, H. (2020). Machine Learning with R, the tidyverse, and mlr (1st edition ed.): Manning Publications.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
+<div class="article-footer">
+  <p class="social_footer">
+    <span class="disqus-comments">
+      <i class="fas fa-comments"></i>
+      &nbsp;
+      <span class="disqus-comment-count" data-disqus-identifier="posts/2021-04-17-machine learning-discriminant-analysis/">Comment on this article</span>
+    </span>
+    <span class="article-sharing">
+      Share: &nbsp;
+      <a href="https://twitter.com/share?text=Discriminant%20Analysis%20--%20A%20Classification%20by%20Maximizing%20Class%20Separation&amp;url=https%3A%2F%2Fhai-mn.github.io%2Fposts%2F2021-04-17-machine%20learning-discriminant-analysis%2F">
+        <i class="fab fa-twitter"></i>
+      </a>
+      <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3A%2F%2Fhai-mn.github.io%2Fposts%2F2021-04-17-machine%20learning-discriminant-analysis%2F&amp;title=Discriminant%20Analysis%20--%20A%20Classification%20by%20Maximizing%20Class%20Separation">
+        <i class="fab fa-linkedin"></i>
+      </a>
+    </span>
+  </p>
+  <script id="dsq-count-scr" src="https://HaiBiostat.disqus.com/count.js" async></script>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript" cookie-consent="functionality">
+var disqus_config = function () {
+  this.page.url = 'https://hai-mn.github.io/posts/2021-04-17-machine learning-discriminant-analysis/';
+  this.page.identifier = 'posts/2021-04-17-machine learning-discriminant-analysis/';
+};
+(function() {
+  var d = document, s = d.createElement('script');
+  s.src = 'https://HaiBiostat.disqus.com/embed.js';
+  s.setAttribute('data-timestamp', +new Date());
+  (d.head || d.body).appendChild(s);
+})();
+</script>
+</div>
 <!--/radix_placeholder_article_footer-->
 </div>
 
