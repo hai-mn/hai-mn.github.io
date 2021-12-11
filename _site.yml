@@ -1,3 +1,4 @@
+name: "haibiostat"
 title: "HaiBiostat"
 description: |
   Biostatistics and Data Science Playground by Hai Nguyen
@@ -11,6 +12,8 @@ twitter:
 output_dir: "docs"
 collections:
   posts:
+    disqus: HaiBiostat
+    share: [twitter, linkedin]
     feed_item_max: false
     custom: _custom.html
 theme: theme.css
