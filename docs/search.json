@@ -6,7 +6,7 @@
       "description": "You've reached the end of the road.",
       "author": [],
       "contents": "\r\n\r\n\r\n\r\n",
-      "last_modified": "2023-01-28T16:24:52-06:00"
+      "last_modified": "2023-01-28T22:39:41-06:00"
     },
     {
       "path": "index.html",
@@ -14,7 +14,7 @@
       "description": "Welcome to my website. I hope you enjoy it!\n",
       "author": [],
       "contents": "\r\n\r\n\r\n\r\n",
-      "last_modified": "2023-01-28T16:24:53-06:00"
+      "last_modified": "2023-01-28T22:39:44-06:00"
     }
   ],
   "collections": ["posts/posts.json"]
