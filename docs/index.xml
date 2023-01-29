@@ -12,7 +12,19 @@
       <link>https://hai-mn.github.io</link>
     </image>
     <generator>Distill</generator>
-    <lastBuildDate>Sun, 24 Oct 2021 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 20 Nov 2021 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>From Unconditional model to Multivariates Workshop -- Series 1 of 10 -- Gaussian vs Robust Estimation</title>
+      <dc:creator>Hai Nguyen</dc:creator>
+      <link>https://hai-mn.github.io/posts/2021-11-20-Bayesian methods - Series 1 of 10</link>
+      <description>Fitting an unconditional model (without predictors) Robust estimates -- Gaussian vs. t-distribution</description>
+      <category>Biostatistics</category>
+      <category>Bayesian methods</category>
+      <category>R</category>
+      <category>JAGS/Stan</category>
+      <guid>https://hai-mn.github.io/posts/2021-11-20-Bayesian methods - Series 1 of 10</guid>
+      <pubDate>Sat, 20 Nov 2021 00:00:00 +0000</pubDate>
+    </item>
     <item>
       <title>Latent Profile Analysis of Chicago Neighborhoods</title>
       <dc:creator>Hai Nguyen</dc:creator>

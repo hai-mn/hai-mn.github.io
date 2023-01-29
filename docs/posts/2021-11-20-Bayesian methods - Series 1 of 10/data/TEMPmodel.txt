@@ -1,0 +1,10 @@
+
+  model {
+    for (i in 1:Ntotal) {
+      y[i] ~ dnorm(mu , 1/sigma^2) #JAGS uses precision
+    }
+    # mu ~ dnorm(mean_mu , 1/(100*sd_mu)^2)
+    mu ~ dnorm(mean_mu , Ntotal/sd_mu^2) #JAGS uses precision
+    sigma ~ dunif(sd_mu/1000, sd_mu*1000)
+  }
+  

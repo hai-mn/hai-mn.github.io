@@ -1,0 +1,10 @@
+
+model {
+   for ( i in 1:Ntotal ) {
+      y[i] ~ dt(mu,1/sigma^2,nu)
+   }
+   mu ~ dnorm( mean_mu , 100/sd_mu^2 )
+   sigma ~ dunif( sd_mu/1000 , sd_mu*1000 )
+   nu ~ dexp(1/30.0)
+}
+
