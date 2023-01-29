@@ -12,8 +12,10 @@ twitter:
 output_dir: "docs"
 collections:
   posts:
-    disqus: haibiostat
-    share: [twitter, linkedin]
+    disqus: 
+      shortname: haibiostat
+      hidden: false
+    share: [twitter, linkedin, facebook]
     feed_item_max: false
     custom: _custom.html
 theme: theme.css
