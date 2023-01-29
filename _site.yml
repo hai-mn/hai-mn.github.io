@@ -13,7 +13,7 @@ output_dir: "docs"
 collections:
   posts:
     disqus: 
-      shortname: HaiBiostat
+      shortname: haibiostat
       hidden: false
     share: [twitter, linkedin]
     feed_item_max: false
@@ -23,6 +23,6 @@ navbar:
   right:
     - icon: fa fa-rss
       href: index.xml
-  source_url: https://github.com/hai-mn/hai-mn.github.io
+  source_url: true
   search: true
 output: distill::distill_article
