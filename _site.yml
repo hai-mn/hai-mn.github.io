@@ -13,7 +13,7 @@ output_dir: "docs"
 collections:
   posts:
     disqus: 
-      shortname: haibiostat
+      shortname: https-hai-mn-github-io
       hidden: false
     share: [twitter, linkedin, facebook]
     feed_item_max: false
