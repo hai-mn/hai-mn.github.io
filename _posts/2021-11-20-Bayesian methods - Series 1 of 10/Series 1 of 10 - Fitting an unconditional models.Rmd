@@ -1,5 +1,5 @@
 ---
-title: "From Unconditional model to Multivariates Workshop -- Series 1 of 10 -- Gaussian vs Robust Estimation"
+title: "From Unconditional to Multivariate Bayesian Model Workshop -- Series 1 of 10 -- Gaussian vs Robust Estimation"
 description: 
   Fitting an unconditional model (without predictors)  
   Robust estimates -- Gaussian vs. t-distribution

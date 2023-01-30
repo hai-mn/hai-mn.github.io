@@ -1,5 +1,5 @@
 ---
-title: From Unconditional model to Multivariates Workshop -- Series 3 of 10 -- How to Compare Two Groups with Robust Bayesian Estimation
+title: From Unconditional to Multivariate Bayesian Model Workshop -- Series 3 of 10 -- How to Compare Two Groups with Robust Bayesian Estimation
 description: |
   4 years ago, the argument about the stop relying 100% on null hypothesis significance testing (NHST) which was the P-VALUE. A very appealing alternative to NHST is Bayesian statistics, which in itself contains many approaches to statistical inference. In this post, I provide an introductory and practical tutorial to Bayesian parameter estimation in the context of comparing two independent groups' data based on the adaption of UC's lecture and Kruschke's textbook (Chapter 16).
 author: Hai Nguyen
