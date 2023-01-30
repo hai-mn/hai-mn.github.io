@@ -2,7 +2,7 @@
 title: Matching in R
 description: |
   Observational study;    
-  Causal inference;    
+  Causal Inference;    
   Matching;    
   R;
 author:
@@ -10,7 +10,7 @@ author:
 date: "July 03, 2021"
 categories:
   - Biostatistics
-  - Causal inference
+  - Causal Inference
   - Tutorial
   - R
 base_url: https://hai-mn.github.io

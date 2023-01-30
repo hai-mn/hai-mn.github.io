@@ -12,7 +12,19 @@
       <link>https://hai-mn.github.io</link>
     </image>
     <generator>Distill</generator>
-    <lastBuildDate>Sat, 01 Jan 2022 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 15 Jan 2022 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>From Unconditional model to Multivariates Workshop -- Series 3 of 10 -- How to Compare Two Groups with Robust Bayesian Estimation</title>
+      <dc:creator>Hai Nguyen</dc:creator>
+      <link>https://hai-mn.github.io/posts/2022-01-15-Bayesian methods - Series 3 of 10</link>
+      <description>4 years ago, the argument about the stop relying 100% on null hypothesis significance testing (NHST) which was the P-VALUE. A very appealing alternative to NHST is Bayesian statistics, which in itself contains many approaches to statistical inference. In this post, I provide an introductory and practical tutorial to Bayesian parameter estimation in the context of comparing two independent groups' data based on the adaption of UC's lecture and Kruschke's textbook (Chapter 16).</description>
+      <category>Biostatistics</category>
+      <category>Bayesian methods</category>
+      <category>R</category>
+      <category>JAGS/Stan</category>
+      <guid>https://hai-mn.github.io/posts/2022-01-15-Bayesian methods - Series 3 of 10</guid>
+      <pubDate>Sat, 15 Jan 2022 00:00:00 +0000</pubDate>
+    </item>
     <item>
       <title>From Unconditional model to Multivariates Workshop -- Series 2 of 10 -- MCMC for Estimation of Gaussian parameters</title>
       <dc:creator>Hai Nguyen</dc:creator>
@@ -71,16 +83,15 @@ General solution;</description>
       <dc:creator>Hai Nguyen</dc:creator>
       <link>https://hai-mn.github.io/posts/2021-07-03-matching in R-causal-inference</link>
       <description>Observational study;    
-Causal inference;    
+Causal Inference;    
 Matching;    
 R;</description>
       <category>Biostatistics</category>
-      <category>Causal inference</category>
+      <category>Causal Inference</category>
       <category>Tutorial</category>
       <category>R</category>
       <guid>https://hai-mn.github.io/posts/2021-07-03-matching in R-causal-inference</guid>
       <pubDate>Sat, 03 Jul 2021 00:00:00 +0000</pubDate>
-      <media:content url="https://hai-mn.github.io/posts/2021-07-03-matching in R-causal-inference/distill-preview.png" medium="image" type="image/png" width="1248" height="768"/>
     </item>
     <item>
       <title>Metabolic Syndrome Prevalence across time using NHANES Data</title>
