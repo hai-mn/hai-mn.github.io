@@ -1,0 +1,10 @@
+
+      model {
+         for (i in 1:nSample){
+         y[i] ~ dnorm(theta[s[i]], 1/25^2)
+         }
+         for (sIdx in 1:nGr) {# Different thetas from same prior
+            theta[sIdx] ~ dnorm(hypeMean,1/hypeSD^2) 
+         }
+      }
+   

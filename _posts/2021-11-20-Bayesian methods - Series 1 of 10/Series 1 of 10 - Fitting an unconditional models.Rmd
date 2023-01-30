@@ -572,4 +572,5 @@ launch_shinystan(stanFitRobust)
 
   - Bayesian Methods, UC's lecture   
   - Gelman, A., Carlin, J., Stern, H., Dunson, D., Vehtari, A., & Rubin, D. (2013). Bayesian Data Analysis, Third Edition, 3rd Edition (3rd edition ed.): CRC Press.   
-  - Kutner, M. H. (2005). Applied linear statistical models (5th ed. ed.). Boston: McGraw-Hill Irwin.
+  - Kutner, M. H. (2005). Applied linear statistical models (5th ed. ed.). Boston: McGraw-Hill Irwin.   
+  - Kruschke, John K. Doing Bayesian Data Analysis: a Tutorial with R, JAGS, and Stan. 2nd ed., Academic Press is an imprint of Elsevier, 2015. 

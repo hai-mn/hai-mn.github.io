@@ -1,0 +1,12 @@
+
+  model { 
+    # Description of data
+    for (i in 1:Ntotal){
+      Y[i] ~ dnorm(mu, 1/sigma^2) #tau = 1/sigma^2
+    }
+    # Description of prior
+    mu ~ dnorm(100 , Ntotal/200^2)
+    #tau <- pow(sigma, -2) #JAGS uses precision
+    sigma <- 25
+  }
+

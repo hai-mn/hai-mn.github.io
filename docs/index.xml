@@ -12,7 +12,19 @@
       <link>https://hai-mn.github.io</link>
     </image>
     <generator>Distill</generator>
-    <lastBuildDate>Sat, 20 Nov 2021 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 01 Jan 2022 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>From Unconditional model to Multivariates Workshop -- Series 2 of 10 -- MCMC for Estimation of Gaussian parameters</title>
+      <dc:creator>Hai Nguyen</dc:creator>
+      <link>https://hai-mn.github.io/posts/2022-01-01-Bayesian methods - Series 2 of 10</link>
+      <description>Run MCMC on binomial model Gaussian distribution, one sample Hierarchical model, two groups of Gaussian observations</description>
+      <category>Biostatistics</category>
+      <category>Bayesian methods</category>
+      <category>R</category>
+      <category>JAGS/Stan</category>
+      <guid>https://hai-mn.github.io/posts/2022-01-01-Bayesian methods - Series 2 of 10</guid>
+      <pubDate>Sat, 01 Jan 2022 00:00:00 +0000</pubDate>
+    </item>
     <item>
       <title>From Unconditional model to Multivariates Workshop -- Series 1 of 10 -- Gaussian vs Robust Estimation</title>
       <dc:creator>Hai Nguyen</dc:creator>

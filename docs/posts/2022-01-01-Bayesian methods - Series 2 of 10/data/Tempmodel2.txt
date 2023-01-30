@@ -1,0 +1,16 @@
+
+  model { 
+    # Description of data
+    for (i in 1:nSample){
+      y[i] ~ dnorm(mu[s[i]], 1/sigma^2) #tau = 1/sigma^2
+    }
+    # Description of prior
+    #mu[1:nGr] <- c(100,100)
+    for (j in 1:nGr) {      
+      mu[j] ~ dnorm(M, nSample/sigma_mu^2) 
+    }
+    sigma <- 25
+    M <- 100
+    sigma_mu <- 200
+  }
+
