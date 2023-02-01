@@ -1,5 +1,5 @@
 ---
-title: "From Unconditional to Multivariate Bayesian Model Workshop -- Series 2 of 10 -- MCMC for Estimation of Gaussian parameters"
+title: "Series 2 of 10 -- MCMC for Estimation of Gaussian parameters"
 description: 
   Run MCMC on binomial model  
   Gaussian distribution, one sample
