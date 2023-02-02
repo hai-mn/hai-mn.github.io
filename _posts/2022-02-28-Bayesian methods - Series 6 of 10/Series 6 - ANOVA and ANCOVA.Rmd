@@ -1,8 +1,9 @@
 ---
-title: ANOVA & ANCOVA
+title: Series 6 -- ANOVA & ANCOVA
 description: |
-  A bit review ANOVA & ANCOVA in the Frequentist view   
-  "ANOVA & ANCOVA" in Bayesian Context  
+  A bit review ANOVA & ANCOVA in the Frequentist's view   
+  "ANOVA & ANCOVA" in Bayesian Context   
+  Contrast Comparison  
 author: Hai Nguyen
 date: "February 28, 2022"
 categories:

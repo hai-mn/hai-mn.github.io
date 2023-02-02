@@ -14,11 +14,12 @@
     <generator>Distill</generator>
     <lastBuildDate>Mon, 28 Feb 2022 00:00:00 +0000</lastBuildDate>
     <item>
-      <title>ANOVA &amp; ANCOVA</title>
+      <title>Series 6 -- ANOVA &amp; ANCOVA</title>
       <dc:creator>Hai Nguyen</dc:creator>
       <link>https://hai-mn.github.io/posts/2022-02-28-Bayesian methods - Series 6 of 10</link>
-      <description>A bit review ANOVA &amp; ANCOVA in the Frequentist view   
-"ANOVA &amp; ANCOVA" in Bayesian Context</description>
+      <description>A bit review ANOVA &amp; ANCOVA in the Frequentist's view   
+"ANOVA &amp; ANCOVA" in Bayesian Context   
+Contrast Comparison</description>
       <category>Biostatistics</category>
       <category>Bayesian methods</category>
       <category>R</category>
