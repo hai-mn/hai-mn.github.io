@@ -1,5 +1,5 @@
 ---
-title: "From Unconditional to Multivariate Bayesian Model Workshop -- Series 4 of 10 -- Fitting Linear Models - Multiple Regression"
+title: "Series 4 of 10 -- Fitting Linear Models - Multiple Regression"
 description: |
   Review a simple linear regression using Bayesian Methods   
   How to fit a linear multiple regression (Stan) using Bayesian Methods   

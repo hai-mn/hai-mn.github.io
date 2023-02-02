@@ -12,7 +12,20 @@
       <link>https://hai-mn.github.io</link>
     </image>
     <generator>Distill</generator>
-    <lastBuildDate>Mon, 14 Feb 2022 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 28 Feb 2022 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>ANOVA &amp; ANCOVA</title>
+      <dc:creator>Hai Nguyen</dc:creator>
+      <link>https://hai-mn.github.io/posts/2022-02-28-Bayesian methods - Series 6 of 10</link>
+      <description>A bit review ANOVA &amp; ANCOVA in the Frequentist view   
+"ANOVA &amp; ANCOVA" in Bayesian Context</description>
+      <category>Biostatistics</category>
+      <category>Bayesian methods</category>
+      <category>R</category>
+      <category>JAGS/Stan</category>
+      <guid>https://hai-mn.github.io/posts/2022-02-28-Bayesian methods - Series 6 of 10</guid>
+      <pubDate>Mon, 28 Feb 2022 00:00:00 +0000</pubDate>
+    </item>
     <item>
       <title>Series 5 of 10 -- Introduction to Selection of Variables using Bayesian Approach</title>
       <dc:creator>Hai Nguyen</dc:creator>
@@ -26,7 +39,7 @@
       <pubDate>Mon, 14 Feb 2022 00:00:00 +0000</pubDate>
     </item>
     <item>
-      <title>From Unconditional to Multivariate Bayesian Model Workshop -- Series 4 of 10 -- Fitting Linear Models - Multiple Regression</title>
+      <title>Series 4 of 10 -- Fitting Linear Models - Multiple Regression</title>
       <dc:creator>Hai Nguyen</dc:creator>
       <link>https://hai-mn.github.io/posts/2022-01-31-Bayesian methods - Series 4 of 10</link>
       <description>Review a simple linear regression using Bayesian Methods   
@@ -42,7 +55,7 @@ Bayesian model with or without shrinkage, ridge regression and lasso regression:
       <pubDate>Mon, 31 Jan 2022 00:00:00 +0000</pubDate>
     </item>
     <item>
-      <title>From Unconditional to Multivariate Bayesian Model Workshop -- Series 3 of 10 -- How to Compare Two Groups with Robust Bayesian Estimation</title>
+      <title>Series 3 of 10 -- How to Compare Two Groups with Robust Bayesian Estimation</title>
       <dc:creator>Hai Nguyen</dc:creator>
       <link>https://hai-mn.github.io/posts/2022-01-15-Bayesian methods - Series 3 of 10</link>
       <description>4 years ago, the argument about the stop relying 100% on null hypothesis significance testing (NHST) which was the P-VALUE. A very appealing alternative to NHST is Bayesian statistics, which in itself contains many approaches to statistical inference. In this post, I provide an introductory and practical tutorial to Bayesian parameter estimation in the context of comparing two independent groups' data based on the adaption of UC's lecture and Kruschke's textbook (Chapter 16).</description>
