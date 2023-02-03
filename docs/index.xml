@@ -21,7 +21,7 @@
 "ANOVA &amp; ANCOVA" in Bayesian Context   
 Contrast Comparison</description>
       <category>Biostatistics</category>
-      <category>Bayesian methods</category>
+      <category>Bayesian Methods</category>
       <category>R</category>
       <category>JAGS/Stan</category>
       <guid>https://hai-mn.github.io/posts/2022-02-28-Bayesian methods - Series 6 of 10</guid>
@@ -61,7 +61,7 @@ Bayesian model with or without shrinkage, ridge regression and lasso regression:
       <link>https://hai-mn.github.io/posts/2022-01-15-Bayesian methods - Series 3 of 10</link>
       <description>4 years ago, the argument about the stop relying 100% on null hypothesis significance testing (NHST) which was the P-VALUE. A very appealing alternative to NHST is Bayesian statistics, which in itself contains many approaches to statistical inference. In this post, I provide an introductory and practical tutorial to Bayesian parameter estimation in the context of comparing two independent groups' data based on the adaption of UC's lecture and Kruschke's textbook (Chapter 16).</description>
       <category>Biostatistics</category>
-      <category>Bayesian methods</category>
+      <category>Bayesian Methods</category>
       <category>R</category>
       <category>JAGS/Stan</category>
       <guid>https://hai-mn.github.io/posts/2022-01-15-Bayesian methods - Series 3 of 10</guid>
@@ -73,19 +73,19 @@ Bayesian model with or without shrinkage, ridge regression and lasso regression:
       <link>https://hai-mn.github.io/posts/2022-01-01-Bayesian methods - Series 2 of 10</link>
       <description>Run MCMC on binomial model Gaussian distribution, one sample Hierarchical model, two groups of Gaussian observations</description>
       <category>Biostatistics</category>
-      <category>Bayesian methods</category>
+      <category>Bayesian Methods</category>
       <category>R</category>
       <category>JAGS/Stan</category>
       <guid>https://hai-mn.github.io/posts/2022-01-01-Bayesian methods - Series 2 of 10</guid>
       <pubDate>Sat, 01 Jan 2022 00:00:00 +0000</pubDate>
     </item>
     <item>
-      <title>From Unconditional to Multivariates Bayesian Model Workshop -- Series 1 of 10 -- Gaussian vs Robust Estimation</title>
+      <title>From Unconditional to Multivariate Bayesian Model Workshop -- Series 1 of 10 -- Gaussian vs Robust Estimation</title>
       <dc:creator>Hai Nguyen</dc:creator>
       <link>https://hai-mn.github.io/posts/2021-11-20-Bayesian methods - Series 1 of 10</link>
       <description>Fitting an unconditional model (without predictors) Robust estimates -- Gaussian vs. t-distribution</description>
       <category>Biostatistics</category>
-      <category>Bayesian methods</category>
+      <category>Bayesian Methods</category>
       <category>R</category>
       <category>JAGS/Stan</category>
       <guid>https://hai-mn.github.io/posts/2021-11-20-Bayesian methods - Series 1 of 10</guid>
@@ -189,11 +189,10 @@ Consider a Bayesian model fit as a remedial measures for influential case</descr
       <category>Biostatistics</category>
       <category>Tutorial</category>
       <category>R</category>
-      <category>Bayesian methods</category>
+      <category>Bayesian Methods</category>
       <category>JAGS/Stan</category>
       <guid>https://hai-mn.github.io/posts/2021-04-22-Simple-linear-regression-in-Bayesian-way</guid>
       <pubDate>Thu, 22 Apr 2021 00:00:00 +0000</pubDate>
-      <media:content url="https://hai-mn.github.io/posts/2021-04-22-Simple-linear-regression-in-Bayesian-way/distill-preview.png" medium="image" type="image/png" width="1248" height="768"/>
     </item>
     <item>
       <title>Discriminant Analysis -- A Classification by Maximizing Class Separation</title>
@@ -241,7 +240,7 @@ Consider a Bayesian model fit as a remedial measures for influential case</descr
       <media:content url="https://hai-mn.github.io/posts/2021-04-11-gamma-distribution-in-intuitive-explanation/Gamma-distribution-in-an-intuitive-explanation_files/figure-html5/unnamed-chunk-1-1.png" medium="image" type="image/png" width="1248" height="768"/>
     </item>
     <item>
-      <title>Fitting a Logistic Regression in Bayes</title>
+      <title>Series 7 -- Fitting a Logistic Regression in Bayes</title>
       <dc:creator>Hai Nguyen</dc:creator>
       <link>https://hai-mn.github.io/posts/2022-03-20-Bayesian methods - Series 7 of 10</link>
       <description>How to fit a Logistic Regression using Bayesian Methods   

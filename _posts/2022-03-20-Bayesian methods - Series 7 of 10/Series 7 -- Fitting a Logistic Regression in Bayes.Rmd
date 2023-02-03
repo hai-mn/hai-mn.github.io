@@ -1,5 +1,5 @@
 ---
-title: "Fitting a Logistic Regression in Bayes"
+title: "Series 7 -- Fitting a Logistic Regression in Bayes"
 description: |
   How to fit a Logistic Regression using Bayesian Methods   
   The advantage of using Bayes to overcome the Separation in Logistic Regression      

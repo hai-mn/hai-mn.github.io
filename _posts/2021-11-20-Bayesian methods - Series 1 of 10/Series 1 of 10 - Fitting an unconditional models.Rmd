@@ -8,7 +8,7 @@ author:
 date: "November 20, 2021"
 categories:
   - Biostatistics
-  - Bayesian methods
+  - Bayesian Methods
   - R
   - JAGS/Stan 
 base_url: https://hai-mn.github.io
