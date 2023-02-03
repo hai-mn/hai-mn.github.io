@@ -240,5 +240,19 @@ Consider a Bayesian model fit as a remedial measures for influential case</descr
       <pubDate>Sun, 11 Apr 2021 00:00:00 +0000</pubDate>
       <media:content url="https://hai-mn.github.io/posts/2021-04-11-gamma-distribution-in-intuitive-explanation/Gamma-distribution-in-an-intuitive-explanation_files/figure-html5/unnamed-chunk-1-1.png" medium="image" type="image/png" width="1248" height="768"/>
     </item>
+    <item>
+      <title>Fitting a Logistic Regression in Bayes</title>
+      <dc:creator>Hai Nguyen</dc:creator>
+      <link>https://hai-mn.github.io/posts/2022-03-20-Bayesian methods - Series 7 of 10</link>
+      <description>How to fit a Logistic Regression using Bayesian Methods   
+The advantage of using Bayes to overcome the Separation in Logistic Regression</description>
+      <category>Biostatistics</category>
+      <category>Tutorial</category>
+      <category>R</category>
+      <category>Bayesian Methods</category>
+      <category>JAGS/Stan</category>
+      <guid>https://hai-mn.github.io/posts/2022-03-20-Bayesian methods - Series 7 of 10</guid>
+      <pubDate>Sat, 20 Mar 2021 00:00:00 +0000</pubDate>
+    </item>
   </channel>
 </rss>
