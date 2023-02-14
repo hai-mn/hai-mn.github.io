@@ -1,9 +1,9 @@
 ---
 title: "Basic Tools of Multivariate Matching"
 description: |
-  Observational study    
-  Causal Inference    
-  Matching    
+  Observational study;    
+  Causal Inference;    
+  Matching;    
   R  
 author:
   - name: Hai Nguyen
