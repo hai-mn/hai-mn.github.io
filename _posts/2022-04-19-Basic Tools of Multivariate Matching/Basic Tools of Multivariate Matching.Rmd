@@ -1,0 +1,860 @@
+---
+title: "Basic Tools of Multivariate Matching"
+description: |
+  Observational study    
+  Causal Inference    
+  Matching    
+  R  
+author:
+  - name: Hai Nguyen
+date: "April 19, 2022"
+categories:
+  - Biostatistics
+  - Causal Inference
+  - Tutorial
+  - R
+base_url: https://hai-mn.github.io
+output:
+  distill::distill_article:
+    toc: true
+    toc_float: yes
+    toc_depth: 3
+    theme: journal
+    highlight: haddock
+    highlight_downlit: false
+bibliography: bibliography.bib
+---
+
+```{r setup, include=FALSE}
+# Setup
+knitr::opts_chunk$set(echo = TRUE)
+library(readxl)
+library(tidyverse)
+library(kableExtra)
+library(MASS) # chi-sq test for 2x2 table
+library(matlib) # inverse a matrix
+require(gdata) # reorder.factor function
+library(optmatch) # for function pairmatch
+library(DOS) # design of observational studies
+```
+
+## Motivation
+
+- The post here is the re-post in 2020, when I start to research in Causal Inference.   
+- The context leaded me to the topic were:  
+  + After the discussion with my advisor, Dr. Dulal Bhaumik, regarding the direction of my Ph.D. dissertation, we decided to work toward the CAUSAL INFERENCE.    
+  + Matching is the very first aim in Causal Inference: "Obtaining inferring causal effects from observational data using the Matching Approach". Thus, I have all prepared to learn and write the Matching issues.   
+  + Parallel, I have been also analyzing the HR Exercise in Congenital Heart Disease patient vs. Normal person applying the matching problem. Maybe, revisit the matching problem in Breast Cancer nested case-control study last summer (using SAS) if I still have time during this Summer 2020.   
+
+
+## A Small Example
+
+Welders are exposed to chromium and nickel, substances that can cause inappropriate links between DNA and proteins, which in turn may disrupt gene expression or interfere with replication of DNA. Costa, Zhitkovich, and Toniolo [10] measured DNA-protein cross-links in samples of white blood cells from 47 subjects (all male).
+01
+
+> Unmatched data for 21 railroad arc welders and 26 potential controls. Covariates are age, race (C=Caucasian, AA=African American), current smoker (Y=yes, N=no). Response is DPC=DNA-protein cross-links in percent in white blood cells. All 47 subjects are male.
+
+Welders --- Controls
+
+| ID      | Age | Race | Smoker | DPC  | | ID      | Age | Race | Smoker | DPC  |
+|---------|-----|------|--------|------|-|---------|-----|------|--------|------|
+| 1       | 38  | C    | N      | 1.77 | |1        | 48  | AA   | N      | 1.08 |
+| 2       | 44  | C    | N      | 1.02 | |2        | 63  | C    | N      | 1.09 |
+| 3       | 39  | C    | Y      | 1.44 | |3        | 44  | C    | Y      | 1.1  |
+| 4       | 33  | AA   | Y      | 0.65 | |4        | 40  | C    | N      | 1.1  |
+| 5       | 35  | C    | Y      | 2.08 | |5        | 50  | C    | N      | 0.93 |
+| 6       | 39  | C    | Y      | 0.61 | |6        | 52  | C    | N      | 1.11 |
+| 7       | 27  | C    | N      | 2.86 | |7        | 56  | C    | N      | 0.98 |
+| 8       | 43  | C    | Y      | 4.19 | |8        | 47  | C    | N      | 2.2  |
+| 9       | 39  | C    | Y      | 4.88 | |9        | 38  | C    | N      | 0.88 |
+| 10      | 43  | AA   | N      | 1.08 | |10       | 34  | C    | N      | 1.55 |
+| 11      | 41  | C    | Y      | 2.03 | |11       | 42  | C    | N      | 0.55 |
+| 12      | 36  | C    | N      | 2.81 | |12       | 36  | C    | Y      | 1.04 |
+| 13      | 35  | C    | N      | 0.94 | |13       | 41  | C    | N      | 1.66 |
+| 14      | 37  | C    | N      | 1.43 | |14       | 41  | AA   | Y      | 1.49 |
+| 15      | 39  | C    | Y      | 1.25 | |15       | 31  | AA   | Y      | 1.36 |
+| 16      | 34  | C    | N      | 2.97 | |16       | 56  | AA   | Y      | 1.02 |
+| 17      | 35  | C    | Y      | 1.01 | |17       | 51  | AA   | N      | 0.99 |
+| 18      | 53  | C    | N      | 2.07 | |18       | 36  | C    | Y      | 0.65 |
+| 19      | 38  | C    | Y      | 1.15 | |19       | 44  | C    | N      | 0.42 |
+| 20      | 37  | C    | N      | 1.07 | |20       | 35  | C    | N      | 2.33 |
+| 21      | 38  | C    | Y      | 1.63 | |21       | 34  | C    | Y      | 0.97 |
+|         |     |      |        |      | |22       | 39  | C    | Y      | 0.62 |
+|         |     |      |        |      | |23       | 45  | C    | N      | 1.02 |
+|         |     |      |        |      | |24       | 42  | C    | N      | 1.78 |
+|         |     |      |        |      | |25       | 30  | C    | N      | 0.95 |
+|         |     |      |        |      | |26       | 35  | C    | Y      | 1.59 |
+
+### Load dataset
+
+```{r load data}
+# loadind data
+gen.tox <- read_excel("data/table81.xlsx", sheet = "data")
+
+data.tab <- gen.tox[c(1:3, 22:24),]
+kable(data.tab, caption = "Generic Toxicology Dataset (6-observation example)") %>%
+  kable_styling(bootstrap_options = "striped", full_width = F)
+```
+
+### Descriptive Statistics
+
+```{r descriptive}
+m.age.w <- round(mean(gen.tox$Age[gen.tox$Group=="Welders"]),0)
+m.age.c <- round(mean(gen.tox$Age[gen.tox$Group=="Controls"]),0)
+aa.p.w <- round(table(gen.tox$Race[gen.tox$Group=="Welders"])[1]/sum(table(gen.tox$Race[gen.tox$Group=="Welders"]))*100,0)
+aa.p.c <- round(table(gen.tox$Race[gen.tox$Group=="Controls"])[1]/sum(table(gen.tox$Race[gen.tox$Group=="Controls"]))*100,0)
+s.p.w <- round(table(gen.tox$Smoker[gen.tox$Group=="Welders"])[2]/sum(table(gen.tox$Smoker[gen.tox$Group=="Welders"]))*100,0)
+s.p.c <- round(table(gen.tox$Smoker[gen.tox$Group=="Controls"])[2]/sum(table(gen.tox$Smoker[gen.tox$Group=="Controls"]))*100,0)
+```
+
+Welders --- Controls
+
+| Mean Age  | AA        | Smoker  |---| Mean Age  | AA        | Smoker  |
+|-----------|-----------|---------|-|-----------|-----------|---------|
+|`r m.age.w`|`r aa.p.w` |`r s.p.w`|---|`r m.age.c`|`r aa.p.c` |`r s.p.c`|  
+
+```{r test btwn groups}
+t.test(Age ~ Group, data=gen.tox)
+
+tbl.age.group <- table(gen.tox$Group, gen.tox$Race)
+tbl.age.group
+chisq.test(tbl.age.group)
+fisher.test(tbl.age.group, conf.int = T, conf.level = 0.95)
+```
+
+- The welders are about 5 years younger than the controls on average, have relatively fewer African Americans, and more smokers. 
+
+- Given the t-test (t = 2.25) and a two-sided significance level of 0.03 showed the difference in age between welders and controls is 
+
+- The 2 binary variables race & smoking are neither significant by that standard nor by Fisher’s exact test for a 2×2 table.
+
+### Notation
+
+Data genetic toxicity had $L$ = 47 subjects, $l = 1,2, ..., L$.
+
+For subject $l$, the observed covariate, $\textbf{x}_l$, is 3-dimensional, $\textbf{x}_l = (x_{l1}, x_{l2}, x_{l3})^T$ , where 
+
+(i) $x_{l1}$ is the age 
+
+(ii) $x_{l2}$ encodes race, $x_{l2}$ = 1 if $l$ is African American, $x_{l2}$ =0 if $l$ is Caucasian, 
+
+(iii) $x_{l3}$ encodes smoking, $x_{l3}$ = 1 if $l$ is is a current smoker, $x_{l3}$ = 0 otherwise. 
+
+$\rightarrow$ For instance, $x_1$ = $(38,0,0)^T$ . 
+
+(iv) The variable $Z_l$ distinguishes treated subjects from potential controls: $Z_l$ = 1 for a treated subject, here a welder; $Z_l$ = 0 for a potential control.
+
+```{r encode}
+gen.tox$Race <- ifelse(gen.tox$Race=="C", 0, 1)
+gen.tox$Smoker <- ifelse(gen.tox$Smoker=="N", 0, 1)
+```
+
+## Propensity Score
+
+- The `PS` is the conditional probability of exposure to treatment given the observed covariates, $e (\textbf{X}) = Pr(\textbf{Z} = 1| \textbf{x})$.   
+- The `PS` is defined in terms of the observed covariates, x, even though there is invariably concern about other covariates that were not measured.  
+- Properties of the `PS`:   
+    + balance property   
+    + the ‘ideal match’ could be produced simply by matching for the observed covariate x. Recall also that it may be difficult to match closely for every one of the many covariates in $x$, but it is easy to match on one variable, the propensity score, $e(\mathbf{x})$, and doing that balances all of $x$.  
+    
+Brief examination of Genetic Toxicity data suggested:  
+
+- at least age, $x_1$, and possibly race and smoking, $x_2$ and $x_3$, could be used to predict treatment assignment $Z$, so that the `PS` is not constant.   
+
+- Saying that welders tend to be somewhat younger than controls is much the same as saying that the chance of being a welder is lower for someone who is older, i.e. $e(\textbf{X})$ is lower when $x_1$ is higher.  
+
+- If 2 subjects have the same `PS` $e(\textbf{X})$, they may have different values of $X$  $\rightarrow$ subjects were matched for $e(\textbf{X})$, they may be mismatched for x $\rightarrow$ the mismatches in x will be due to chance and will tend to balance, **particularly in large samples**. ( e.g. if young nonsmokers and old smokers have the same `PS`, then a match on the `PS` may pair a young nonsmoking welder to an old smoking control, but it will do this about as often as it pairs an old smoking welder to a young nonsmoking control) $\rightarrow$ matching on $e(\textbf(X))$ tends to balance $\textbf{X}$ $\rightarrow$ $Z$| $e(\textbf{X})$ indep. $X$ 
+
+In short, 
+
+(i) matching on $e(\textbf{X})$ is often practical even when there are many covariates in x because $e(\textbf{X})$ is a single variable, 
+
+(ii) failure to balance $e(\textbf{X})$ implies that $X$ is not balanced
+
+(iii) matching on $e(\textbf{X})$ tends to balance all of $X$. On the negative side, success in balancing the observed covariates, $X$, provides no assurance that unmeasured covariates are balanced
+
+$\rightarrow$ For example, the men whose his father worked as a welder is associated with a much higher chance that the son also will work as a welder, so father’s occupation is an unmeasured covariate that could be used to predict treatment $Z$; then success in matching on the propensity score $e(\textbf{X})$ would tend to balance age, race and smoking, but there is no reason to expect it to balance father’s occupation.
+
+### Conduct `PS`
+
+The `PS` is unknown, but it can be estimated from the data at hand. `PS` is estimated by a linear logit model
+\[ log {\frac{e(\textbf{X}_l)}{1 - e(\textbf{X}_l)}} = \zeta_0 + \zeta_1 x_{l1} + \zeta_2 x_{l2} + \zeta_3 x_{l3}\]
+
+and the fitted values $\hat{e}(\textbf{X}_l)$ from this model are the estimates of the `PS`.
+
+```{r ps}
+#fit a propensity score model. logistic regression
+gen.tox$Group <- relevel(as.factor(gen.tox$Group), ref="Controls")
+psmodel <- glm(Group ~ Age + Race + Smoker, family=binomial(), data=gen.tox)
+
+#show coefficients etc
+summary(psmodel)
+
+#create propensity score
+pscore<-psmodel$fitted.values
+gen.tox$ps <- round(pscore,2)
+
+# mean of PS in Welders group
+mean.ps.welder <- round(mean(gen.tox$ps[gen.tox$Group=="Welders"]),2)
+
+# mean of PS in 21 largest Controls group
+mean.ps.21largestcontrols <- gen.tox %>%
+  filter(Group=="Controls") %>%
+  top_n(21, ps) %>% # wrapper that uses filter() and min_rank() to select the top or bottom entries in each group, ordered by ps.
+  arrange(desc(ps)) %>% # order data follow ps decreasing
+  summarize(round(mean(ps),2)) %>%
+  as.numeric()
+```
+
+Estimated `PS` for 21 railroad arc welders and 26 potential controls. Covariates are age, race (C=Caucasian, AA=African American), current smoker (Y=yes, N=no).
+
+| ID      | Age | Race | Smoker | DPC  |$\hat{e}(\textbf{X})$ | ID      | Age | Race | Smoker | DPC  |$\hat{e}(\textbf{X})$|
+|:--------|:---:|:----:|:------:|:----:|:--------------------:|:--------|:---:|:----:|:------:|:----:|:-------------------:|
+| 1       | 38  | C    | N      | 1.77 |`r gen.tox$ps[1]`     |1        | 48  | AA   | N      | 1.08 | `r gen.tox$ps[22]`  |
+| 2       | 44  | C    | N      | 1.02 |`r gen.tox$ps[2]`     |2        | 63  | C    | N      | 1.09 |`r gen.tox$ps[23]`|
+| 3       | 39  | C    | Y      | 1.44 |`r gen.tox$ps[3]`     |3        | 44  | C    | Y      | 1.1  |`r gen.tox$ps[24]`|
+| 4       | 33  | AA   | Y      | 0.65 |`r gen.tox$ps[4]`     |4        | 40  | C    | N      | 1.1  |`r gen.tox$ps[25]`|
+| 5       | 35  | C    | Y      | 2.08 |`r gen.tox$ps[5]`     |5        | 50  | C    | N      | 0.93 |`r gen.tox$ps[26]`|
+| 6       | 39  | C    | Y      | 0.61 |`r gen.tox$ps[6]`     |6        | 52  | C    | N      | 1.11 |`r gen.tox$ps[27]`|
+| 7       | 27  | C    | N      | 2.86 |`r gen.tox$ps[7]`     |7        | 56  | C    | N      | 0.98 |`r gen.tox$ps[28]`|
+| 8       | 43  | C    | Y      | 4.19 |`r gen.tox$ps[8]`     |8        | 47  | C    | N      | 2.2  |`r gen.tox$ps[29]`|
+| 9       | 39  | C    | Y      | 4.88 |`r gen.tox$ps[9]`     |9        | 38  | C    | N      | 0.88 |`r gen.tox$ps[30]`|
+| 10      | 43  | AA   | N      | 1.08 |`r gen.tox$ps[10]`    |10       | 34  | C    | N      | 1.55 |`r gen.tox$ps[30]`|
+| 11      | 41  | C    | Y      | 2.03 |`r gen.tox$ps[11]`    |11       | 42  | C    | N      | 0.55 |`r gen.tox$ps[31]`|
+| 12      | 36  | C    | N      | 2.81 |`r gen.tox$ps[12]`    |12       | 36  | C    | Y      | 1.04 |`r gen.tox$ps[32]`|
+| 13      | 35  | C    | N      | 0.94 |`r gen.tox$ps[13]`    |13       | 41  | C    | N      | 1.66 |`r gen.tox$ps[33]`|
+| 14      | 37  | C    | N      | 1.43 |`r gen.tox$ps[14]`    |14       | 41  | AA   | Y      | 1.49 |`r gen.tox$ps[34]`|
+| 15      | 39  | C    | Y      | 1.25 |`r gen.tox$ps[15]`    |15       | 31  | AA   | Y      | 1.36 |`r gen.tox$ps[35]`|
+| 16      | 34  | C    | N      | 2.97 |`r gen.tox$ps[16]`    |16       | 56  | AA   | Y      | 1.02 |`r gen.tox$ps[36]`|
+| 17      | 35  | C    | Y      | 1.01 |`r gen.tox$ps[17]`    |17       | 51  | AA   | N      | 0.99 |`r gen.tox$ps[37]`|
+| 18      | 53  | C    | N      | 2.07 |`r gen.tox$ps[18]`    |18       | 36  | C    | Y      | 0.65 |`r gen.tox$ps[38]`|
+| 19      | 38  | C    | Y      | 1.15 |`r gen.tox$ps[19]`    |19       | 44  | C    | N      | 0.42 |`r gen.tox$ps[39]`|
+| 20      | 37  | C    | N      | 1.07 |`r gen.tox$ps[20]`    |20       | 35  | C    | N      | 2.33 |`r gen.tox$ps[40]`|
+| 21      | 38  | C    | Y      | 1.63 |`r gen.tox$ps[21]`    |21       | 34  | C    | Y      | 0.97 |`r gen.tox$ps[41]`|
+|         |     |      |        |      |                      |22       | 39  | C    | Y      | 0.62 | |
+|         |     |      |        |      |                      |23       | 45  | C    | N      | 1.02 | |
+|         |     |      |        |      |                      |24       | 42  | C    | N      | 1.78 | |
+|         |     |      |        |      |                      |25       | 30  | C    | N      | 0.95 | |
+|         |     |      |        |      |                      |26       | 35  | C    | Y      | 1.59 | |
+
+
+```{r}
+ps.w <- round(mean(gen.tox$ps[gen.tox$Group=="Welders"]),2)
+ps.c <- round(mean(gen.tox$ps[gen.tox$Group=="Controls"]),2)
+```
+
+Welders --- Controls
+
+| Mean Age  | AA        | Smoker  |$\hat{e}(\mathbf{x})$|--- |Mean Age   | AA        | Smoker  |$\hat{e}(\mathbf{x})$|
+|-----------|-----------|---------|---------------------|-|-----------|-----------|---------|---------------------|
+|`r m.age.w`|`r aa.p.w` |`r s.p.w`|`r ps.w`             |--- |`r m.age.c`|`r aa.p.c` |`r s.p.c`|`r ps.c`             |
+
+
+- Welders #10 and #18 have similar $\hat{e}(\textbf{x})$ but different patterns of covariates $X$.
+
+- The limitations of pair matching, apply with any variable, including the `PS`. The mean of the 21 largest $\hat{e}(\textbf{x})$’s in the control group is `r mean.ps.21largestcontrols`, somewhat less than the mean of $\hat{e}(\textbf{x})$) in the treated group, namely `r mean.ps.welder`, so no pair matching can completely close that gap.
+
+## Distance Matrices
+
+### Squared difference in the $\hat{e}(\textbf{x})$ distance
+
+- A distance matrix is *a table* with *one row for each treated subject* and *one column for each potential control*.  The value in row $i$ and column $j$ of the table is the `distance` between the $i^{th}$ treated subject and the $j^{th}$ potential control. 2 individuals with the same value $\mathbf{x}$ would have distance zero.   
+
+- The welder data: 21 rows x 26 columns (21x26) distance.  The distance is the squared difference in the $\hat{e}(\textbf{x})$
+
+```{r sq difference PS}
+ps.vec.c <- gen.tox$ps[gen.tox$Group=="Controls"]
+ps.vec.w <- gen.tox$ps[gen.tox$Group=="Welders"]
+d.m <- matrix(NA, nrow = 21, ncol = 26)
+for (i in 1:21){
+  for (j in 1:26){
+    d.m[i,j] <- round((ps.vec.w[i] - ps.vec.c[j])^2, 2)
+  }
+}
+```
+
+**Table.** Squared differences in `PS` between welders and controls: $(\hat{e}(\textbf{X})_{Welder} - \hat{e}(\textbf{X})_{Control})^2$  
+
+Rows are the 21 welders and columns are for the first 6 of 26 potential controls.
+
+```{r table of sq difference PS}
+Welder <- c(1:21)
+d.m.d <- as.data.frame(d.m)
+names(d.m.d) <- paste0("Control ", 1:26)
+d.m.d.n <- as.data.frame(cbind(Welder, d.m.d))
+kable(d.m.d.n[,1:7], caption = "Squared differences in `PS` between welders and controls")  %>%
+  kable_styling(bootstrap_options = "striped", full_width = F)
+```
+
+Look at the disadvantage:   
+- that 2 controls with the same $\hat{e}(\mathbf{x})$ may have different patterns of covariates, $\mathbf{x}$, and this is ignored   
+$\Rightarrow$ In the $1^{st}$ row and $3^{rd}$ and $4^{th}$ columns of Table above, the distance is 0 to two decimal places. Actually, the distances between welder #1 and potential controls #3 and #4 are, respectively, $(0.46−0.47)^2 = 0.0001$ and $(0.46−0.42)^2 = 0.0016,$ so control #3 is ever so slightly closer to welder #1.  
+- However, in terms of the details of $\textbf{x}$, **control #4** looks to be the better match, *a nonsmoker* with a two-year difference in *age*, as opposed to *control #3*, *a smoker* with a six-year difference in *age*.  
+$\rightarrow$ Because younger smokers are more common in the welder group, the `PS` is indifferent between a younger nonsmoker and an older smoker, but the details of $\textbf{x}$ suggest that **control #4** is a better match for welder #1 than is *control #3*.
+
+### Justifying by adding caliper on the `PS`
+
+An alternative distance [@RN645]:   
+
+- individuals be close on the `PS`, $\hat{e}(\textbf{x})$, but once this is achieved, the details of $\textbf{x}$ affect the distance.  
+- with a `caliper` of width $w$, if two individuals, say $k$ and $l$,  
+    + have `PS` that differ by more than $w$ i.e.  $| \hat{e}(\textbf{x}_k) - \hat{e}(\textbf{x}_l) | > w$ $\rightarrow$ set $w$ = $\infty$  
+    + if $| \hat{e}(\textbf{x}_k) - \hat{e}(\textbf{x}_l) | \le w$ $\rightarrow$ the distance is a measure of proximity of $\textbf{x}_k$ and $\textbf{x}_l$.
+    
+```{r caliper w}
+sd.ps <- round(sd(pscore),3) # [1] 0.172
+w <- round(sd.ps/2,3)
+paste0("The standard deviation of ps: ", sd.ps)
+paste0("The caliper w (half of sd of ps): ", sd.ps, ", used to demonstate in this post.")
+```
+
+- The caliper width, $w$, is often taken as a multiple of the standard deviation of the `PS`, so that by varying the multiplier, one can vary the relative importance given to $\hat{e}(\textbf{x})$ and $\textbf{x}$. 
+    - The standard deviation of $\hat{e}(\textbf{X})$ is `r sd.ps`. 
+    - We illustrate 2 distance matrices using a caliper on the `PS`, in which the caliper is half of the standard deviation of the `PS`, or `r sd.ps`/2 = `r w`.
+
+> **In problems of practical size**, a `caliper` of 20% of the sd of `ps` is more common, and even that may be too large. A reasonable strategy: to start with a `caliper` of 20% of the sd of `ps` $\rightarrow$ adjusting the caliper if needed to obtain balance on the propensity score.   
+
+### Mahalanobis distance matrix
+
+If $\hat{\Sigma}$ is the sample covariance matrix of $\textbf{x}$, then the estimated Mahalanobis distance between $\textbf{x}_k$ and $\textbf{x}_l$ is \[ (\textbf{x}_k - \textbf{x}_l)^T \hat{\Sigma}^{-1} (\textbf{x}_k - \textbf{x}_l) \]
+
+```{r create matrix of variables}
+var.m <-gen.tox %>%
+  dplyr::select(Age, Race, Smoker) %>%
+  unname() %>%
+  as.matrix()
+```
+
+#### Sample var-cov matrix 
+
+```{r cov matrix}
+# sample variance covariance matrix
+cov.m <- cov(var.m)
+round(cov.m,2)
+```
+
+#### Inverse of sample var-cov matrix
+```{r inv of cov matrix}
+# inverse of sample variance covariance matrix
+cov.m.inv <- inv(cov.m)
+round(cov.m.inv,3)
+```
+
+#### Mahalanobis `dmat` [@RN646, @RN647]
+
+Distance matrix would have 21 treated subject (Welders) and 26 controls; the value in row $i$ and column $j$ of the table is the `distance` between the $i^{th}$ treated subject and the $j^{th}$ potential control.
+
+```{r Mahalanobis}
+var.m.w <-gen.tox %>%
+  filter(Group=="Welders") %>%
+  dplyr::select(Age, Race, Smoker) %>%
+  as.matrix()
+
+var.m.c <-gen.tox %>%
+  filter(Group=="Controls") %>%
+  dplyr::select(Age, Race, Smoker) %>%
+  as.matrix()
+
+m.d.m <- matrix(NA, nrow = 21, ncol = 26)
+for (i in 1:21){
+  for (j in 1:26){
+    m.d.m[i,j] <- t(var.m.w[i,] - var.m.c[j,]) %*% cov.m.inv %*% (var.m.w[i,] - var.m.c[j,])
+  }
+}
+
+# Mahalanobis distance
+Welder <- c(1:21)
+d.m.d.m <- as.data.frame(m.d.m)
+names(d.m.d.m) <- paste0("Control ", 1:26)
+d.d.m.d.n <- cbind(Welder, d.m.d.m)
+kable(round(d.d.m.d.n[,1:7],2), caption = "Mahalanobis distance between 21 Welders vs 26 Controls dealed with Age, Race and Smoker")  %>%
+  kable_styling(bootstrap_options = "striped", full_width = F)
+```
+
+Another way to produce the Mahalanobis distance matrix: look at the source code of `mahal` function. 
+
+
+```{r}
+source("mahal.R")
+print(mahal)
+```
+
+### Mahalanobis dmat within `PS` calipers. 
+
+Rows are the 21 welders and columns are for the first 6 of 26 potential controls. An $\infty$ signifies that the caliper is violated.
+
+```{r mahal w PS caliper}
+m.m <- matrix(NA, nrow = 21, ncol = 26)
+for (i in 1:21){
+  for (j in 1:26){
+    m.m[i,j] <- ifelse(abs(ps.vec.w[i] - ps.vec.c[j]) > w, Inf, m.d.m[i,j])
+  }
+}
+Welder <- c(1:21)
+d.m.m <- as.data.frame(m.m)
+names(d.m.m) <- paste0("Control ", 1:26)
+d.d.m.m <- cbind(Welder, d.m.m)
+kable(round(d.d.m.m[,1:7],2), caption = "Mahalanobis distances within PS calipers. An `Inf` signifies that the caliper is violated.")  %>%
+  kable_styling(bootstrap_options = "striped", full_width = F)
+```
+
+### Cons of Mahalanobis distance 
+
+- `Mahalanobis distance` was originally developed for use with multivariate Normal data  
+$\rightarrow$ With data that are not Normal, `Mahalanobis distance` can exhibit some rather odd behavior. 
+
+- If one covariate
+    + contains extreme outliers or 
+    + has a long-tailed distribution,  
+
+$\rightarrow$ its standard deviation will be inflated, and 
+$\rightarrow$ Mahalanobis distance will tend to ignore that covariate in matching. 
+
+- With binary indicators, 
+    + the variance is largest for events that occur about half the time, and 
+    + it is smallest for events with probabilities near 0 and 1 
+
+$\rightarrow$ `Mahalanobis distance` gives greater weight to binary variables with probabilities near 0 or 1 than to binary variables with probabilities
+closer to 1/2. 
+
+- In `welder data`,  
+    + 2 individuals with the same `Age` and `Race` but different `smoking behavior` have a Mahalanobis distance of 4.41, 
+    + whereas 2 individuals with the same `Age` and `Smoking behavior` but different `Race` have a Mahalanobis distance of 8.06,   
+    $\rightarrow$ so a mismatch on `Race` is counted as almost twice as bad as a mismatch on `Smoking`. 
+    + 2 people who differed by 20 years in `Age` with the same `Race` and `Smoking` would have a `Mahalanobis distance` of 0.021 × $20^2$ = `r cov.m.inv[1,1] * 20^2`,   
+    $\rightarrow$ a difference in `Race` counts about as much as a 20-year difference in `Age`.
+
+> $\Longrightarrow$ In many contexts, rare binary covariates are not of overriding importance, and outliers do not make a covariate unimportant $\rightarrow$ `Mahalanobis distance` may not be appropriate with covariates of this kind.
+
+### Solution `rank-based Mahalanobis distance`
+
+(i) replaces each of the covariates, one at a time, by its ranks, with average ranks for ties,  
+  $\Longrightarrow$  limits the influence of outliers.  
+(ii) premultiplies and postmultiplies the covariance matrix of the ranks by a diagonal matrix whose diagonal elements are the ratios of the standard deviation of untied ranks, 1, ..., L, to the standard deviations of the tied ranks of the covariates,  
+  $\rightarrow$ the adjusted covariance matrix has a constant diagonal  
+  $\Longrightarrow$ prevents heavily tied covariates, such as rare binary variables, from having increased influence due to reduced variance.  
+(iii) computes the Mahalanobis distance using the ranks and this adjusted covariance matrix.  
+
+```{r rank-based Mahalanobis distance}
+### Note that the covariance matrix now is on the rank-based matrix
+data.r <- gen.tox %>%
+  dplyr::select(Age, Race, Smoker) %>%
+  as.matrix()
+for (j in 1:dim(data.r)[2]){data.r[,j] <- rank(data.r[,j])}
+cov.m.r <- cov(data.r)
+
+## Step 1
+var.m.w.r <- data.r[gen.tox$Group=="Welders",]
+var.m.c.r <- data.r[gen.tox$Group=="Controls",]
+
+## Step 2:
+var.untied <- var(1:dim(gen.tox)[1])
+rat <- sqrt(var.untied/diag(cov.m.r))
+
+cov.m.r.adjusted <- diag(rat) %*% cov.m.r %*% diag(rat)
+cov.m.r.adjusted.inv <- inv(cov.m.r.adjusted)
+
+m.d.m.r <- matrix(NA, nrow = 21, ncol = 26)
+
+for (i in 1:21){
+  for (j in 1:26){
+    m.d.m.r[i,j] <- t(var.m.w.r[i,] - var.m.c.r[j,]) %*% cov.m.r.adjusted.inv %*% (var.m.w.r[i,] - var.m.c.r[j,])
+  }
+}
+
+# rank-based Mahalanobis distance
+Welder <- c(1:21)
+d.m.d.m.r <- as.data.frame(m.d.m.r)
+names(d.m.d.m.r) <- paste0("Control ", 1:26)
+d.d.m.d.m.r <- cbind(Welder, d.m.d.m.r)
+kable(round(d.d.m.d.m.r[,1:7],2), caption = "Rank-based Mahalanobis distance between 21 Welders vs 26 Controls dealed with Age, Race and Smoker")  %>%
+  kable_styling(bootstrap_options = "striped", full_width = F)
+```
+
+Another way to produce the rank-based Mahalanobis distance matrix: look at the source code of `smahal` function.
+
+```{r}
+source("smahal.R")
+print(smahal)
+```
+
+- In `welder data`,  
+    + 2 individuals (Welder 2 vs Control 3) with the same `Age` and `Race` but different `smoking behavior` have a rank-based Mahalanobis distance of 3.21 (4.41 for a Mahalanobis distance),  
+    + whereas 2 individuals (Welder 11 vs Control 14) with the same `Age` and `Smoking behavior` but different `Race` have a rank-based Mahalanobis distance of 3.07 (8.06 for a Mahalanobis distance),   
+    
+> $\Longrightarrow$ a mismatch on `race` is counted as about equal to a mismatch on `smoking`.  
+
+Rank-based Mahalanobis distances within `Propensity Score` calipers. An `Inf` signifies that the caliper is violated
+
+```{r r-mahal w PS caliper}
+m.m.r <- matrix(NA, nrow = 21, ncol = 26)
+for (i in 1:21){
+  for (j in 1:26){
+    m.m.r[i,j] <- ifelse(abs(ps.vec.w[i] - ps.vec.c[j]) > w, Inf, m.d.m.r[i,j])
+  }
+}
+Welder <- c(1:21)
+d.m.m.r <- as.data.frame(m.m.r)
+names(d.m.m.r) <- paste0("Control ", 1:26)
+d.d.m.m.r <- cbind(Welder, d.m.m.r)
+kable(round(d.d.m.m.r[,1:7],2), caption = "rank-based Mahalanobis distances within PS calipers. An `Inf` signifies that the caliper is violated.")  %>%
+  kable_styling(bootstrap_options = "striped", full_width = F)
+```
+
+
+## Optimal Pair Matching
+
+- An `optimal pair matching` pairs each treated subject with a different control to minimize the total distance within matched pairs. 
+    + In the welder data: forming 21 pairs using 21 different controls from the 26 potential controls so that the sum of the 21 distances within pairs is minimized.
+    + The problem is serious: the closest control to one treated subject may also be the closest control to another treated subject.
+
+Hansen’s `pairmatch` function in his `optmatch` package makes Bertsekas’ Fortran code (aka **'assignment problem'** solved by Kuhn in 1955) available from inside the statistical package R;
+
+The SAS program `proc assign` also solves the assignment problem.
+
+### Match pair on `PS`
+
+I generated code in which the treated's ps match with the closest control's ps. It seemed the marginal means were well balanced.
+```{r pairmatch using closest ps}
+ctrl <- NULL
+k <- NULL
+
+d <- d.m.d.n[-1]
+
+for (i in 1:21){
+  k <- which.min(d[i,])
+  ctrl[i] <- names(k)
+  d <- d[-k]
+}
+
+index <- base::order(ctrl)
+
+Welders <- gen.tox %>%
+  filter(Group=="Welders") %>%
+  dplyr::select(Age, Race, Smoker, ps)
+Welders$Pair <- paste0("Pair ",1:21)
+Welders <- Welders[,c("Pair","Age","Race","Smoker","ps")]
+
+Controls <- gen.tox %>%
+  filter(Group=="Controls") %>%
+  dplyr::select(Age, Race, Smoker, ps)
+
+Controls$id <- paste0("Control ",1:26)
+
+matched.controls <- Controls[which(Controls$id %in% ctrl),]
+
+# Reorder follow the ctrl match order
+matched.controls$id <- reorder.factor(matched.controls$id, new.order=ctrl)
+#matched.controls <- matched.controls[-5]
+
+matched.controls <- matched.controls %>% dplyr::arrange(id)
+
+kable(cbind(Welders,matched.controls), caption="Pair match using the closed measure in the PS")  %>%
+  kable_styling(bootstrap_options = "striped", full_width = F)
+```
+
+```{r}
+m.age.mps <- round(mean(matched.controls$Age),0)
+
+aa.p.mps <- round(table(matched.controls$Race)[2]/21*100,0)
+
+s.p.mps <- round(table(matched.controls$Smoker)[2]/21*100,0)
+
+ps.mps <- round(mean(matched.controls$ps),2)
+```
+
+
+Welders --- Matched Controls
+
+| Mean Age  | AA        | Smoker  |$\hat{e}(\mathbf{x})$|--- |Mean Age   | AA        | Smoker  |$\hat{e}(\mathbf{x})$|
+|-----------|-----------|---------|---------------------|-|-----------|-----------|---------|---------------------|
+|`r m.age.w`|`r aa.p.w` |`r s.p.w`|`r ps.w`             |--- |`r m.age.mps`|`r aa.p.mps` |`r s.p.mps`|`r ps.mps`     |
+
+
+$\Longrightarrow$ the marginal means the matching above are well balanced as expected 
+
+Next, I use the `pairmatch` function in `optmatch` package to compare.
+
+```{r}
+gen.tox.op <- gen.tox
+gen.tox.op$Group1 <- as.numeric(ifelse(gen.tox.op$Group=="Welders", 1,0))
+#pairmatch(match_on( Group~ps, data=gen.tox ) )# did not run
+pm <- pairmatch(Group1 ~ ps, data = gen.tox.op)
+print(pairmatch(Group1 ~ ps, data = gen.tox.op), grouped = TRUE) # knowing the ordered id of treated and controls
+
+summary(pairmatch(Group1 ~ ps, data = gen.tox.op))
+
+#all.equal(names(pm), row.names(gen.tox))
+
+## Housekeeping
+ipm <- as.integer(pm)
+gen.tox.op <- cbind(gen.tox.op, matches=pm, ipm)
+data.pairmatch<-gen.tox.op[matched(pm),] # only select matched cases
+
+Welders <- data.pairmatch %>%
+  filter(Group=="Welders") %>%
+  arrange(ipm) %>%
+  dplyr::select(Age, Race, Smoker, ps, ipm)
+Welders$Pair <- paste0("Pair ",1:21)
+Welders <- Welders[,c("Pair","Age","Race","Smoker","ps","ipm")]
+
+matched.controls <- data.pairmatch %>%
+  filter(Group=="Controls") %>%
+  arrange(ipm) %>%
+  dplyr::select(Age, Race, Smoker, ps, ipm)
+
+kable(cbind(Welders,matched.controls), caption="Optimal pair match using the squared difference in the PS")  %>%
+  kable_styling(bootstrap_options = "striped", full_width = F)
+```
+
+```{r}
+m.age.mps <- round(mean(matched.controls$Age),0)
+
+aa.p.mps <- round(table(matched.controls$Race)[2]/21*100,0)
+
+s.p.mps <- round(table(matched.controls$Smoker)[2]/21*100,0)
+
+ps.mps <- round(mean(matched.controls$ps),2)
+```
+
+
+Welders --- Matched Controls
+
+| Mean Age  | AA        | Smoker  |$\hat{e}(\mathbf{x})$|--- |Mean Age   | AA        | Smoker  |$\hat{e}(\mathbf{x})$|
+|-----------|-----------|---------|---------------------|-|-----------|-----------|---------|---------------------|
+|`r m.age.w`|`r aa.p.w` |`r s.p.w`|`r ps.w`             |--- |`r m.age.mps`|`r aa.p.mps` |`r s.p.mps`|`r ps.mps`     |
+
+$\Longrightarrow$ the marginal means the matching above are fairly well balanced, but the individual pairs are often not matched for race or smoking.
+
+### Match pair on `Mahalanobis distance within PS calipers`
+
+The caliper is half the standard deviation of the `PS`, or 0.172/2 = 0.086   
+
+```{r}
+z<-1*(gen.tox$Group=="Welders")
+aa<-gen.tox$Race
+smoker=gen.tox$Smoker
+age<-gen.tox$Age
+x<-cbind(age,aa,smoker)
+# Mahalanobis distances
+dmat<-mahal(z,x)
+
+# Impose propensity score calipers
+prop<-gen.tox$ps # propensity score
+# Mahalanobis distanced penalized for violations of a propensity score caliper.
+# This version is used for numerical work.
+dmat<-addcaliper(dmat,z,prop,caliper=.5)
+
+# Find the minimum distance match within propensity score calipers.
+pm.cal<-optmatch::pairmatch(dmat,data=gen.tox)#, remove.unmatchables = TRUE)
+
+ipm.cal <- as.integer(pm.cal)
+gen.tox.op.caliper <- cbind(gen.tox, matches=pm.cal,ipm.cal)
+data.pairmatch.cal<-gen.tox.op.caliper[matched(pm.cal),] # only select matched cases
+
+Welders <- data.pairmatch.cal %>%
+  filter(Group=="Welders") %>%
+  arrange(ipm.cal) %>%
+  dplyr::select(Age, Race, Smoker, ps,ipm.cal)
+Welders$Pair <- paste0("Pair ",1:21)
+Welders <- Welders[,c("Pair","Age","Race","Smoker","ps","ipm.cal")]
+
+matched.controls <- data.pairmatch.cal %>%
+  filter(Group=="Controls") %>%
+  arrange(ipm.cal) %>%
+  dplyr::select(Age, Race, Smoker, ps, ipm.cal)
+
+kable(cbind(Welders,matched.controls), caption="Optimal pair match using the Mahalanobis distance within PS calipers")  %>%
+  kable_styling(bootstrap_options = "striped", full_width = F)
+```
+
+```{r}
+m.age.mps <- round(mean(matched.controls$Age),0)
+
+aa.p.mps <- round(table(matched.controls$Race)[2]/21*100,0)
+
+s.p.mps <- round(table(matched.controls$Smoker)[2]/21*100,0)
+
+ps.mps <- round(mean(matched.controls$ps),2)
+```
+
+
+Welders --- Matched Controls
+
+| Mean Age  | AA        | Smoker  |$\hat{e}(\mathbf{x})$|--- |Mean Age   | AA        | Smoker  |$\hat{e}(\mathbf{x})$|
+|-----------|-----------|---------|---------------------|-|-----------|-----------|---------|---------------------|
+|`r m.age.w`|`r aa.p.w` |`r s.p.w`|`r ps.w`             |--- |`r m.age.mps`|`r aa.p.mps` |`r s.p.mps`|`r ps.mps`     |
+
+
+### Match pair on `rank-based Mahalanobis distance within PS calipers`
+
+- The difference here is just substitute the `mahal` by `smahal`
+
+```{r}
+z<-1*(gen.tox$Group=="Welders")
+aa<-gen.tox$Race
+smoker=gen.tox$Smoker
+age<-gen.tox$Age
+x<-cbind(age,aa,smoker)
+# rank-based Mahalanobis distances
+dmat<-smahal(z,x)
+
+# Impose propensity score calipers
+prop<-gen.tox$ps # propensity score
+# Mahalanobis distanced penalized for violations of a propensity score caliper.
+# This version is used for numerical work.
+dmat<-addcaliper(dmat,z,prop,caliper=.5)
+
+# Find the minimum distance match within propensity score calipers.
+pm.cal<-optmatch::pairmatch(dmat,data=gen.tox)#, remove.unmatchables = TRUE)
+
+ipm.cal <- as.integer(pm.cal)
+gen.tox.op.caliper <- cbind(gen.tox, matches=pm.cal,ipm.cal)
+data.pairmatch.cal<-gen.tox.op.caliper[matched(pm.cal),] # only select matched cases
+
+Welders <- data.pairmatch.cal %>%
+  filter(Group=="Welders") %>%
+  arrange(ipm.cal) %>%
+  dplyr::select(Age, Race, Smoker, ps,ipm.cal)
+Welders$Pair <- paste0("Pair ",1:21)
+Welders <- Welders[,c("Pair","Age","Race","Smoker","ps","ipm.cal")]
+
+matched.controls <- data.pairmatch.cal %>%
+  filter(Group=="Controls") %>%
+  arrange(ipm.cal) %>%
+  dplyr::select(Age, Race, Smoker, ps, ipm.cal)
+
+kable(cbind(Welders,matched.controls), caption="Optimal pair match using the Mahalanobis distance within PS calipers")  %>%
+  kable_styling(bootstrap_options = "striped", full_width = F)
+```
+
+```{r}
+m.age.mps <- round(mean(matched.controls$Age),0)
+
+aa.p.mps <- round(table(matched.controls$Race)[2]/21*100,0)
+
+s.p.mps <- round(table(matched.controls$Smoker)[2]/21*100,0)
+
+ps.mps <- round(mean(matched.controls$ps),2)
+```
+
+
+Welders --- Matched Controls
+
+| Mean Age  | AA        | Smoker  |$\hat{e}(\mathbf{x})$|--- |Mean Age   | AA        | Smoker  |$\hat{e}(\mathbf{x})$|
+|-----------|-----------|---------|---------------------|-|-----------|-----------|---------|---------------------|
+|`r m.age.w`|`r aa.p.w` |`r s.p.w`|`r ps.w`             |--- |`r m.age.mps`|`r aa.p.mps` |`r s.p.mps`|`r ps.mps`     |
+
+
+## Optimal Matching with Multiple Controls
+
+In matching with multiple controls, each treated subject is matched to at least one, and possibly more than one, control:   
+
+  * To match in `a fixed ratio` is to match each treated subject to the same number of controls; for instance, pair matching in a ratio of 1-to-1, or matching in a ratio of 1-to-2.   
+  * To match in `a variable ratio`: to allow the number of controls to vary from one treated subject to another. In the welder data above, allows the possibility of matching with multiple controls in a variable ratio, and in particular to use all of the controls.
+
+The decision to match in `fixed` or `variable ratio` that affects both:   
+
+  * the quality of the matching,      
+  * the analysis, and  
+  * presentation of results.
+
+Matching with a variable number of controls is slightly more complex:   
+
+  * The optimization algorithm decides:
+      + who is matched to whom,  
+      + how many controls to assign to each treated subject.  
+  * The choices of number of controls must be constrained in some reasonable way to avoid trivial results. 
+      + without constraints imposed, if all the distances were positive, the minimum distance matching with variable numbers of controls would always be a pair matching. 
+      + with a simple constraint is to insist that a certain number of controls be used.   
+          - for example of the welder data, one might insist that all 26 controls be used. Alternatively, one might insist that 23 controls be used, which would permit, but not require, the algorithm to discard the 3 potential controls who are older than all of the welders.  
+  * An attractive feature of fixing the total number of controls 
+      + the total distance = a sum of a fixed number of distances. 
+          - to constraining the total number of controls: a different type of constraint permits a treated subject to have at least one but at most three controls. 
+      + given some set of constraints on the matching, an optimal matching with `variable controls` minimizes the total distance between treated subjects and controls inside matched sets.
+
+```{r}
+
+```
+
+
+The principal advantage of matching in a fixed ratio:    
+
+  * summary statistics, including those that might be displayed in graphs, may be computed from treated and control groups in the usual way, without using `direct adjustment` to give unequal weights to observations. This advantage will weigh heavily when potential controls are abundant and the biases that must be removed are not large (!?!).   
+  * A smaller issue is statistical efficiency, which in nominal terms, though often not in practical terms, slightly favors matching in fixed ratio over matching with a variable ratio [@RN666].   
+
+Several advantages to matching with a variable ratio [@RN666, @RN640]:    
+
+  * First, the matched sets will be more closely matched, in the following precise sense. If one finds the minimum distance match with, say, an average of three controls per treated subject and two to four controls for each treated subject, the total distance within matched sets will never be larger, and will typically be quite a bit smaller, than in fixed ratio matching with three controls.4 This is visible in Table: the two welders with low propensity scores were matched to the seven controls with low propensity scores, and trying to allocate these seven more evenly among welders would have produced a larger mismatch on these propensity scores.   
+  * Second, matching in fixed ratio requires the number of controls to be an integer multiple of the number of treated subjects, and this restriction may be inconvenient or undesirable for any of a variety of reasons; for instance, for the welder data, the only possible matching in fixed ratio is pair matching.   
+  * Third, just as §8.1 discussed definite limits to what can be accomplished with pair matching, there are
+also definite limits to what can be accomplished by matching with multiple controls, but these limits are better when matching with a variable ratio.   
+
+Finding an optimal match with variable controls is equivalent to solving a particular minimum-cost flow problem in a network [@RN640].
+
+## Optimal Full Matching
+
+* In full matching, besides matching with a variable number of controls, i.e. a treated subject could be matched to one or more controls, the reverse situation is permitted: one control may be matched to several treated subjects [@RN650].  
+
+* As in matching with variable controls, summary statistics for the control group in full matching must be directly adjusted.  
+
+* Full matching can be vastly better than pair matching or matching with a variable number of controls. The matched sets would be quite homogeneous, the quite unequal set sizes can lead to some inefficiency.  
+
+* In one specific sense, an optimal full matching is an optimal design for an observational study [@RN650]. Specifically, define a stratification to be a partitioning of the subjects into groups or strata based on the covariates with the one requirement that
+each stratum must contain at least one treated subject and at least one control. The quality of a stratification might reasonably be judged by a weighted average of all the within strata distances between treated subjects and controls.  
+
+* No matter which of these weightings is used, no matter what distance is used, there is always a full matching that minimizes this weighted average distance [@RN650].
+
+```{r}
+m<-fullmatch(dmat, data=gen.tox, min.controls = 1/7,max.controls = 7)
+length(m)
+sum(matched(m))
+
+# Housekeeping
+im<-as.integer(m)
+gen.tox.fm<-cbind(gen.tox,im)
+g.t.m<-gen.tox[matched(m),]
+
+Welders <- gen.tox.fm %>%
+  filter(Group=="Welders") %>%
+  arrange(im) %>%
+  dplyr::select(Age, Race, Smoker, ps, im)
+#Welders$Pair <- paste0("Pair ",1:21)
+Welders <- Welders[,c("Age","Race","Smoker","ps","im")]
+
+fmatched.controls <- gen.tox.fm %>%
+  filter(Group=="Controls") %>%
+  arrange(im) %>%
+  dplyr::select(Age, Race, Smoker, ps, im)
+
+kable(list(Welders,fmatched.controls), caption="Optimal full match using the Mahalanobis distance within PS calipers")  %>%
+  kable_styling(bootstrap_options = "striped", full_width = F)
+```
+
+
+
+## Efficiency
+
+(be continued)
+
+## Summary
+
+Matching on one variable, the `propensity score`, tends to produce treated and control
+groups that, in aggregate, are balanced with respect to observed covariates; 
+
+$\rightarrow$ Cons: *individual pairs* that are close on the propensity score may differ widely on specific covariates. 
+
+$\rightarrow$ Solution: to form *closer pairs*, `a distance` is used that penalizes large differences
+on the propensity score, and then finds *individual pairs* that are as close as possible.
+
+Pairs or matched sets are constructed using **an optimization algorithm**. `Matching
+with variable controls` and `full matching` combine elements of matching with elements
+of direct adjustment. 
+
+`Full matching` can often produce closer matches than `pair matching`.
+
+## Further Reading
+
+  *Chapter 9, Basic Tools of Multivariate Matching* from *Rosenbaum, Paul R. Design of Observational Studies. 2nd ed. 2020., Springer International Publishing, 2020, https://doi.org/10.1007/978-3-030-46405-9.*
+
+

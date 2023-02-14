@@ -1,0 +1,330 @@
+---
+title: "Series 8 - Ordinal Response & Probit Model"
+description: |
+  How to fit an Ordinal Regression (unconditional/conditional) in Bayes   
+  Compare 2 groups  
+author: Hai Nguyen
+date: "April 04, 2022"
+categories:
+  - Biostatistics
+  - Tutorial
+  - R
+  - Bayesian Methods
+  - JAGS/Stan
+output: 
+  distill::distill_article:
+    number_sections: true
+    toc: true
+    toc_float: yes
+    toc_depth: 3
+    theme: readable
+    highlight: haddock
+    highlight_downlit: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(rstan)
+library(shinystan)
+```
+
+# Ordinal Response
+
+Ordinal responses are ordered; include Likert scales for agreement with attitude statements (e.g., disagree, neither agree nor disagree, and agree) and reported frequencies of doing something such as helping children with homework (e.g., daily, several times per week, occasionally, and never).  
+
+Ordinal responses are often modeled with probit regression.  
+According to probit approach there is a Gaussian latent variable $z\sim N(\mu,\sigma)$  that may depend on some predictors.  
+Latent variable $z$ defines the ordinal output $y = k, \ k:\{1, ...,K\}$ through formulas  
+
+\begin{align*}
+P(y = k \mid \mu, \sigma, \theta_j) &= \phi\Big(\frac{\theta_k - \mu}{\sigma}\Big) - \phi\Big(\frac{\theta_{k-1} - \mu}{\sigma}\Big), \ &k = 2, ..., K-1 \\
+P(y = k \mid \mu, \sigma, \theta_j) &= \phi\Big(\frac{\theta_1 - \mu}{\sigma}\Big), \ &k = 1 \\
+P(y = k \mid \mu, \sigma, \theta_j) &= 1 - \phi\Big(\frac{\theta_{k-1} - \mu}{\sigma}\Big), \ &k = K 
+\end{align*}
+
+## Single Group
+
+Consider the simplest case when latent variable is standard normal does not have predictors, threshold parameters have uniform prior.  
+There is only one ordinal variable.
+
+```{r}
+modelString<-"
+data {
+    int<lower=2> K;  // num of y classes
+    int<lower=0> N;  // num of observations
+    int<lower=1,upper=K> y[N];
+}
+parameters {
+    ordered[K-1] c;   // thersholds
+}
+model {
+    vector[K] theta;
+    for (n in 1:N) {
+        theta[1] = Phi(c[1]);
+        for (k in 2:(K-1))
+            theta[k] = Phi(c[k]) - Phi(c[k-1]);
+        theta[K] = 1 - Phi(c[K-1]);
+        y[n] ~ categorical(theta);
+    }
+}
+"
+```
+
+<aside>
+`Phi(T x)`  
+standard normal cumulative distribution function of x  
+</aside>
+
+Note that in the description above prior is not defined.  
+Not defined prior is equivalent to uniform prior. Omitting definition of prior when variables are bound results in uniform prior on [0,1]. If the variable is unbound the prior is improper uniform.  
+
+Read the data.  
+The sample is just one column of ratings between 1 and 7.  
+Calculate frequencies of different levels of the rating.  
+
+```{r}
+mdta = read.csv(file = "data/OrdinalProbitData-1grp.csv")
+head(mdta)
+table(mdta$Y)
+(frequencies <- prop.table(table(mdta$Y)))
+```
+
+Compile the model DSO and run Markov Chains.
+
+```{r, eval=F}
+model <- stan_model(model_code=modelString)
+fit <- sampling(model,
+                data=list(N=nrow(mdta),  # num of observations
+                          K=max(mdta$Y), # num of outcome classes
+                          y=mdta$Y),
+                pars=c('c'),
+                iter=5000, chains = 2, cores = 2)
+```
+
+```{r}
+# save(fit, file = "data/fitordinalreponse.Rds")
+load("data/fitordinalreponse.Rds")
+```
+
+```{r, eval=FALSE}
+# analyze fitted model using shinystan
+launch_shinystan(fit)
+```
+
+Check the chains.
+
+```{r}
+pairs(fit)
+(fitResults<-summary(fit)$summary[,c(1,4,6,8,10)])
+```
+
+Returned parameters are 6 thresholds separating 7 ordinal categories.
+
+```{r}
+stan_ac(fit, separate_chains = T)
+stan_trace(fit)
+stan_dens(fit)
+```
+
+Compare estimated means with the frequencies of the sample
+
+```{r}
+cbind(Cumulativefrequencies=head(cumsum(frequencies)),
+      EstimatedProbabilities=pnorm(head(fitResults[,1])))
+```
+
+Plot HDI of the parameters.
+
+```{r}
+plot(fit)
+```
+
+HDI intervals overlap which may seem counter-intuitive: thresholds have to be ordered.
+
+Extract the chains.
+
+```{r}
+fit_ext <- rstan::extract(fit)
+fit_ext<-fit_ext$c
+head(fit_ext)
+```
+
+Plot first 6 rows of the chains to see that at each step of the chain thresholds are ordered.
+
+```{r}
+plot(fit_ext[1,],rep(1,6),ylim=c(1,6),xlim=c(0,3),col=1,pch=16)
+points(fit_ext[2,],rep(2,6),col=2,pch=16)
+points(fit_ext[3,],rep(3,6),col=3,pch=16)
+points(fit_ext[4,],rep(4,6),col=4,pch=16)
+points(fit_ext[5,],rep(5,6),col=5,pch=16)
+points(fit_ext[6,],rep(6,6),col=6,pch=16)
+```
+
+## Two Groups
+
+Two ordinal variables may need to be compared, for example, in the following situations:
+
+1- Two groups of participants asked to answer a questionnaire with the same scale of ordinal categories, for example, "*Strongly Disagree*", "*Disagree*", "*Undecided*", "*Agree*", "*Strongly Agree*". But two groups are asked about their agreement/disagreement with two different statements about social issues: "Left-handed people should have equal rights under the law" -- for group 1, and "Disabled people should be given equal rights under the law".  
+  The assumption is that people in both groups have the same latent variable, call it "__*sense of fairness*__". But two social issues have different responses formalized in mean value and standard deviation of the latent variable with respect to the issues.  
+  The goal of the experiment may be analysis of contrast between the two statements, i.e. how significant the difference is between the two statements.
+
+2- Two groups of participants are asked to rate two different products and select level of satisfaction from *1 (lowest)* to *10 (highest)*. Again the scale of ordinal responses is the same. Assumption is that the latent variable of evaluation of each product, "satisfaction", is shared by both groups of participants. But different products result in different mean values and variances of the latent variable. The goal of the study is understanding the difference between the products.
+
+Write description for 2 nominal groups.
+
+```{r}
+modelString<-"
+data {
+    int<lower=2> K;  // num of y classes
+    int<lower=0> N;  // num of observations
+    int<lower=1> D;  // num of groups
+    int<lower=1,upper=K> y[N]; // response
+    int<lower=1,upper=D> x[N]; // group index: each obeservation has its own group
+}
+parameters {
+    ordered[K-3] c_raw;
+    vector[D] sigma; // group sigma
+    vector[D] beta;  // group mean
+}
+transformed parameters{ // renormalize vector c
+    vector[K-1] c;
+    c[1] = 1.5;
+    for (k in 2:(K-2))
+        c[k] = 1.5 + (K - 2.0)* inv_logit(c_raw[k-1]); // sigmoid
+    c[K-1] = K - 0.5;
+}
+model {
+    vector[K] theta;
+    real mu;
+    real sgm;
+    beta ~ normal((1+K)/2.0, K);
+    sigma ~ uniform(K/1000.0, K * 10.0);
+    for (n in 1:N) {
+        mu = beta[x[n]];
+        sgm = sigma[x[n]];
+        theta[1] = Phi((c[1] - mu)/sgm);
+        for (k in 2:(K-1))
+            theta[k] = Phi((c[k] - mu)/sgm) - Phi((c[k-1] - mu)/sgm);
+        theta[K] = 1 - Phi((c[K-1] - mu)/sgm);
+        y[n] ~ categorical(theta);
+    }
+}"
+```
+
+Re-scaling of thresholds (adding a constant and dividing by a constant) is not going to change probabilities if the same transformation is done to the distribution.  
+In order to remove such degrees of freedom "pin down" the extreme values of thresholds to 1.5 and $K - 0.5$ correspondingly and re-scale the rest of the thresholds between them. This is what is done in the block "transformed parameters" above.
+
+Create DSO.
+
+```{r}
+model <- stan_model(model_code=modelString)
+# save(model, file = "data/modelordinal2grps.Rds")
+```
+
+```{r, include=F}
+load("data/modelordinal2grps.Rds")
+```
+
+Read the data.
+
+```{r}
+mdt = read.csv(file = "data/OrdinalProbitData1.csv", stringsAsFactors=TRUE)
+head(mdt)
+table(mdt)
+```
+
+The dataset now has 2 groups A and B, showing different distributions on the 5 ordinal categories.
+
+Run the chains.
+
+```{r}
+fit <- sampling(model,
+                data=list(N=nrow(mdt),  # num of observations
+                          K=max(mdt$Y), # num of outcome classes
+                          D=nlevels(mdt$X),
+                          y=mdt$Y,
+                          x=as.integer(mdt$X)),
+                pars=c('c', 'beta', 'sigma'),
+                iter=5000, chains = 2, cores = 2
+)
+```
+
+Analyze fitted model 
+
+```{r}
+pairs(fit)
+stan_ac(fit, separate_chains = T)
+stan_trace(fit)
+stan_dens(fit)
+summary(fit)
+plot(fit,pars=c("beta"))
+```
+
+HDIs show that even at 80% the difference between the two means is insignificant.
+
+```{r}
+plot(fit,pars=c("sigma"))
+```
+
+Standard deviations are identical.
+
+What would the FNP approach conclude about this data?
+
+First, assume that the data are of metric type.
+
+Check whether t-test is able to distinguish the means.
+
+```{r}
+subsetA <- subset(mdt,X=="A")
+subsetB <- subset(mdt,X=="B")
+t.test(subsetA$Y,subsetB$Y)
+```
+
+With any level greater than 0.032 the equality hypothesis is rejected.  
+
+In the book this is explained by non-normality of the data.  
+Confirm this with qq-plot.
+
+```{r}
+qqnorm(subsetA$Y)
+qqline(subsetA$Y)
+qqnorm(subsetB$Y)
+qqline(subsetB$Y)
+```
+
+Distributions are indeed not normal. But, probably, the main reason for rejecting the null hypothesis is discrete format of the data.
+
+Compare the samples assuming that they have multinomial distribution.
+Then apply $\chi-square$ test.
+
+```{r}
+chisq.test(c(table(subsetA$Y)/length(subsetA$Y),0),table(subsetB$Y)/length(subsetB$Y))
+```
+
+With proper method selected the hypothesis of equality of means is not rejected.
+
+Plot row means against simulated thresholds.
+
+```{r}
+draws <- extract(fit)
+c1 <- draws$c[,1]
+c2 <- draws$c[,2]
+c3 <- draws$c[,3]
+c4 <- draws$c[,4]
+mc <- rowMeans(draws$c)
+head(cbind(c1,c4))
+head(mc)
+plot(c1, mc, xlim = c(1,5),xlab="c")
+points(c2,mc)
+points(c3,mc)
+points(c4,mc)
+abline(v=mean(c2))
+abline(v=mean(c3))
+```
+
+# Probit Model with Metric Predictors
+
+(be continued)
+
+## Single predictor: Happiness and Money
+

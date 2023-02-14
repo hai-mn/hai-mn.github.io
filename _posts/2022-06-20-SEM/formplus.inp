@@ -1,0 +1,37 @@
+Title: CFA Example
+
+Data: File is Mathieu & Farr 1991.txt;
+
+Type is Means Stdeviations Correlation;
+
+Nobservations = 483;
+
+Variable:
+Names are 
+OC1 OC2 OC3 ! Organizational commitment
+JI1 JI2 JI3 ! Job involvement
+SAT1 SAT2 SAT3 ! Job satisfaction
+JS1 JS2 JS3 ! Job scope
+SELF1 SELF2 SELF3 ! Self ratings of performance
+SUPR1 SUPR2 SUPR3 ! Supervisor ratings of performance
+Education
+PostTen ! Position tenure
+OrgTen ! Organizational tenure
+Age;
+
+UseVariables are OC1-OC3 SAT1-SAT3 
+JS1-JS3 SUPR1-SUPR3 Education;
+
+Analysis:
+
+Model:
+OC by OC1 OC2 OC3;
+SAT by SAT1 SAT2 SAT3;
+JS by JS1 JS2 JS3;
+PERF by SUPR1 SUPR2 SUPR3;
+
+PERF on OC SAT JS Education;
+OC on SAT; 
+SAT on JS;
+
+Output: Tech1 Tech8 standardized sampstat;

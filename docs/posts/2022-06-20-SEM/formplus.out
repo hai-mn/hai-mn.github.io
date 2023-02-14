@@ -1,0 +1,763 @@
+Mplus VERSION 8.6
+MUTHEN & MUTHEN
+02/14/2023   4:20 PM
+
+INPUT INSTRUCTIONS
+
+  Title: CFA Example
+
+  Data: File is Mathieu & Farr 1991.txt;
+
+  Type is Means Stdeviations Correlation;
+
+  Nobservations = 483;
+
+  Variable:
+  Names are
+  OC1 OC2 OC3 ! Organizational commitment
+  JI1 JI2 JI3 ! Job involvement
+  SAT1 SAT2 SAT3 ! Job satisfaction
+  JS1 JS2 JS3 ! Job scope
+  SELF1 SELF2 SELF3 ! Self ratings of performance
+  SUPR1 SUPR2 SUPR3 ! Supervisor ratings of performance
+  Education
+  PostTen ! Position tenure
+  OrgTen ! Organizational tenure
+  Age;
+
+  UseVariables are OC1-OC3 SAT1-SAT3
+  JS1-JS3 SUPR1-SUPR3 Education;
+
+  Analysis:
+
+  Model:
+  OC by OC1 OC2 OC3;
+  SAT by SAT1 SAT2 SAT3;
+  JS by JS1 JS2 JS3;
+  PERF by SUPR1 SUPR2 SUPR3;
+
+  PERF on OC SAT JS Education;
+  OC on SAT;
+  SAT on JS;
+
+  Output: Tech1 Tech8 standardized sampstat;
+
+
+
+*** WARNING in VARIABLE command
+  Note that only the first 8 characters of variable names are used in the output.
+  Shorten variable names to avoid any confusion.
+*** WARNING in OUTPUT command
+  TECH8 option is available only with analysis types MIXTURE, RANDOM, or
+  TWOLEVEL with estimators ML, MLF, or MLR or ALGORITHM=INTEGRATION.
+  Request for TECH8 is ignored.
+   2 WARNING(S) FOUND IN THE INPUT INSTRUCTIONS
+
+
+
+CFA Example
+
+SUMMARY OF ANALYSIS
+
+Number of groups                                                 1
+Number of observations                                         483
+
+Number of dependent variables                                   12
+Number of independent variables                                  1
+Number of continuous latent variables                            4
+
+Observed dependent variables
+
+  Continuous
+   OC1         OC2         OC3         SAT1        SAT2        SAT3
+   JS1         JS2         JS3         SUPR1       SUPR2       SUPR3
+
+Observed independent variables
+   EDUCATIO
+
+Continuous latent variables
+   OC          SAT         JS          PERF
+
+
+Estimator                                                       ML
+Information matrix                                        EXPECTED
+Maximum number of iterations                                  1000
+Convergence criterion                                    0.500D-04
+Maximum number of steepest descent iterations                   20
+
+Input data file(s)
+  Mathieu & Farr 1991.txt
+
+Input data format  FREE
+
+
+SAMPLE STATISTICS
+
+
+     SAMPLE STATISTICS
+
+
+           Means/Intercepts/Thresholds
+              OC1           OC2           OC3           SAT1          SAT2
+              ________      ________      ________      ________      ________
+                5.580         4.890         3.760         5.190         5.070
+
+
+           Means/Intercepts/Thresholds
+              SAT3          JS1           JS2           JS3           SUPR1
+              ________      ________      ________      ________      ________
+                5.140         3.320         3.440         3.140         6.450
+
+
+           Means/Intercepts/Thresholds
+              SUPR2         SUPR3         EDUCATIO
+              ________      ________      ________
+                6.250         6.690         1.600
+
+
+           Covariances/Correlations/Residual Correlations
+              OC1           OC2           OC3           SAT1          SAT2
+              ________      ________      ________      ________      ________
+ OC1            0.792
+ OC2            0.676         1.000
+ OC3            0.662         0.755         1.232
+ SAT1           0.436         0.490         0.525         0.740
+ SAT2           0.431         0.466         0.537         0.636         0.774
+ SAT3           0.380         0.409         0.484         0.605         0.556
+ JS1            0.138         0.133         0.148         0.170         0.159
+ JS2            0.150         0.144         0.169         0.175         0.176
+ JS3            0.117         0.139         0.168         0.166         0.166
+ SUPR1          0.148         0.144         0.025         0.086         0.068
+ SUPR2          0.158         0.100        -0.012         0.086         0.088
+ SUPR3          0.136         0.098        -0.012         0.066         0.048
+ EDUCATIO       0.056         0.095         0.012         0.081         0.092
+
+
+           Covariances/Correlations/Residual Correlations
+              SAT3          JS1           JS2           JS3           SUPR1
+              ________      ________      ________      ________      ________
+ SAT3           0.792
+ JS1            0.184         0.185
+ JS2            0.178         0.120         0.160
+ JS3            0.168         0.115         0.105         0.168
+ SUPR1          0.040         0.091         0.071         0.036         1.232
+ SUPR2          0.069         0.119         0.107         0.073         0.727
+ SUPR3          0.068         0.094         0.074         0.040         0.714
+ EDUCATIO       0.037         0.063         0.017         0.022         0.175
+
+
+           Covariances/Correlations/Residual Correlations
+              SUPR2         SUPR3         EDUCATIO
+              ________      ________      ________
+ SUPR2          1.232
+ SUPR3          0.750         1.188
+ EDUCATIO       0.198         0.172         1.103
+
+
+THE MODEL ESTIMATION TERMINATED NORMALLY
+
+
+
+MODEL FIT INFORMATION
+
+Number of Free Parameters                       42
+
+Loglikelihood
+
+          H0 Value                       -5138.829
+          H1 Value                       -5075.557
+
+Information Criteria
+
+          Akaike (AIC)                   10361.657
+          Bayesian (BIC)                 10537.218
+          Sample-Size Adjusted BIC       10403.913
+            (n* = (n + 2) / 24)
+
+Chi-Square Test of Model Fit
+
+          Value                            126.544
+          Degrees of Freedom                    60
+          P-Value                           0.0000
+
+RMSEA (Root Mean Square Error Of Approximation)
+
+          Estimate                           0.048
+          90 Percent C.I.                    0.036  0.060
+          Probability RMSEA <= .05           0.599
+
+CFI/TLI
+
+          CFI                                0.981
+          TLI                                0.976
+
+Chi-Square Test of Model Fit for the Baseline Model
+
+          Value                           3614.872
+          Degrees of Freedom                    78
+          P-Value                           0.0000
+
+SRMR (Standardized Root Mean Square Residual)
+
+          Value                              0.040
+
+
+
+MODEL RESULTS
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+ OC       BY
+    OC1                1.000      0.000    999.000    999.000
+    OC2                1.124      0.049     22.934      0.000
+    OC3                1.128      0.056     20.156      0.000
+
+ SAT      BY
+    SAT1               1.000      0.000    999.000    999.000
+    SAT2               0.949      0.031     30.970      0.000
+    SAT3               0.900      0.034     26.719      0.000
+
+ JS       BY
+    JS1                1.000      0.000    999.000    999.000
+    JS2                0.950      0.048     19.671      0.000
+    JS3                0.886      0.049     17.969      0.000
+
+ PERF     BY
+    SUPR1              1.000      0.000    999.000    999.000
+    SUPR2              1.071      0.073     14.751      0.000
+    SUPR3              1.028      0.070     14.666      0.000
+
+ PERF     ON
+    OC                 0.115      0.084      1.370      0.171
+    SAT               -0.207      0.093     -2.214      0.027
+    JS                 0.800      0.173      4.620      0.000
+
+ OC       ON
+    SAT                0.667      0.041     16.421      0.000
+
+ SAT      ON
+    JS                 1.471      0.107     13.733      0.000
+
+ PERF     ON
+    EDUCATION          0.145      0.038      3.781      0.000
+
+ Intercepts
+    OC1                5.580      0.040    137.933      0.000
+    OC2                4.890      0.045    107.581      0.000
+    OC3                3.760      0.050     74.523      0.000
+    SAT1               5.190      0.039    132.768      0.000
+    SAT2               5.070      0.040    126.751      0.000
+    SAT3               5.140      0.040    127.057      0.000
+    JS1                3.320      0.020    169.861      0.000
+    JS2                3.440      0.018    189.200      0.000
+    JS3                3.140      0.019    168.488      0.000
+    SUPR1              6.219      0.079     78.778      0.000
+    SUPR2              6.002      0.082     73.107      0.000
+    SUPR3              6.452      0.080     81.098      0.000
+
+ Variances
+    JS                 0.127      0.012     10.489      0.000
+
+ Residual Variances
+    OC1                0.195      0.021      9.514      0.000
+    OC2                0.246      0.026      9.479      0.000
+    OC3                0.473      0.038     12.491      0.000
+    SAT1               0.072      0.012      6.089      0.000
+    SAT2               0.173      0.015     11.389      0.000
+    SAT3               0.250      0.019     13.186      0.000
+    JS1                0.058      0.006     10.172      0.000
+    JS2                0.046      0.005      9.427      0.000
+    JS3                0.068      0.006     12.061      0.000
+    SUPR1              0.547      0.050     11.028      0.000
+    SUPR2              0.446      0.049      9.106      0.000
+    SUPR3              0.464      0.047      9.814      0.000
+    OC                 0.298      0.029     10.122      0.000
+    SAT                0.392      0.033     11.982      0.000
+    PERF               0.595      0.071      8.417      0.000
+
+
+QUALITY OF NUMERICAL RESULTS
+
+     Condition Number for the Information Matrix              0.496E-03
+       (ratio of smallest to largest eigenvalue)
+
+
+STANDARDIZED MODEL RESULTS
+
+
+STDYX Standardization
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+ OC       BY
+    OC1                0.868      0.016     53.099      0.000
+    OC2                0.868      0.016     53.248      0.000
+    OC3                0.784      0.021     37.284      0.000
+
+ SAT      BY
+    SAT1               0.950      0.009    106.178      0.000
+    SAT2               0.881      0.013     69.396      0.000
+    SAT3               0.827      0.016     50.580      0.000
+
+ JS       BY
+    JS1                0.828      0.020     41.273      0.000
+    JS2                0.845      0.019     43.921      0.000
+    JS3                0.770      0.023     33.257      0.000
+
+ PERF     BY
+    SUPR1              0.743      0.028     26.563      0.000
+    SUPR2              0.797      0.026     30.319      0.000
+    SUPR3              0.779      0.027     29.027      0.000
+
+ PERF     ON
+    OC                 0.108      0.078      1.377      0.169
+    SAT               -0.205      0.092     -2.238      0.025
+    JS                 0.346      0.070      4.912      0.000
+
+ OC       ON
+    SAT                0.706      0.028     25.614      0.000
+
+ SAT      ON
+    JS                 0.641      0.032     19.908      0.000
+
+ PERF     ON
+    EDUCATION          0.185      0.047      3.893      0.000
+
+ Intercepts
+    OC1                6.276      0.207     30.320      0.000
+    OC2                4.895      0.164     29.859      0.000
+    OC3                3.391      0.118     28.686      0.000
+    SAT1               6.041      0.200     30.262      0.000
+    SAT2               5.767      0.191     30.186      0.000
+    SAT3               5.781      0.191     30.190      0.000
+    JS1                7.729      0.253     30.573      0.000
+    JS2                8.609      0.281     30.669      0.000
+    JS3                7.666      0.251     30.565      0.000
+    SUPR1              5.623      0.206     27.316      0.000
+    SUPR2              5.429      0.202     26.917      0.000
+    SUPR3              5.943      0.217     27.434      0.000
+
+ Variances
+    JS                 1.000      0.000    999.000    999.000
+
+ Residual Variances
+    OC1                0.247      0.028      8.723      0.000
+    OC2                0.246      0.028      8.694      0.000
+    OC3                0.385      0.033     11.653      0.000
+    SAT1               0.098      0.017      5.745      0.000
+    SAT2               0.224      0.022     10.002      0.000
+    SAT3               0.317      0.027     11.730      0.000
+    JS1                0.314      0.033      9.447      0.000
+    JS2                0.285      0.033      8.760      0.000
+    JS3                0.408      0.036     11.441      0.000
+    SUPR1              0.447      0.042     10.750      0.000
+    SUPR2              0.365      0.042      8.714      0.000
+    SUPR3              0.394      0.042      9.426      0.000
+    OC                 0.501      0.039     12.872      0.000
+    SAT                0.589      0.041     14.243      0.000
+    PERF               0.881      0.034     25.794      0.000
+
+
+STDY Standardization
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+ OC       BY
+    OC1                0.868      0.016     53.099      0.000
+    OC2                0.868      0.016     53.248      0.000
+    OC3                0.784      0.021     37.284      0.000
+
+ SAT      BY
+    SAT1               0.950      0.009    106.178      0.000
+    SAT2               0.881      0.013     69.396      0.000
+    SAT3               0.827      0.016     50.580      0.000
+
+ JS       BY
+    JS1                0.828      0.020     41.273      0.000
+    JS2                0.845      0.019     43.921      0.000
+    JS3                0.770      0.023     33.257      0.000
+
+ PERF     BY
+    SUPR1              0.743      0.028     26.563      0.000
+    SUPR2              0.797      0.026     30.319      0.000
+    SUPR3              0.779      0.027     29.027      0.000
+
+ PERF     ON
+    OC                 0.108      0.078      1.377      0.169
+    SAT               -0.205      0.092     -2.238      0.025
+    JS                 0.346      0.070      4.912      0.000
+
+ OC       ON
+    SAT                0.706      0.028     25.614      0.000
+
+ SAT      ON
+    JS                 0.641      0.032     19.908      0.000
+
+ PERF     ON
+    EDUCATION          0.176      0.045      3.921      0.000
+
+ Intercepts
+    OC1                6.276      0.207     30.320      0.000
+    OC2                4.895      0.164     29.859      0.000
+    OC3                3.391      0.118     28.686      0.000
+    SAT1               6.041      0.200     30.262      0.000
+    SAT2               5.767      0.191     30.186      0.000
+    SAT3               5.781      0.191     30.190      0.000
+    JS1                7.729      0.253     30.573      0.000
+    JS2                8.609      0.281     30.669      0.000
+    JS3                7.666      0.251     30.565      0.000
+    SUPR1              5.623      0.206     27.316      0.000
+    SUPR2              5.429      0.202     26.917      0.000
+    SUPR3              5.943      0.217     27.434      0.000
+
+ Variances
+    JS                 1.000      0.000    999.000    999.000
+
+ Residual Variances
+    OC1                0.247      0.028      8.723      0.000
+    OC2                0.246      0.028      8.694      0.000
+    OC3                0.385      0.033     11.653      0.000
+    SAT1               0.098      0.017      5.745      0.000
+    SAT2               0.224      0.022     10.002      0.000
+    SAT3               0.317      0.027     11.730      0.000
+    JS1                0.314      0.033      9.447      0.000
+    JS2                0.285      0.033      8.760      0.000
+    JS3                0.408      0.036     11.441      0.000
+    SUPR1              0.447      0.042     10.750      0.000
+    SUPR2              0.365      0.042      8.714      0.000
+    SUPR3              0.394      0.042      9.426      0.000
+    OC                 0.501      0.039     12.872      0.000
+    SAT                0.589      0.041     14.243      0.000
+    PERF               0.881      0.034     25.794      0.000
+
+
+STD Standardization
+
+                                                    Two-Tailed
+                    Estimate       S.E.  Est./S.E.    P-Value
+
+ OC       BY
+    OC1                0.771      0.034     22.930      0.000
+    OC2                0.867      0.038     22.957      0.000
+    OC3                0.870      0.044     19.799      0.000
+
+ SAT      BY
+    SAT1               0.816      0.030     27.461      0.000
+    SAT2               0.775      0.032     24.210      0.000
+    SAT3               0.735      0.034     21.915      0.000
+
+ JS       BY
+    JS1                0.356      0.017     20.978      0.000
+    JS2                0.338      0.016     21.597      0.000
+    JS3                0.315      0.017     18.955      0.000
+
+ PERF     BY
+    SUPR1              0.822      0.048     17.215      0.000
+    SUPR2              0.881      0.047     18.653      0.000
+    SUPR3              0.845      0.047     18.158      0.000
+
+ PERF     ON
+    OC                 0.108      0.078      1.377      0.169
+    SAT               -0.205      0.092     -2.238      0.025
+    JS                 0.346      0.070      4.912      0.000
+
+ OC       ON
+    SAT                0.706      0.028     25.614      0.000
+
+ SAT      ON
+    JS                 0.641      0.032     19.908      0.000
+
+ PERF     ON
+    EDUCATION          0.176      0.045      3.921      0.000
+
+ Intercepts
+    OC1                5.580      0.040    137.933      0.000
+    OC2                4.890      0.045    107.581      0.000
+    OC3                3.760      0.050     74.523      0.000
+    SAT1               5.190      0.039    132.768      0.000
+    SAT2               5.070      0.040    126.751      0.000
+    SAT3               5.140      0.040    127.057      0.000
+    JS1                3.320      0.020    169.861      0.000
+    JS2                3.440      0.018    189.200      0.000
+    JS3                3.140      0.019    168.488      0.000
+    SUPR1              6.219      0.079     78.778      0.000
+    SUPR2              6.002      0.082     73.107      0.000
+    SUPR3              6.452      0.080     81.098      0.000
+
+ Variances
+    JS                 1.000      0.000    999.000    999.000
+
+ Residual Variances
+    OC1                0.195      0.021      9.514      0.000
+    OC2                0.246      0.026      9.479      0.000
+    OC3                0.473      0.038     12.491      0.000
+    SAT1               0.072      0.012      6.089      0.000
+    SAT2               0.173      0.015     11.389      0.000
+    SAT3               0.250      0.019     13.186      0.000
+    JS1                0.058      0.006     10.172      0.000
+    JS2                0.046      0.005      9.427      0.000
+    JS3                0.068      0.006     12.061      0.000
+    SUPR1              0.547      0.050     11.028      0.000
+    SUPR2              0.446      0.049      9.106      0.000
+    SUPR3              0.464      0.047      9.814      0.000
+    OC                 0.501      0.039     12.872      0.000
+    SAT                0.589      0.041     14.243      0.000
+    PERF               0.881      0.034     25.794      0.000
+
+
+R-SQUARE
+
+    Observed                                        Two-Tailed
+    Variable        Estimate       S.E.  Est./S.E.    P-Value
+
+    OC1                0.753      0.028     26.549      0.000
+    OC2                0.754      0.028     26.624      0.000
+    OC3                0.615      0.033     18.642      0.000
+    SAT1               0.902      0.017     53.089      0.000
+    SAT2               0.776      0.022     34.698      0.000
+    SAT3               0.683      0.027     25.290      0.000
+    JS1                0.686      0.033     20.636      0.000
+    JS2                0.715      0.033     21.961      0.000
+    JS3                0.592      0.036     16.629      0.000
+    SUPR1              0.553      0.042     13.282      0.000
+    SUPR2              0.635      0.042     15.159      0.000
+    SUPR3              0.606      0.042     14.514      0.000
+
+     Latent                                         Two-Tailed
+    Variable        Estimate       S.E.  Est./S.E.    P-Value
+
+    OC                 0.499      0.039     12.807      0.000
+    SAT                0.411      0.041      9.954      0.000
+    PERF               0.119      0.034      3.484      0.000
+
+
+TECHNICAL 1 OUTPUT
+
+
+     PARAMETER SPECIFICATION
+
+
+           NU
+              OC1           OC2           OC3           SAT1          SAT2
+              ________      ________      ________      ________      ________
+                  1             2             3             4             5
+
+
+           NU
+              SAT3          JS1           JS2           JS3           SUPR1
+              ________      ________      ________      ________      ________
+                  6             7             8             9            10
+
+
+           NU
+              SUPR2         SUPR3         EDUCATIO
+              ________      ________      ________
+                 11            12             0
+
+
+           LAMBDA
+              OC            SAT           JS            PERF          EDUCATIO
+              ________      ________      ________      ________      ________
+ OC1                0             0             0             0             0
+ OC2               13             0             0             0             0
+ OC3               14             0             0             0             0
+ SAT1               0             0             0             0             0
+ SAT2               0            15             0             0             0
+ SAT3               0            16             0             0             0
+ JS1                0             0             0             0             0
+ JS2                0             0            17             0             0
+ JS3                0             0            18             0             0
+ SUPR1              0             0             0             0             0
+ SUPR2              0             0             0            19             0
+ SUPR3              0             0             0            20             0
+ EDUCATIO           0             0             0             0             0
+
+
+           THETA
+              OC1           OC2           OC3           SAT1          SAT2
+              ________      ________      ________      ________      ________
+ OC1               21
+ OC2                0            22
+ OC3                0             0            23
+ SAT1               0             0             0            24
+ SAT2               0             0             0             0            25
+ SAT3               0             0             0             0             0
+ JS1                0             0             0             0             0
+ JS2                0             0             0             0             0
+ JS3                0             0             0             0             0
+ SUPR1              0             0             0             0             0
+ SUPR2              0             0             0             0             0
+ SUPR3              0             0             0             0             0
+ EDUCATIO           0             0             0             0             0
+
+
+           THETA
+              SAT3          JS1           JS2           JS3           SUPR1
+              ________      ________      ________      ________      ________
+ SAT3              26
+ JS1                0            27
+ JS2                0             0            28
+ JS3                0             0             0            29
+ SUPR1              0             0             0             0            30
+ SUPR2              0             0             0             0             0
+ SUPR3              0             0             0             0             0
+ EDUCATIO           0             0             0             0             0
+
+
+           THETA
+              SUPR2         SUPR3         EDUCATIO
+              ________      ________      ________
+ SUPR2             31
+ SUPR3              0            32
+ EDUCATIO           0             0             0
+
+
+           ALPHA
+              OC            SAT           JS            PERF          EDUCATIO
+              ________      ________      ________      ________      ________
+                  0             0             0             0             0
+
+
+           BETA
+              OC            SAT           JS            PERF          EDUCATIO
+              ________      ________      ________      ________      ________
+ OC                 0            33             0             0             0
+ SAT                0             0            34             0             0
+ JS                 0             0             0             0             0
+ PERF              35            36            37             0            38
+ EDUCATIO           0             0             0             0             0
+
+
+           PSI
+              OC            SAT           JS            PERF          EDUCATIO
+              ________      ________      ________      ________      ________
+ OC                39
+ SAT                0            40
+ JS                 0             0            41
+ PERF               0             0             0            42
+ EDUCATIO           0             0             0             0             0
+
+
+     STARTING VALUES
+
+
+           NU
+              OC1           OC2           OC3           SAT1          SAT2
+              ________      ________      ________      ________      ________
+                5.580         4.890         3.760         5.190         5.070
+
+
+           NU
+              SAT3          JS1           JS2           JS3           SUPR1
+              ________      ________      ________      ________      ________
+                5.140         3.320         3.440         3.140         6.450
+
+
+           NU
+              SUPR2         SUPR3         EDUCATIO
+              ________      ________      ________
+                6.250         6.690         0.000
+
+
+           LAMBDA
+              OC            SAT           JS            PERF          EDUCATIO
+              ________      ________      ________      ________      ________
+ OC1            1.000         0.000         0.000         0.000         0.000
+ OC2            1.000         0.000         0.000         0.000         0.000
+ OC3            1.000         0.000         0.000         0.000         0.000
+ SAT1           0.000         1.000         0.000         0.000         0.000
+ SAT2           0.000         1.000         0.000         0.000         0.000
+ SAT3           0.000         1.000         0.000         0.000         0.000
+ JS1            0.000         0.000         1.000         0.000         0.000
+ JS2            0.000         0.000         1.000         0.000         0.000
+ JS3            0.000         0.000         1.000         0.000         0.000
+ SUPR1          0.000         0.000         0.000         1.000         0.000
+ SUPR2          0.000         0.000         0.000         1.000         0.000
+ SUPR3          0.000         0.000         0.000         1.000         0.000
+ EDUCATIO       0.000         0.000         0.000         0.000         1.000
+
+
+           THETA
+              OC1           OC2           OC3           SAT1          SAT2
+              ________      ________      ________      ________      ________
+ OC1            0.396
+ OC2            0.000         0.500
+ OC3            0.000         0.000         0.616
+ SAT1           0.000         0.000         0.000         0.370
+ SAT2           0.000         0.000         0.000         0.000         0.387
+ SAT3           0.000         0.000         0.000         0.000         0.000
+ JS1            0.000         0.000         0.000         0.000         0.000
+ JS2            0.000         0.000         0.000         0.000         0.000
+ JS3            0.000         0.000         0.000         0.000         0.000
+ SUPR1          0.000         0.000         0.000         0.000         0.000
+ SUPR2          0.000         0.000         0.000         0.000         0.000
+ SUPR3          0.000         0.000         0.000         0.000         0.000
+ EDUCATIO       0.000         0.000         0.000         0.000         0.000
+
+
+           THETA
+              SAT3          JS1           JS2           JS3           SUPR1
+              ________      ________      ________      ________      ________
+ SAT3           0.396
+ JS1            0.000         0.092
+ JS2            0.000         0.000         0.080
+ JS3            0.000         0.000         0.000         0.084
+ SUPR1          0.000         0.000         0.000         0.000         0.616
+ SUPR2          0.000         0.000         0.000         0.000         0.000
+ SUPR3          0.000         0.000         0.000         0.000         0.000
+ EDUCATIO       0.000         0.000         0.000         0.000         0.000
+
+
+           THETA
+              SUPR2         SUPR3         EDUCATIO
+              ________      ________      ________
+ SUPR2          0.616
+ SUPR3          0.000         0.594
+ EDUCATIO       0.000         0.000         0.000
+
+
+           ALPHA
+              OC            SAT           JS            PERF          EDUCATIO
+              ________      ________      ________      ________      ________
+                0.000         0.000         0.000         0.000         1.600
+
+
+           BETA
+              OC            SAT           JS            PERF          EDUCATIO
+              ________      ________      ________      ________      ________
+ OC             0.000         0.000         0.000         0.000         0.000
+ SAT            0.000         0.000         0.000         0.000         0.000
+ JS             0.000         0.000         0.000         0.000         0.000
+ PERF           0.000         0.000         0.000         0.000         0.000
+ EDUCATIO       0.000         0.000         0.000         0.000         0.000
+
+
+           PSI
+              OC            SAT           JS            PERF          EDUCATIO
+              ________      ________      ________      ________      ________
+ OC             0.050
+ SAT            0.000         0.050
+ JS             0.000         0.000         0.050
+ PERF           0.000         0.000         0.000         0.050
+ EDUCATIO       0.000         0.000         0.000         0.000         1.100
+
+
+     Beginning Time:  16:20:13
+        Ending Time:  16:20:13
+       Elapsed Time:  00:00:00
+
+
+
+MUTHEN & MUTHEN
+3463 Stoner Ave.
+Los Angeles, CA  90066
+
+Tel: (310) 391-9971
+Fax: (310) 391-8971
+Web: www.StatModel.com
+Support: Support@StatModel.com
+
+Copyright (c) 1998-2021 Muthen & Muthen

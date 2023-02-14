@@ -12,12 +12,59 @@
       <link>https://hai-mn.github.io</link>
     </image>
     <generator>Distill</generator>
-    <lastBuildDate>Sun, 20 Mar 2022 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 20 Jun 2022 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>A Gentle Introduction to Structural Equation Modeling</title>
+      <dc:creator>Hai Nguyen</dc:creator>
+      <link>https://hai-mn.github.io/posts/2022-06-20-SEM</link>
+      <description>The introduction composed on Lecture Notes from authors: Michael Zyphur, Lesa Hoffman and Johnny Lin   
+Review of SEM    
+Read correlation/covariance matrix as input in Mplus &amp; lavaan (R)    
+Run SEM in Mplus &amp; lavaan (R)    
+Model fit indices</description>
+      <category>Biostatistics</category>
+      <category>Psychology/Sociology</category>
+      <category>SEM</category>
+      <category>Mplus</category>
+      <category>lavaan (R)</category>
+      <category>Model Fit Statistics</category>
+      <guid>https://hai-mn.github.io/posts/2022-06-20-SEM</guid>
+      <pubDate>Mon, 20 Jun 2022 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>Basic Tools of Multivariate Matching</title>
+      <dc:creator>Hai Nguyen</dc:creator>
+      <link>https://hai-mn.github.io/posts/2022-04-19-Basic Tools of Multivariate Matching</link>
+      <description>Observational study    
+Causal Inference    
+Matching    
+R</description>
+      <category>Biostatistics</category>
+      <category>Causal Inference</category>
+      <category>Tutorial</category>
+      <category>R</category>
+      <guid>https://hai-mn.github.io/posts/2022-04-19-Basic Tools of Multivariate Matching</guid>
+      <pubDate>Tue, 19 Apr 2022 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>Series 8 - Ordinal Response &amp; Probit Model</title>
+      <dc:creator>Hai Nguyen</dc:creator>
+      <link>https://hai-mn.github.io/posts/2022-04-04-Bayesian methods - Series 8 of 10</link>
+      <description>How to fit an Ordinal Regression (unconditional/conditional) in Bayes   
+Compare 2 groups</description>
+      <category>Biostatistics</category>
+      <category>Tutorial</category>
+      <category>R</category>
+      <category>Bayesian Methods</category>
+      <category>JAGS/Stan</category>
+      <guid>https://hai-mn.github.io/posts/2022-04-04-Bayesian methods - Series 8 of 10</guid>
+      <pubDate>Mon, 04 Apr 2022 00:00:00 +0000</pubDate>
+    </item>
     <item>
       <title>Series 7 -- Fitting a Logistic Regression in Bayes</title>
       <dc:creator>Hai Nguyen</dc:creator>
       <link>https://hai-mn.github.io/posts/2022-03-20-Bayesian methods - Series 7 of 10</link>
-      <description>How to fit a Logistic Regression using Bayesian Methods   
+      <description>How to fit a Logistic Regression using Bayesian Methods    
 The advantage of using Bayes to overcome the Separation in Logistic Regression</description>
       <category>Biostatistics</category>
       <category>Tutorial</category>
