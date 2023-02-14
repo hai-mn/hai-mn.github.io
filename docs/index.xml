@@ -17,10 +17,10 @@
       <title>A Gentle Introduction to Structural Equation Modeling</title>
       <dc:creator>Hai Nguyen</dc:creator>
       <link>https://hai-mn.github.io/posts/2022-06-20-SEM</link>
-      <description>The introduction composed on Lecture Notes from authors: Michael Zyphur, Lesa Hoffman and Johnny Lin   
-Review of SEM    
-Read correlation/covariance matrix as input in Mplus &amp; lavaan (R)    
-Run SEM in Mplus &amp; lavaan (R)    
+      <description>The introduction composed on Lecture Notes from authors: Michael Zyphur, Lesa Hoffman and Johnny Lin;    
+Review of SEM;    
+Read correlation/covariance matrix as input in Mplus &amp; lavaan (R);    
+Run SEM in Mplus &amp; lavaan (R);    
 Model fit indices</description>
       <category>Biostatistics</category>
       <category>Psychology/Sociology</category>

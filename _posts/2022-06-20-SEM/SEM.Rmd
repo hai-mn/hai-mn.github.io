@@ -1,10 +1,10 @@
 ---
 title: "A Gentle Introduction to Structural Equation Modeling"
 description: |
-  The introduction composed on Lecture Notes from authors: Michael Zyphur, Lesa Hoffman and Johnny Lin   
-  Review of SEM    
-  Read correlation/covariance matrix as input in Mplus & lavaan (R)    
-  Run SEM in Mplus & lavaan (R)    
+  The introduction composed on Lecture Notes from authors: Michael Zyphur, Lesa Hoffman and Johnny Lin;    
+  Review of SEM;    
+  Read correlation/covariance matrix as input in Mplus & lavaan (R);    
+  Run SEM in Mplus & lavaan (R);    
   Model fit indices   
 author:
   - name: Hai Nguyen
