@@ -1,0 +1,35 @@
+---
+title: "Bayesian Hierarchical Modeling"
+author: "Hai Nguyen"
+date: '2023-02-18'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Why
+
+## Theory
+
+## Another view
+
+## An example
+
+Define the model.  
+
+In this model there there are 2 different prior distributions for the data parameter θ
+.
+For m=1
+ the prior is concentrated around ω1=0.25
+ and for m=2
+ the prior is concentrated around ω2=0.75
+.
+Concentration levels are the same κ=12
+.
+The resulting parameters of beta distribution are: (α1=3.5,β1=8.5)
+ and (α2=8.5,β2=3.5)
+, correspondingly.
+
+Create list of data corresponding to 6 successes out of 9 trials.

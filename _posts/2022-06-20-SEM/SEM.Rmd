@@ -1,5 +1,5 @@
 ---
-title: "A Gentle Introduction to Structural Equation Modeling"
+title: "Structural Equation Modeling: What Fun if We Cannot Run in Mplus"
 description: |
   The introduction composed on Lecture Notes from authors: Michael Zyphur, Lesa Hoffman and Johnny Lin;    
   Review of SEM;    

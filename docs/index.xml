@@ -12,9 +12,24 @@
       <link>https://hai-mn.github.io</link>
     </image>
     <generator>Distill</generator>
-    <lastBuildDate>Mon, 20 Jun 2022 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 19 Sep 2022 00:00:00 +0000</lastBuildDate>
     <item>
-      <title>A Gentle Introduction to Structural Equation Modeling</title>
+      <title>Exploratory / Confirmatory Factor Analysis?</title>
+      <dc:creator>Hai Nguyen</dc:creator>
+      <link>https://hai-mn.github.io/posts/2022-09-15-Factor Analysis</link>
+      <description>Correlation matrix;  
+Exploratory Factor Analysis vs. Confirmatory Factor Analysis;
+Run An Example with Categorical Data in R (psych package);</description>
+      <category>Biostatistics</category>
+      <category>Psychology/Sociology</category>
+      <category>EFA</category>
+      <category>Model Fit Statistics</category>
+      <guid>https://hai-mn.github.io/posts/2022-09-15-Factor Analysis</guid>
+      <pubDate>Mon, 19 Sep 2022 00:00:00 +0000</pubDate>
+      <media:content url="https://hai-mn.github.io/posts/2022-09-15-Factor Analysis/distill-preview.png" medium="image" type="image/png" width="1248" height="768"/>
+    </item>
+    <item>
+      <title>Structural Equation Modeling: What Fun if We Cannot Run in Mplus</title>
       <dc:creator>Hai Nguyen</dc:creator>
       <link>https://hai-mn.github.io/posts/2022-06-20-SEM</link>
       <description>The introduction composed on Lecture Notes from authors: Michael Zyphur, Lesa Hoffman and Johnny Lin;    
