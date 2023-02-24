@@ -1,0 +1,369 @@
+---
+title: "Factor Analysis applied in Multivariate Regression: Machine Learning's Perspective"
+description: |
+     FA vs. PCA;   
+     Conducting an Exploratory Factor Analysis Example;  
+     Factor Score;  
+     FA applied in Regression;     
+author:
+  - name: Hai Nguyen
+date: September 30, 2022
+categories:
+  - Biostatistics  
+  - Machine Learning
+  - PCA  
+  - EFA 
+  - Regression   
+base_url: https://hai-mn.github.io
+output:
+  distill::distill_article:
+    toc: true
+    toc_float: yes
+    toc_depth: 4
+    theme: journal
+    highlight: haddock
+    highlight_downlit: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(Hmisc) # for describe()
+library(corrplot)
+library(ppcor) # t test for correlation
+library(car) # vif function
+library(psych)
+library(GPArotation)
+library(Metrics) # mse function
+```
+
+## Questions  
+
+1- What is difference between EFA and PCA?   
+2- Is it possible that we can run the regression analysis on factors generating from Factor Analysis?    
+3- If so, how can we run it?     
+ 
+
+The demonstration is to use the dataset [Factor-Hair-Revised.csv](https://www.kaggle.com/ipravin/hair-customer-survey-data-for-100-customers) to build a regression model to predict satisfaction.
+
+## EFA vs. PCA
+
+|                 |FA               |PCA           |
+|:----------------|:----------------|:-------------|
+|Meaning          |A factor (or latent) is a common or underlying element with which several other variables are correlated<br>$X_1 = L_1\times F + \epsilon_1$<br>$X_2 = L_2\times F + \epsilon_2$<br>$X_3 = L_3\times F + \epsilon_3$ where, F is the factor, W is are the loading |A component is a derived new dimension (or variable) so that the derived variables are linearly independent of each other<br>$Y =  W_1\times PC_1 + W_2\times PC_2 + ...+ W_{10}\times PC_{10} + C$ where, PCs are the components & W is are the weights|  
+|Process          |The original variables are defined as the linear combinations of the factors|The components are calculated as the linear combinations of the original variables|  
+|Objective        |FA focuses on explaining the covariances or the correlations between the variables|The aim of PCA is to explain as much of the cumulative variance in the predictors (or variables) as possible|  
+|Purpose          |Factor Analysis is used to understand the underlying ‘cause’ which these factors (latent or constituents) capture much of the information of a set of variables in the dataset data|PCA is used to decompose the data into a smaller number of components and therefore is a type of Singular Value Decomposition (SVD)|  
+|Interpretation of coefficients|The coefficients (loadings) in the factor analysis express the relationship or association of each variable (X) to the underlying factor (F)|The coefficients indicate which component contributes more to the target variable, Y, as the independent variables are standardized|
+
+
+## An Example: Data Exploration
+
+```{r load data}
+prodsurvey <- read_csv("Factor-Hair-Revised.csv")
+head(prodsurvey)
+dim(prodsurvey)
+str(prodsurvey)
+names(prodsurvey)
+describe(prodsurvey)
+```
+
+```{r cor plot}
+datamatrix1 <- cor(prodsurvey[,-1])
+corrplot(datamatrix1, method="number")
+```
+
+As we can see from the above correlation matrix:   
+
+   1. Complaint resolution (`CompRes`) and delivery speed (`DelSpeed`) are highly correlated  
+   2. Order billing (`OrdBilling`) and `CompRes` are highly correlated  
+   3. `WartyClaim` and `TechSupport` are highly correlated  
+   4. `OrdBilling` and `DelSpeed` are highly correlated  
+   5. e-commerce (`Ecom`) and sales force image (`SalesFImage`) are highly correlated  
+
+```{r pairwise correlation}
+pcor(prodsurvey[,-1], method="pearson")
+```
+
+- We can see that there is a high degree of collinearity between the independent variables.  
+
+## Multiple Linear Regression
+
+```{r regression model}
+model1 <- lm(Satisfaction ~ ., prodsurvey[,-1])
+summary(model1)
+```
+
+- As in our model the adjusted R-squared: 0.7774, meaning that independent variables explain 78% of the variance of the dependent variable, only 3 variables are significant out of 11 independent variables.   
+- The p-value of the F-statistic is less than 0.05 (level of Significance), which means our model is significant. This means that, at least, one of the predictor variables is significantly related to the outcome variable.   
+- Our model equation can be written as:   
+Satisfaction = -0.66 + 0.37 x `ProdQual` -0.44 x `Ecom` + 0.034 x `TechSup` + 0.16 x `CompRes` -0.02 x `Advertising` + 0.14 x `ProdLine` + 0.80 x `SalesFImage` - 0.038 x `CompPricing` - 0.10 x `WartyClaim` + 0.14 x `OrdBilling` + 0.16 x `DelSpeed`  
+
+## Variable Inflation Factor (VIF)
+
+```{r}
+vif(model1)
+```
+
+- High Variable Inflation Factor (VIF) is a sign of multicollinearity. There is no formal VIF value for determining the presence of multicollinearity; however, in weaker models, VIF value greater than 2.5 may be a cause of concern.  
+- From the VIF values, we can infer that variables `CompRes` and `DelSpeed` are a cause of concern.  
+
+- Remedial Measures:  
+Two of the most commonly used methods to deal with multicollinearity in the model is the following.   
+    * Remove some of the highly correlated variables using VIF or stepwise algorithms.  
+    * Perform an analysis design like principal component analysis (PCA)/ Factor Analysis on the correlated variables.  
+    
+## Factor Analysis  
+
+```{r}
+X <- prodsurvey[,-c(1,13)]
+y <- prodsurvey[,13]
+```
+
+Let’s check the factorability of the variables in the dataset: perform the Kaiser-Meyer-Olkin (KMO) Test.  
+
+> Kaiser-Meyer-Olkin (KMO) Test and/or  Bartlett’s Test is a measure of how suited your data is for Factor Analysis. The test measures sampling adequacy for each variable in the model and for the complete model. The statistic is a measure of the proportion of variance among variables that might be common variance. The lower the proportion, the more suited your data is to Factor Analysis.
+
+```{r}
+datamatrix2 <- cor(X)
+KMO(r=datamatrix2)
+```
+
+- MSA (measure of sampling adequacy) > 0.5, we can run Factor Analysis on this data.  
+
+```{r}
+print(cortest.bartlett(datamatrix2, nrow(prodsurvey[,-1])))
+```
+
+- The approximate of Chi-square is 619.27 with 55 degrees of freedom, which is significant at 0.05 Level of significance.  
+
+Hence Factor Analysis is considered as an appropriate technique for further analysis of the data.  
+
+### Find the optimal clusters
+
+Plotting the eigenvalues from our factor analysis (whether it’s based on principal axis or principal components extraction), a parallel analysis involves generating random correlation matrices and after factor analyzing them, comparing the resulting eigenvalues to the eigenvalues of the observed data. The idea behind this method is thatobserved eigenvalues that are higher than their corresponding random eigenvalues are more likely to be from "meaningful factors" than observed eigenvalues that are below their corresponding random eigenvalue.
+
+```{r parallel analysis, warning=FALSE}
+parallel <- fa.parallel(X)
+```
+
+```{r}
+# other option of scree plot
+scree(X)
+```
+ 
+Selection of factors from the scree plot can be based on:  
+
+   1. Kaiser-Guttman normalization rule says that we should choose all factors with an eigenvalue greater than 1.   
+   2. Bend elbow rule  
+
+When looking at the parallel analysis scree plots, there are two places to look depending on which type of factor analysis you’re looking to run. The two blue lines show you the observed eigenvalues - they should look identical to the scree plots drawn by the scree function. The red dotted lines show the random eigenvalues or the simulated data line. Each point on the blue line that lies above the corresponding simulated data line is a factor or component to extract. In this analysis, you can see that 4 factors in the "Factor Analysis" parallel analysis lie above the corresponding simulated data line and 3 components in the "Principal Components" parallel analysis lie above the corresponding simulated data line.   
+In our case, however, the last factor/component lies very close to the line - for both principal components extraction and principal axis extraction. Thus, we should probably compare the 3 factor and 4 factor solutions, to see which one is most interpretable.  
+
+- The scree plot graphs the Eigenvalue against each factor. We can see from the graph that after factor 4 there is a sharp change in the curvature of the scree plot. This shows that after factor 4 the total variance accounts for smaller amounts.   
+
+```{r}
+ev <- eigen(cor(X))
+ev$values
+```
+
+```{r scree plot using ggplot}
+Factor <- rep(1:11)
+Eigen_Values <- ev$values
+Scree <- data.frame(Factor, Eigen_Values)
+
+ggplot(data = Scree, mapping = aes(x = Factor, y = Eigen_Values)) + 
+  geom_point() +
+  geom_line() +
+  scale_y_continuous(name = "Eigen Values", limits = c(0,4)) +
+  theme_bw() + 
+  theme(panel.grid.major.y = element_line(color = "skyblue")) +
+  ggtitle("Scree Plot")
+```
+
+So as per the elbow or Kaiser-Guttman normalization rule, we are good to go ahead with 4 factors.  
+
+### Conducting the Factor Analysis
+
+   1. Factor analysis using fa method:
+
+```{r fa method}
+fa.none <-  fa(r=X, 
+              nfactors = 4, 
+#              covar = FALSE, SMC = TRUE,
+              fm="pa", # type of factor analysis we want to use (“pa” is principal axis factoring)
+              max.iter=100, # (50 is the default, but we have changed it to 100
+              rotate="none") # none rotation
+print(fa.none)
+```
+
+   2. Factor analysis using the factanal method:
+   
+```{r factanal}
+factanal.none <- factanal(X, factors=4, scores = c("regression"), rotation = "none")
+print(factanal.none)
+
+factanal.var <- factanal(X, factors=4, scores = c("regression"), rotation = "varimax")
+print(factanal.var)
+```
+
+### Graph Factor Loading Matrices
+
+Factor analysis results are typically interpreted in terms of the major loadings on each factor. These structures may be represented an "interpretable" solution as a table of loadings or graphically, where all loadings with an absolute value $\rightarrow$ some cut point are represented as an edge (path).  
+
+```{r}
+fa.diagram(fa.none)
+```
+
+   - The first 4 factors have an Eigenvalue >1 and which explains almost 69% of the variance. We can effectively reduce dimensionality from 11 to 4 while only losing about 31% of the variance.   
+   - Factor 1 accounts for 29.20% of the variance; Factor 2 accounts for 20.20% of the variance; Factor 3 accounts for 13.60% of the variance; Factor 4 accounts for 6% of the variance. All the 4 factors together explain for 69% of the variance in performance.  
+
+```{r varimax rotated}
+fa.var <-  fa(r=X, 
+              nfactors = 4, 
+#              covar = FALSE, SMC = TRUE,
+              fm="pa", # type of factor analysis we want to use (“pa” is principal axis factoring)
+              max.iter=100, # (50 is the default, but we have changed it to 100
+              rotate="varimax") # none rotation
+print(fa.var)
+```
+
+```{r varimax loadings}
+fa.var$loadings
+```
+
+```{r varimax diagram}
+fa.diagram(fa.var)
+```
+
+   - The red dotted line means that Competitive Pricing marginally falls under the PA4 bucket and the loading are negative.   
+
+### Labeling and interpretation of the factors
+
+|Factors |Variables                      |Label           |Short Interpretaation   |
+|--------|-------------------------------|----------------|------------------------|
+|PA1     |DelSpeed, CompRes, OrdBilling  |Purchase        |All the items are related to purchasing the product; from placing order to billing and getting it delivered.                        |
+|PA2     |SalesFImage, Ecom, Advertising |Marketing       |In this factors the item are related to marketing processes like the image of sales force and spending on adverstising                        |
+|PA3     |WartyClaim, TechSup            |Post Purchase   |Post purchase activities are included in this factor; like warranty claims and technical support.                        |   
+|PA4     |ProdLine, ProdQual, CompPricing|Product Position|Product positioning related items are grouped in this factor.                        |
+
+### Scores for all the rows
+
+```{r score}
+head(fa.var$scores)
+#fa.var$scores # for 100 observations
+```
+
+## Regression analysis using the factors scores as the independent variable
+
+```{r generate data for reg}
+regdata <- cbind(prodsurvey["Satisfaction"], fa.var$scores)
+
+#Labeling the data
+names(regdata) <- c("Satisfaction", "Purchase", "Marketing",
+                    "Post_purchase", "Prod_positioning")
+head(regdata)
+```
+
+### Splitting the data to train and test set
+
+```{r train-test}
+#Splitting the data 70:30
+#Random number generator, set seed.
+set.seed(100)
+indices= sample(1:nrow(regdata), 0.7*nrow(regdata))
+train=regdata[indices,]
+test = regdata[-indices,]
+```
+
+### Regression Model using train data
+
+```{r reg on FA score}
+model.fa.score = lm(Satisfaction~., train)
+summary(model.fa.score)
+```
+
+### Check vif
+
+```{r}
+vif(model.fa.score)
+```
+
+- As per the VIF values, we don’t have multicollinearity in the model   
+
+### Check prediction of the model in the test dataset  
+
+```{r metrics}
+#Model Performance metrics:
+pred_test <- predict(model.fa.score, newdata = test, type = "response")
+pred_test
+```
+
+```{r}
+#Find MSE and MAPE scores:
+#MSE/ MAPE of Model1
+test$Satisfaction_Predicted <- pred_test
+head(test[c("Satisfaction","Satisfaction_Predicted")], 10)
+```
+
+```{r r square}
+test_r2 <- cor(test$Satisfaction, test$Satisfaction_Predicted) ^2
+
+mse_test <- mse(test$Satisfaction, pred_test)
+rmse_test <- sqrt(mse(test$Satisfaction, pred_test))
+mape_test <- mape(test$Satisfaction, pred_test)
+model_metrics <- cbind(mse_test,rmse_test,mape_test,test_r2)
+print(model_metrics, 3)
+```
+
+As the feature `Post_purchase` is not significant so we will drop this feature and then let’s run the regression model again.
+
+```{r train model 2}
+##Regression model without post_purchase:
+model2 <- lm(Satisfaction ~ Purchase+ Marketing+ 
+                Prod_positioning, data= train)
+summary(model2)
+```
+
+```{r test 2}
+pred_test2 <- predict(model2, newdata = test, type = "response")
+pred_test2
+```
+
+```{r predict}
+test$Satisfaction_Predicted2 <- pred_test2
+head(test[c(1,7)], 10)
+```
+
+```{r metrics 2}
+test_r22 <- cor(test$Satisfaction, test$Satisfaction_Predicted2) ^2
+mse_test2 <- mse(test$Satisfaction, pred_test2)
+rmse_test2 <- sqrt(mse(test$Satisfaction, pred_test2))
+mape_test2 <- mape(test$Satisfaction, pred_test2)
+
+model2_metrics <- cbind(mse_test2,rmse_test2,mape_test2,test_r22)
+model2_metrics
+```
+
+```{r combine}
+Overall <- rbind(model_metrics,model2_metrics)
+row.names(Overall) <- c("Test1", "Test2")
+colnames(Overall) <- c("MSE", "RMSE", "MAPE", "R-squared")
+print(Overall,3)
+```
+
+### Try the interaction?!
+
+Including Interaction model, we are able to make a better prediction!??
+
+## Conclusion
+
+We saw how Factor Analysis can be used to reduce the dimensionality of a dataset and then we used multiple linear regression on the dimensionally reduced columns/Features for further analysis/predictions.  
+
+## Further Reading
+
+- [A repost from Haibiostat's rpubs](https://rpubs.com/Haibiostat/FAinMReg)
+- [AnalytixLabs](https://www.analytixlabs.co.in/blog/factor-analysis-vs-pca/#:~:text=PCA%20is%20used%20to%20decompose,variables%20in%20the%20dataset%20data.)  
+- Jay Narayan, [Multiple Linear Regression & Factor Analysis in R](https://medium.com/analytics-vidhya/multiple-linear-regression-factor-analysis-in-r-35a26a2575cc), May 28, 2019  
+- Rachael Smyth and Andrew Johnson, [Factor Analysis](https://www.uwo.ca/fhs/tc/labs/10.FactorAnalysis.pdf)  
+- Sreenu Konda, Lecture on Factor Analysis, Bistatistics, SPH, UIC, Spring 2020  

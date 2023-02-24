@@ -224,15 +224,8 @@ model {
 
 Create a DSO and save it to disk to reuse later or just keep it in memory.
 
-```{r, eval=FALSE}
-stanDso <- stan_model(model_code = modelString)
-save(stanDso, file = "data/DSONormal1.Rds")
-```
-
-If saved DSO is used load it, then run the chains.
-
 ```{r}
-load(file= "data/DSONormal1.Rds")
+stanDso <- stan_model(model_code = modelString)
 ```
 
 Run chains by either using the existing DSO:
@@ -501,26 +494,21 @@ model {
 
 Create DSO.
 
-```{r, eval=FALSE}
-stanDso <- stan_model(model_code = modelString)
-save(stanDso,file = "data/DSONormal2.Rds")
-```
-
 ```{r}
-load(file = "data/DSONormal2.Rds")
+stanDso <- stan_model(model_code = modelString)
 ```
 
 Run MCMC.
 
 ```{r}
-stanFitRobust <- sampling( object=stanDso , 
+stanFitRobust <- sampling(object=stanDso , 
                      data = dataList ,
                      pars=c('nu','mu', 'sigma'),
                      chains = 3,
                      cores= 3,
                      iter = 50000,
                      warmup = 300, 
-                     thin = 1 )
+                     thin = 1)
 ```
 
 

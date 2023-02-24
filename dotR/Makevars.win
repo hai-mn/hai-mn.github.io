@@ -1,0 +1,3 @@
+
+CXX14FLAGS=-O3 -march=native -mtune=native
+CXX11FLAGS=-O3 -march=native -mtune=native

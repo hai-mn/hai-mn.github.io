@@ -12,7 +12,24 @@
       <link>https://hai-mn.github.io</link>
     </image>
     <generator>Distill</generator>
-    <lastBuildDate>Mon, 19 Sep 2022 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 30 Sep 2022 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Factor Analysis applied in Multivariate Regression: Machine Learning's Perspective</title>
+      <dc:creator>Hai Nguyen</dc:creator>
+      <link>https://hai-mn.github.io/posts/2022-09-30-FA in Multivariate Regression</link>
+      <description>FA vs. PCA;   
+Conducting an Exploratory Factor Analysis Example;  
+Factor Score;  
+FA applied in Regression;</description>
+      <category>Biostatistics</category>
+      <category>Machine Learning</category>
+      <category>PCA</category>
+      <category>EFA</category>
+      <category>Regression</category>
+      <guid>https://hai-mn.github.io/posts/2022-09-30-FA in Multivariate Regression</guid>
+      <pubDate>Fri, 30 Sep 2022 00:00:00 +0000</pubDate>
+      <media:content url="https://hai-mn.github.io/posts/2022-09-30-FA in Multivariate Regression/distill-preview.png" medium="image" type="image/png" width="1248" height="768"/>
+    </item>
     <item>
       <title>Exploratory / Confirmatory Factor Analysis?</title>
       <dc:creator>Hai Nguyen</dc:creator>
@@ -166,6 +183,7 @@ Bayesian model with or without shrinkage, ridge regression and lasso regression:
       <category>JAGS/Stan</category>
       <guid>https://hai-mn.github.io/posts/2021-11-20-Bayesian methods - Series 1 of 10</guid>
       <pubDate>Sat, 20 Nov 2021 00:00:00 +0000</pubDate>
+      <media:content url="https://hai-mn.github.io/posts/2021-11-20-Bayesian methods - Series 1 of 10/distill-preview.png" medium="image" type="image/png" width="1248" height="768"/>
     </item>
     <item>
       <title>Latent Profile Analysis of Chicago Neighborhoods</title>
