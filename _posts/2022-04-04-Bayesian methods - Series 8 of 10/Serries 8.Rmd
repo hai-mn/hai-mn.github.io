@@ -91,7 +91,7 @@ table(mdta$Y)
 
 Compile the model DSO and run Markov Chains.
 
-```{r, eval=F}
+```{r}
 model <- stan_model(model_code=modelString)
 fit <- sampling(model,
                 data=list(N=nrow(mdta),  # num of observations
@@ -101,10 +101,6 @@ fit <- sampling(model,
                 iter=5000, chains = 2, cores = 2)
 ```
 
-```{r}
-# save(fit, file = "data/fitordinalreponse.Rds")
-load("data/fitordinalreponse.Rds")
-```
 
 ```{r, eval=FALSE}
 # analyze fitted model using shinystan
@@ -218,11 +214,6 @@ Create DSO.
 
 ```{r}
 model <- stan_model(model_code=modelString)
-# save(model, file = "data/modelordinal2grps.Rds")
-```
-
-```{r, include=F}
-load("data/modelordinal2grps.Rds")
 ```
 
 Read the data.

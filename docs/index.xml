@@ -91,12 +91,13 @@ Compare 2 groups</description>
       <category>JAGS/Stan</category>
       <guid>https://hai-mn.github.io/posts/2022-04-04-Bayesian methods - Series 8 of 10</guid>
       <pubDate>Mon, 04 Apr 2022 00:00:00 +0000</pubDate>
+      <media:content url="https://hai-mn.github.io/posts/2022-04-04-Bayesian methods - Series 8 of 10/distill-preview.png" medium="image" type="image/png" width="1248" height="768"/>
     </item>
     <item>
       <title>Series 7 -- Fitting a Logistic Regression in Bayes</title>
       <dc:creator>Hai Nguyen</dc:creator>
       <link>https://hai-mn.github.io/posts/2022-03-20-Bayesian methods - Series 7 of 10</link>
-      <description>How to fit a Logistic Regression using Bayesian Methods    
+      <description>How to fit a Logistic Regression using Bayesian Methods      
 The advantage of using Bayes to overcome the Separation in Logistic Regression</description>
       <category>Biostatistics</category>
       <category>Tutorial</category>
@@ -105,6 +106,7 @@ The advantage of using Bayes to overcome the Separation in Logistic Regression</
       <category>JAGS/Stan</category>
       <guid>https://hai-mn.github.io/posts/2022-03-20-Bayesian methods - Series 7 of 10</guid>
       <pubDate>Sun, 20 Mar 2022 00:00:00 +0000</pubDate>
+      <media:content url="https://hai-mn.github.io/posts/2022-03-20-Bayesian methods - Series 7 of 10/distill-preview.png" medium="image" type="image/png" width="1248" height="768"/>
     </item>
     <item>
       <title>Series 6 -- ANOVA &amp; ANCOVA</title>

@@ -97,7 +97,7 @@ modelString <- "
 
 Then move on the destination one:
 
-```{r, eval=FALSE}
+```{r}
 modelString <- "
   data {
     int<lower=1> Ntotal; // num of observations
@@ -147,13 +147,8 @@ modelString <- "
 "
 ```
 
-```{r, eval=FALSE}
-stanDsoLogistic <- stan_model(model_code=modelString)
-# save(stanDsoLogistic, file = "data/stanLogisticDso.Rdata")
-```
-
 ```{r}
-load(file = "data/stanLogisticDso.Rdata")
+stanDsoLogistic <- stan_model(model_code=modelString)
 ```
 
 Fit model
@@ -337,7 +332,7 @@ plot(Argument, dbeta(Argument, 1, 9), type="l")
 
 The modified model is on the ![diagram](pics/kruschke_style_RobustLogistic.png).
 
-```{r, eval=F}
+```{r}
 modelString= 
 "data {                   // ROBUST LOGISTIC REGRESSION
     int<lower=1> Ntotal;  // num of observations
@@ -386,13 +381,8 @@ generated quantities {
 "
 ```
 
-```{r, eval=F}
-stanDsoRobustLogistic <- stan_model(model_code=modelString)
-```
-
 ```{r}
-# save(stanDsoRobustLogistic, file = "data/stanRobustLogisticDso.Rds")
-load("data/stanRobustLogisticDso.Rds")
+stanDsoRobustLogistic <- stan_model(model_code=modelString)
 ```
 
 Run robust MCMC with the hight/weight data.
@@ -712,7 +702,7 @@ points(myData$X1[idx4],myData$X2[idx4],pch=16,col="magenta")
 Prepare data list
 
 ```{r}
-dataListSoftmax<-list(N=nrow(myData),  # num of observations
+dataListSoftmax <- list(N=nrow(myData),  # num of observations
                           K=max(myData$Y), # num of groups
                           y=myData$Y,
                           x=cbind(x1 = myData$X1, x2 = myData$X2),
@@ -723,7 +713,7 @@ dataListSoftmax<-list(N=nrow(myData),  # num of observations
 
 Describe the model.
 
-```{r, eval=F}
+```{r}
 modelString="
 data {
     int<lower=2> K;  // num of groups
@@ -778,25 +768,15 @@ generated quantities {
 
 Create DSO.
 
-```{r, eval=F}
+```{r}
 modelSoftmax <- stan_model(model_code=modelString)
-save(modelSoftmax, file = "data/stanSoftmaxDso.Rds")
 ```
 
 ```{r}
-load("data/stanSoftmaxDso.Rds")
-```
-
-```{r, eval=F}
 fit <- sampling(modelSoftmax,
                 data=dataListSoftmax,
                 pars=c('beta0', 'beta'),
                 iter=5000, chains = 2, cores = 2)
-```
-
-```{r, include=F}
-# save(fit, file = "data/fitinmodelsoftmax.Rds")
-load("data/fitinmodelsoftmax.Rds")
 ```
 
 ## Analysis
