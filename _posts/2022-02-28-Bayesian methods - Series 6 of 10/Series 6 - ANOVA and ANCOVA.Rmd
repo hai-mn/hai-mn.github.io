@@ -214,7 +214,7 @@ abline(v=sd(dta$Longevity)/2)
 
 Prepare the model description.
 
-```{r modelString, eval=F}
+```{r modelString}
 modelString<-"
 data {
     int<lower=1> Ntotal;
@@ -255,13 +255,13 @@ generated quantities {
 
 Run MCMC.
 
-```{r, eval=F}
+```{r}
 stanDso <- stan_model(model_code = modelString)
 ```
 
 If saved DSO is used load it, then run the chains.
 
-```{r}
+```{r, eval=F}
 # saveRDS(stanDso,file="data/stanDSO.Rds")
 stanDso <- readRDS("data/stanDSO.Rds")
 ```
@@ -346,7 +346,7 @@ plot(rank((fit_ext$b[,1] + fit_ext$b[,2] + fit_ext$b[,3])/3),rank((fit_ext$b[,4]
 
 Define the model
 
-```{r, eval=F} 
+```{r} 
 modelString<-"
 data {
     int<lower=1> Ntotal;
@@ -422,12 +422,12 @@ generated quantities {
 }"
 ```
 
-```{r, eval=F}
+```{r}
 #Create DSO.
 stanDsoANOVA2Way <- stan_model(model_code=modelString)
 ```
 
-```{r}
+```{r, eval=F}
 #If saved DSO is used load it, then run the chains.
 # saveRDS(stanDsoANOVA2Way,file="data/stanDso2WayANOVA.Rds")
 stanDsoANOVA2Way <- readRDS(file="data/stanDso2WayANOVA.Rds")
@@ -491,7 +491,7 @@ varNames<-c("Intercept", namesPos, namesOrg, namesInter, rep("Var",5)) #why need
 
 ## MCMC
 
-```{r, eval=F}
+```{r}
 # fit model
 fit <- sampling(stanDsoANOVA2Way, 
                 data=dataListSalary, 
@@ -506,7 +506,7 @@ fit <- sampling(stanDsoANOVA2Way,
                 iter=5000, chains = 2, cores = 4)
 ```
 
-```{r}
+```{r, eval=F}
 # save(fit, file = "data/fitinstan1.Rdata")
 load("data/fitinstan1.Rdata")
 ```
@@ -776,7 +776,7 @@ dataList2<-list(Ntotal=nrow(dta),
 ```
 
 
-```{r modelString2, eval=FALSE}
+```{r modelString2}
 modelString<-"
 data {
     int<lower=1> Ntotal;
@@ -823,18 +823,19 @@ generated quantities {
 "
 ```
 
-```{r, eval=FALSE}
+```{r}
 model2 <- stan_model(model_code=modelString)
 ```
 
 If saved DSO is used load it, then run the chains.
 
-```{r}
+```{r, eval=FALSE}
 # saveRDS(model2, file="data/stanDSO2.Rds")
 model2 <- readRDS("data/stanDSO2.Rds")
 ```
 
 Run MCMC.
+
 ```{r}
 fit2 <- sampling(model2, 
                 data=dataList2, 
@@ -974,7 +975,7 @@ These contradicting results are caused by the fact that for comparison of C with
 
 Run MCMC.
 
-```{r, eval=F}
+```{r}
 modelString<-"
 data {
     int<lower=1> Ntotal;
@@ -1026,11 +1027,11 @@ generated quantities {
 "
 ```
 
-```{r, eval=FALSE}
+```{r}
 model3 <- stan_model(model_code = modelString)
 ```
 
-```{r}
+```{r, eval=FALSE}
 # saveRDS(model3,file = "data/stanDSO3.Rds")
 model3 <- readRDS(file = "data/stanDSO3.Rds")
 ```
