@@ -2,7 +2,7 @@
 title: "The Data Analyst -- Interview Prep & Skills"
 author:
   - name: A Talk from Steve Olson - rewritten by Hai Nguyen
-date: February 23, 2021
+date: February 23, 2023
 description: |
   Data Analyst;     
   Interview Preperation;     
