@@ -1,0 +1,186 @@
+---
+title: "The Data Analyst -- Interview Prep & Skills"
+author:
+  - name: A Talk from Steve Olson - rewritten by Hai Nguyen
+date: February 23, 2021
+description: |
+  Data Analyst;     
+  Interview Preperation;     
+  Skills;    
+categories:
+  - Stats' Thought
+  - Stats' Life  
+base_url: https://hai-mn.github.io
+output:
+  distill::distill_article:
+    toc: true
+    toc_float: yes
+    toc_depth: 3
+    code_folding: hide
+    theme: journal
+    highlight: haddock
+    highlight_downlit: false
+---
+
+## Thoughts 
+
+As a biostatistician role, we also play Data Analysts. With comprehensive and deep knowledge of statistics, we apply available methods and choose the proper method or, if necessary, modify/create a new approach to drive the data into a story that fits.
+
+In general, Steve Olson's Talk (CCASA Presentation) could tell us about essential requirements to prepare skills and interview for the data analyst.  
+
+## Outline
+
+1- Goal of the Data Analyst   
+
+2- Hard Skills   
+
+   - Understanding the Data  
+   - Approach to Analytics  
+   - Creating Valuable Analytic Output  
+   - Test and Learn Principles  
+   - Skills & Tools  
+   
+3- Soft Skills  
+
+   - Valuable Analyst Attributes  
+   - Questions to Ask   
+   
+## Goal of the Data Analyst
+
+The Goal of the Analyst is to generate insights from available data *in service of improving the company or brand Key Performance Indicators (KPIs), goals, metrics*    
+
+- Understanding a brand or company's KPIs and/or goals is foundational as all analytics are conducted in service of KPIs and identifying opportunities to improve the metrics  
+   * Commerce: Monthly sales, revenue, margin or profit, steal share from specific competitors   
+   * Marketing: Engagement (CRM) such as email open rates or click through rates, revenue, new names generated  
+
+- Examples of questions to be answered through analytics:  
+   * How are the KPIs trending?  
+   * Where can we increase sales?  
+   * Where is engagement strong or lacking?  
+   
+## How to understand the Data
+
+<span style="text-decoration:underline">__All analytics start with a full understanding of the underlying data__</span>   
+
+- How to "break down" a dataset:  
+   
+   1- Know the __exhaustive set of variables and data__ with which you are working   
+   
+   + Data dictionary is sometimes a good starting point -- often will just be high level description and format  
+   + How are different data sets linked? What are the primary keys? (individual id, phone number, store id)  
+         
+   2- __Calculate basic metrics__ to fully understand the data -- up to 90% of analytic work -- Discovery or EDA   
+   
+   + Calculate means and medians for each variable  
+   + Create distribution metrics of each variable: standard deviations, interquartile ranges etc  
+   + Data ranges  
+   + Survey data -- know the possible answers to each question, the scale  
+   + Uncover questionable data: missing data, miscoded or incorrect data, outliers  
+   + Create cross tabs   
+         
+   3- __Visualize__ the distribution of data in the variables   
+   
+   + Create graphs of distribution frequencies, histograms   
+   
+## Approach to Analytics 
+
+<span style="text-decoration:underline">__A single number or metric or datapoint is not an insight__</span>    
+
+Metrics require CONTEXT to know it it is "good or bad"  
+
+<span style="text-decoration:underline">__Analytic approaches to create context:__</span>  
+
+1- <span style="text-decoration:underline">Benchmarking</span> against past similar timeframes or events   
+
+   + Compare to last year (YoY), Past promotion comparison, Previous month average  
+   
+2- <span style="text-decoration:underline">Trending</span> over time -- is the metric increasing or decreasing?   
+
+   + line graphs of : past 12 months, year over year   
+   + cohort analysis -- Q1 engaged, did they engage in Q2, Q3 etc   
+3- Segmenting the data: how does the metric look for different segments?  
+
+   + Age groups  
+   + Purchase segments  
+   + High, medium, low engagement tiers  
+   
+4- <span style="text-decoration:underline">Industry benchmarks</span> or comparisons  
+
+5- Create maps to determine if there are <span style="text-decoration:underline">geographical</span> differences  
+
+6- <span style="text-decoration:underline">Cumulative response distributions</span> - linear growth or plateau  
+
+7- <span style="text-decoration:underline">Test results</span> -- how did group A perform vs group B?  
+
+## Creating Valuable Analytic Output
+
+- Think about the numbers in terms of __telling a story__  
+   + "The metric appears to be trending in this direction, this might be why, and here is what I think we should do"   
+- __Make recommendations__ -- what recommendations do you have because of the story in the data and how might we alter the KPIs ore metrics favorably?   
+   + Because the metrics are doing this, we should consider doing this  
+- __Generate hypotheses__ -- if information is lacking to make a firm recommendation -- why might things be trending the way they are -- be provocative  
+   + The metrics may be trending this way because  
+   + Is there other data that could help explain what you are seeing?   
+- __Propose testing__ -- where appropriate to evaluate hypotheses -- can a test be set up to confirm or disprove the hypothesis?  
+
+## Test and Learn Principles
+
+- Identity A) the metric to change and B) the feature(s) which, if changed, may improve the metric  
+   + Increase open rates: modify subject lines/preview text  
+   + Increase online conversion/purchase: add purchase message pop ups or abandon cart messaging  
+   + Increase sales: increase discount amounts  
+- Generate a hypothesis -- if we change this, this will happen  
+- Understand the engagement or purchase funnel  
+   + Is there enough sample to get a read on results?   
+- Statistical testing  
+   + Understand statistical vs. practical significant -- effect size vs. P values  
+   + Is the result sizeable enough to warrrant making the change?  
+   + Random sampling is vital   
+
+## Skills & Tools
+
+__Speak the "language" of the different tools you might use__ -- may not need to be an expert  
+
+- Know the basic functions within SQL ana what they do  
+   * select, from, where  
+   * different joins and what they do -- frequent interview question   
+
+- Familiarize yourself with different analytic tools   
+   * Visualization tools: Excel, Tableau, PowerBI  
+   * Web analysis: Adobe analytics, Google analytics  
+   * Statistical languages: R, Python  
+   
+- Prepare an example for when you learned something similar quickly to be successful   
+
+## Soft skills  
+
+- Attributes of the Valuable Data Analyst  
+   * Curiosity - about the business and the metrics  
+      + You are hungry to understand what is the data telling you  
+      + You have an appetite for knowing what you can learn from the data  
+   * Creativity -- with data and output  
+      + Excited to explore different ways to visualize data  
+      + Ability to explain the findings -- you may need to present the data to non-data experts  
+   * Attention to detail   
+      + Data errors are easy to make -- always double check the work and get others' feedback  
+      + Code running without error is not enough -- validate the output   
+   * Ability to have __"Big Picture" view__  
+      + Step back and ask yourself if the numbers you are presenting make sense  
+      + Gui check -- refer to other work, as others for input  
+      
+## Questions to ask during the interview
+
+* What kind of data will I be working with?  
+   + CRM engagement, sales data, media spend, what level (household, individual, store)   
+* How is the data structured?  
+   + Relational tables?
+   + What are the different datasets?  
+   + How are different tables linked? (primary keys)  
+* What are the Key Performance Indicators we are trying to improve?   
+* Will I be presenting the data and results and who is the audience?  
+   + Will I be working with others to tell the story?  
+* What analytic tools are used most often in daily work?   
+
+## Sum up
+
+![Source: [dasca](https://www.dasca.org/world-of-big-data/article/why-a-data-analyst-requires-a-data-analytics-certification)](how-to-become-a-data-analyst-skill-set-768x550.png)
