@@ -407,7 +407,41 @@ We can map on Chicago Neighborhood map (using ArcGIS) as such
 
 ## Classification by race-ethnicity
 
+```{r}
+r_eth.df <- read.csv("data/Chicago Census Data by Tract_ACS 2015.csv", header = TRUE) %>% 
+  select(tract, PctBlack,PctAsian,PctHispanicLatino,PctWhiteNonHisp)
 
+dff <- merge(df2, r_eth.df, by="tract")
+```
+
+<!-- https://rpubs.com/Dee_Chiluiza/821124 -->
+
+```{r, fig.align='center', out.width="100%"}
+mclust1Dplot(dff[,"PctBlack"], parameters = mod.3$parameters, z = mod.3$z, 
+             what = "classification", main = FALSE)
+title("Percent Black")
+mclust1Dplot(dff[,"PctAsian"], parameters = mod.3$parameters, z = mod.3$z, 
+             what = "classification", main = FALSE)
+title("Percent Asian")
+mclust1Dplot(dff[,"PctHispanicLatino"], parameters = mod.3$parameters, z = mod.3$z, 
+             what = "classification", main = FALSE)
+title("Percent Hispanic Latino")
+mclust1Dplot(dff[,"PctWhiteNonHisp"], parameters = mod.3$parameters, z = mod.3$z, 
+             what = "classification", main = FALSE)
+title("Percent White")
+```
+
+We can see that:
+
+- black (bottom): joint of 3 classes  
+- grean: class 3 (highly disadvantage)  
+- red: class 2 (medium)  
+- blue: class 1 (none disadvantage)
+
+Thus, neighborhoods with high percent Black focus on class 3 (the first graph). It's quite contradict with high percent White (i.e. neighborhoods with high percent White focus on class 1, the last graph).
+
+Now, how can we turn the visualization into an analysis.   
+I will discuss this in a future post.   
 
 ## Further readings
 
