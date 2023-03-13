@@ -201,21 +201,24 @@ Bayesian model with or without shrinkage, ridge regression and lasso regression:
       <media:content url="https://hai-mn.github.io/posts/2021-11-20-Bayesian methods - Series 1 of 10/distill-preview.png" medium="image" type="image/png" width="1248" height="768"/>
     </item>
     <item>
-      <title>Latent Profile Analysis of Chicago Neighborhoods</title>
+      <title>What could we do if Latent Profile Analysis (LPA) run not as expected? -- LPA of Chicago Neighborhoods</title>
       <dc:creator>Hai Nguyen</dc:creator>
       <link>https://hai-mn.github.io/posts/2021-10-24-LPA Chicago Neighborhoods</link>
-      <description>American Census Survey data;    
-Factor Analysis;    
-Latent Profile Analysis: Gaussian Mixture modeling;</description>
+      <description>American Census Survey data - Chicago Neighborhood;    
+Latent Profile Analysis: Gaussian Mixture modeling;    
+Mclust package;   
+Mplus;  
+Exploratory Factor Analysis;</description>
       <category>Biostatistics</category>
       <category>Psychology/Sociology</category>
       <category>Factor Analysis</category>
       <category>Mclust</category>
+      <category>Mplus</category>
       <category>Tutorial</category>
       <category>Mapping</category>
       <guid>https://hai-mn.github.io/posts/2021-10-24-LPA Chicago Neighborhoods</guid>
       <pubDate>Sun, 24 Oct 2021 00:00:00 +0000</pubDate>
-      <media:content url="https://hai-mn.github.io/posts/2021-10-24-LPA Chicago Neighborhoods/distill-preview.png" medium="image" type="image/png" width="1248" height="768"/>
+      <media:content url="https://hai-mn.github.io/posts/2021-10-24-LPA Chicago Neighborhoods/distill-preview.png" medium="image" type="image/png" width="2688" height="2688"/>
     </item>
     <item>
       <title>Selection bias</title>
