@@ -1,0 +1,103 @@
+---
+title: "Measurement in Social Studies"
+author:
+  - name: Hai Nguyen
+date: April 3, 2023
+description: |
+  How to establish the measurements on cognition, stressors and physiological function      
+categories:
+  - Psychology/Sociology
+base_url: https://hai-mn.github.io
+output:
+  distill::distill_article:
+    toc: true
+    toc_float: yes
+    toc_depth: 3
+    code_folding: hide
+    theme: journal
+    highlight: haddock
+    highlight_downlit: false
+---
+
+Conducting a study in social science is an art but can be quite complex. One of the initial steps involves considering how to measure "unmeasured objects," such as cognition, awareness, and deception.
+
+Furthermore, to ensure the reliability and accuracy of measurement scales, they need to be established and validated using established scientific methods.
+
+Recently, I conducted an analysis for a project titled ["Mid-life Stress Exposure, Physiological Dysregulation, and Cognitive Function: A Longitudinal Mediation Analysis with Latent Growth Models."](https://event.fourwaves.com/sphpostercompetition/abstracts/572b8cbb-9d81-4dd6-b044-2a1ec2bd923e) The project aims to explore the relationships between mid-life stress exposure, physiological dysregulation, and cognitive function using a longitudinal mediation analysis with latent growth models.
+
+The project's topic led me to consider how we can measure exposure, outcome, and mediator variables both subjectively and objectively. Here are some of the details of the measurement process.
+
+Finally, the figure shows the conceptual model used in the analysis.
+
+![](Mediation Analysis.png)
+
+
+## The outcome: Cognition
+
+Cognitive function was processed as:
+
+- Cognitive data are based on a modified version of the Telephone Interview of Cognitive Status (m-TICS; Table below).   
+- Other measures of cognitive function, such as the Mini Mental State Examination (MMSE), exist, however, the TICS is the only measure available in the Health and Retirement Study (HRS) for the age range of interest, 51-64 years old and the TICS is a validated measure that has been shown to produce similar findings to the MMSE106 and to have a high interclass correlation coefficient.   
+- The HRS uses 4 different cognitive tests from the m-TICS to assess different types of memory and function. These tests will be summed to create a 27-point measure of overall cognitive function, where higher values indicate greater functioning.
+
+__Cognitive Measures__  
+
+|Measures |Description |
+|:--------|:-----------|
+|Immediate word recall|Episodic Memory. Recall a list of 10 words in any order (range: 0-10)|
+|Delayed word recall|Episodic Memory. Repeat the list of 10 words from the immediate recall test (range: 0-10)|
+|Serial 7’s subtraction|Working Memory. Subtract 7 from 100 and continue subtracting 7 from each subsequent number 5 times (range: 0-5)|
+|Backwards counting from 20|Mental Processing Speed. Count backwards from 20 (range: 0-2)|
+
+## The exposure: Stressors
+
+The proposed study will capitalize on the richness of the HRS data set by examining the effects of both acute and chronic stressors on cognitive decline (Table below). 
+
+- All life events, traumas and major acts of discrimination that occurred in the past 5 years will be counted (range: 0-20) to measure acute stress exposure, such that a greater number of events corresponds with greater (i.e., more frequent) stress exposure.   
+- There are three chronic stressors specific to three life domains -- work stress, family strain110 and financial hardship -- and chronic experiences of discrimination, which is not domain-specific.  
+- Responses to these four measures will be averaged and internal reliability will be assessed. Incorporating acute and chronic stressors in mid-life, stressors that impact various life domains, and stressors particularly relevant to racial/ethnic minorities is a more valid representation of the stress universe that will lead to more rigorous findings.  
+- All stressors will be time-invariant baseline measures
+
+__Stress Measures__
+
+|Measures	|Description |
+|:----------|:-----------|
+|Acute life events	 |Count of 6 life events, 7 traumas and |7 major experiences of discrimination that occurred in the past 5 years |
+|Chronic work stress |Average of 6 items with 4 Likert-like response options (range: 1-4) |
+|Chronic family strain |Average of 3 items with 4 Likert-like response options (range: 1-4) |
+|Chronic financial hardship |	Two separate items assessing difficulty paying monthly bills (range: 1-5) and low sense of control over finances (range: 1-5) |
+|Chronic discrimination |	Average of 6 items with 6 Likert-like response options (range: 1-6) |
+
+## The mediator: Physiological dysregulators
+
+Physiological dysregulation will be assessed using cumulative and system-specific measures (Table below). 
+
+- Cumulative measures of dysregulation more accurately reflect the interconnectedness of the physiological response to stress, while system-specific measures allow for more nuanced understanding of change in physiological functioning.   
+- The cumulative measure will incorporate seven/eight physical measures and biomarkers that represent the cardiovascular, metabolic and immune systems.   
+- We will count the number of biomarkers with measured values considered "high-risk" based on clinical guidelines or established research.   
+- The advantage of this approach is that the measure is clearly defined and easily replicated in other studies, and the use of clinical guidelines enhances the clinical relevance of the measure.   
+- Analyses focused on the role of specific physiological systems will   
+   (1) count the number of high-risk biomarkers within each physiological system and   
+   (2) examine the effects of each biomarker individually.
+
+__Physiological Dysregulation__
+
+|Measures	|Cut-point/Range |
+|:----------|:---------------|
+|C-Reactive protein (CRP immune) |	≥ 3.0 mg/L |
+|Systolic blood pressure (SBP; cardiovascular) |	≥ 135 mmHg |
+|Diastolic blood pressure (DBP; cardiovascular) |	≥ 80 mmHg or < 60 mmHg |
+|Heart rate (cardiovascular) |	≥ 90 bpm |
+|Glycosylated hemoglobin A1c (metabolic) |	≥ 6.5% |
+|HDL cholesterol (metabolic) |	< 40 mg/dL |
+|Total cholesterol (metabolic) |	≥ 240 mg/dL |
+|Waist circumference (metabolic) |	>	35 in. (women); >	40 in. (men) |
+|Body mass index (BMI metabolic) |	≥ 30 kg/m2 (class I obesity) |
+|Cumulative physiological dysregulation (count) |	0-9 |
+
+## Sum up
+
+To determine whether changes in physiological functioning mediate the relationship between stressors and cognitive decline, it is necessary to establish alignment across all three measurement scales at the outset.
+
+
+

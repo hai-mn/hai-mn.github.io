@@ -12,7 +12,16 @@
       <link>https://hai-mn.github.io</link>
     </image>
     <generator>Distill</generator>
-    <lastBuildDate>Thu, 23 Feb 2023 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 03 Apr 2023 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Measurement in Social Studies</title>
+      <dc:creator>Hai Nguyen</dc:creator>
+      <link>https://hai-mn.github.io/posts/2023-04-03-Social Measurement</link>
+      <description>How to establish the measurements on cognition, stressors and physiological function</description>
+      <category>Psychology/Sociology</category>
+      <guid>https://hai-mn.github.io/posts/2023-04-03-Social Measurement</guid>
+      <pubDate>Mon, 03 Apr 2023 00:00:00 +0000</pubDate>
+    </item>
     <item>
       <title>The Data Analyst -- Interview Prep &amp; Skills</title>
       <dc:creator>A Talk from Steve Olson - rewritten by Hai Nguyen</dc:creator>
@@ -146,6 +155,7 @@ Contrast Comparison</description>
       <category>JAGS/Stan</category>
       <guid>https://hai-mn.github.io/posts/2022-02-14-Bayesian methods - Series 5 of 10</guid>
       <pubDate>Mon, 14 Feb 2022 00:00:00 +0000</pubDate>
+      <media:content url="https://hai-mn.github.io/posts/2022-02-14-Bayesian methods - Series 5 of 10/distill-preview.png" medium="image" type="image/png" width="1248" height="768"/>
     </item>
     <item>
       <title>Series 4 of 10 -- Fitting Linear Models - Multiple Regression</title>
@@ -162,6 +172,7 @@ Bayesian model with or without shrinkage, ridge regression and lasso regression:
       <category>JAGS/Stan</category>
       <guid>https://hai-mn.github.io/posts/2022-01-31-Bayesian methods - Series 4 of 10</guid>
       <pubDate>Mon, 31 Jan 2022 00:00:00 +0000</pubDate>
+      <media:content url="https://hai-mn.github.io/posts/2022-01-31-Bayesian methods - Series 4 of 10/distill-preview.png" medium="image" type="image/png" width="1248" height="768"/>
     </item>
     <item>
       <title>Series 3 of 10 -- How to Compare Two Groups with Robust Bayesian Estimation</title>
@@ -174,6 +185,7 @@ Bayesian model with or without shrinkage, ridge regression and lasso regression:
       <category>JAGS/Stan</category>
       <guid>https://hai-mn.github.io/posts/2022-01-15-Bayesian methods - Series 3 of 10</guid>
       <pubDate>Sat, 15 Jan 2022 00:00:00 +0000</pubDate>
+      <media:content url="https://hai-mn.github.io/posts/2022-01-15-Bayesian methods - Series 3 of 10/distill-preview.png" medium="image" type="image/png" width="1248" height="768"/>
     </item>
     <item>
       <title>Series 2 of 10 -- MCMC for Estimation of Gaussian parameters</title>
@@ -186,6 +198,7 @@ Bayesian model with or without shrinkage, ridge regression and lasso regression:
       <category>JAGS/Stan</category>
       <guid>https://hai-mn.github.io/posts/2022-01-01-Bayesian methods - Series 2 of 10</guid>
       <pubDate>Sat, 01 Jan 2022 00:00:00 +0000</pubDate>
+      <media:content url="https://hai-mn.github.io/posts/2022-01-01-Bayesian methods - Series 2 of 10/distill-preview.png" medium="image" type="image/png" width="1248" height="768"/>
     </item>
     <item>
       <title>From Unconditional to Multivariate Bayesian Model Workshop -- Series 1 of 10 -- Gaussian vs Robust Estimation</title>
@@ -246,6 +259,7 @@ R;</description>
       <category>R</category>
       <guid>https://hai-mn.github.io/posts/2021-07-03-matching in R-causal-inference</guid>
       <pubDate>Sat, 03 Jul 2021 00:00:00 +0000</pubDate>
+      <media:content url="https://hai-mn.github.io/posts/2021-07-03-matching in R-causal-inference/distill-preview.png" medium="image" type="image/png" width="1248" height="768"/>
     </item>
     <item>
       <title>Metabolic Syndrome Prevalence across time using NHANES Data</title>
@@ -305,6 +319,7 @@ Consider a Bayesian model fit as a remedial measures for influential case</descr
       <category>JAGS/Stan</category>
       <guid>https://hai-mn.github.io/posts/2021-04-22-Simple-linear-regression-in-Bayesian-way</guid>
       <pubDate>Thu, 22 Apr 2021 00:00:00 +0000</pubDate>
+      <media:content url="https://hai-mn.github.io/posts/2021-04-22-Simple-linear-regression-in-Bayesian-way/distill-preview.png" medium="image" type="image/png" width="1248" height="768"/>
     </item>
     <item>
       <title>Discriminant Analysis -- A Classification by Maximizing Class Separation</title>
@@ -315,6 +330,7 @@ Consider a Bayesian model fit as a remedial measures for influential case</descr
       <category>R</category>
       <guid>https://hai-mn.github.io/posts/2021-04-17-machine learning-discriminant-analysis</guid>
       <pubDate>Sat, 17 Apr 2021 00:00:00 +0000</pubDate>
+      <media:content url="https://hai-mn.github.io/posts/2021-04-17-machine learning-discriminant-analysis/ml-discriminant-analysis_files/figure-html5/unnamed-chunk-1-1.png" medium="image" type="image/png" width="1248" height="768"/>
     </item>
     <item>
       <title>Machine Learning &amp; Predictive Analytics</title>

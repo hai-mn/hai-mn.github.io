@@ -101,7 +101,6 @@ df <- census %>% mutate(
   select(tract, AgeDependencyRatio, LimitedEngProf5andUP, LessThanHS, Unemployment, 
          PctForeignBorn, FemaleHHPct, MedianIncomeHH1K, AllOcc2009Pct, PctVacHousing, 
          PctBelowPoverty, PublicAssistancePct)
-
 df2 <- df.fa <- df[complete.cases(df),]
 ``` 
  
@@ -263,7 +262,6 @@ We calculate and show FA scores -- The concentrated disadvantage index scores:
 
 ```{r concentrated disadvantage--fa score, layout="l-body-outset"}
 df.fa$concdisadv <- as.matrix(df.fa[,-1]) %*% (fit.f$loadings[,1]*(abs(fit.f$loadings[,1])>0.5))
-
 # print out the scores
 rmarkdown::paged_table(cbind(tract = df.fa[1:20,1], 
                              condisadv_fascore = df.fa[1:20,13], 
@@ -351,7 +349,6 @@ Mixture probabilities and mean (sd in separate table below) for Census tract cha
 
 ```{r}
 sum.mod.3 <- summary(mod.3, parameters = TRUE)
-
 rbind(Component = c("Class 1","Class 2","Class 3"),
       `Mix Probability` = paste0(round((sum.mod.3$pro)*100,1),"%"),
       round(sum.mod.3$mean,1),
@@ -410,7 +407,6 @@ We can map on Chicago Neighborhood map (using ArcGIS) as such
 ```{r}
 r_eth.df <- read.csv("data/Chicago Census Data by Tract_ACS 2015.csv", header = TRUE) %>% 
   select(tract, PctBlack,PctAsian,PctHispanicLatino,PctWhiteNonHisp)
-
 dff <- merge(df2, r_eth.df, by="tract")
 ```
 
@@ -454,3 +450,4 @@ Stats Stackexchange. "How to calculate the loading matrix from the score matrix 
 Luca Scrucca. 2020. "A quick tour of mclust" - https://cran.r-project.org/web/packages/mclust/vignettes/mclust.html
 
 Luca Scrucca, Michael Fop, T. Brendan Murphy,Adrian E. Raftery. "mclust 5: Clustering, Classification and Density Estimation Using Gaussian Finite Mixture Models." R J. 2016 August ; 8(1): 289-317
+Footer
